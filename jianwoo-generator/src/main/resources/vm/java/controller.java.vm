@@ -1,0 +1,230 @@
+package ${packageName}.web.controller.${moduleName};
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.github.pagehelper.Page;
+import cn.hutool.core.collection.CollUtil;
+import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import cn.jianwoo.common.annotation.BizOptLog;
+import cn.jianwoo.common.annotation.Log;
+import cn.jianwoo.common.core.controller.BaseController;
+import cn.jianwoo.common.core.domain.R;
+import cn.jianwoo.common.enums.BusinessType;
+import ${packageName}.${moduleName}.domain.${ClassName};
+import ${packageName}.web.dto.${businessName}.${ClassName}ResVO;
+import ${packageName}.web.dto.${businessName}.${ClassName}QueryRequest;
+import ${packageName}.web.dto.${businessName}.${ClassName}CreateRequest;
+import ${packageName}.web.dto.${businessName}.${ClassName}EditRequest;
+import ${packageName}.${moduleName}.service.I${ClassName}Service;
+import cn.jianwoo.common.utils.poi.ExcelUtil;
+#if($table.crud || $table.sub)
+import cn.jianwoo.common.core.page.TableDataInfo;
+#elseif($table.tree)
+#end
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+
+/**
+ * ${functionName}Controller
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("/${businessName}")
+@Tag(name = "${functionName}模块")
+public class ${ClassName}Controller extends BaseController
+{
+    @Autowired
+    private I${ClassName}Service ${className}Service;
+
+    /**
+     * 查询${functionName}列表
+     */
+    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:list')")
+    @Operation(summary = "查询${functionName}列表",description = "查询${functionName}列表")
+    @GetMapping("/list")
+    @Log
+#if($table.crud || $table.sub)
+    public TableDataInfo<${ClassName}ResVO> list(@Validated @ParameterObject ${ClassName}QueryRequest request)
+    {
+        Page page = startPage();
+        ${ClassName} ${className} = new ${ClassName}();
+        BeanUtils.copyProperties(request, ${className});
+
+        #foreach ($column in $columns)
+            #if($column.isQuery)
+                #if($column.queryType == "BETWEEN")
+                    #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
+                        #set($AttrName=$column.javaField)
+                    #else
+                        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+                    #end
+        ${className}.getParams().put("begin$AttrName",request.getBegin$AttrName());
+        ${className}.getParams().put("end$AttrName",request.getEnd$AttrName());
+                #end
+            #end
+        #end
+        List<${ClassName}> list = ${className}Service.query${ClassName}List(${className});
+        List<${ClassName}ResVO> resList = new ArrayList<>();
+        if (CollUtil.isNotEmpty(list))
+        {
+            for (${ClassName} domain : list)
+            {
+                ${ClassName}ResVO vo = new ${ClassName}ResVO();
+                BeanUtils.copyProperties(domain, vo);
+                resList.add(vo);
+            }
+        }
+        return getDataTable(resList, page);
+    }
+#elseif($table.tree)
+    public R<List<${ClassName}ResVO>> list(@Validated @ParameterObject ${ClassName}QueryRequest request)
+    {
+        ${ClassName} ${className} = new ${ClassName}();
+        BeanUtils.copyProperties(request, ${className});
+        #foreach ($column in $columns)
+            #if($column.isQuery)
+                #if($column.queryType == "BETWEEN")
+                    #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
+                        #set($AttrName=$column.javaField)
+                    #else
+                        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+                    #end
+         ${className}.getParams().put("begin$AttrName",request.getBegin$AttrName());
+         ${className}.getParams().put("end$AttrName",request.getEnd$AttrName());
+                #end
+            #end
+        #end
+        List<${ClassName}> list = ${className}Service.query${ClassName}List(${className});
+        List<${ClassName}ResVO> resList = new ArrayList<>();
+        if (CollUtil.isNotEmpty(list))
+        {
+            for (${ClassName} domain : list)
+            {
+                ${ClassName}ResVO vo = new ${ClassName}ResVO();
+                BeanUtils.copyProperties(domain, vo);
+                resList.add(vo);
+            }
+        }
+        return ok(resList);
+    }
+#end
+
+    /**
+     * 导出${functionName}列表
+     */
+    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:export')")
+    @BizOptLog(title = "${businessName}.name", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    @Operation(summary = "导出${functionName}列表",description = "导出${functionName}列表")
+    @Log
+    public void export(@Validated @ParameterObject ${ClassName}QueryRequest request)
+    {
+        ${ClassName} ${className} = new ${ClassName}();
+        BeanUtils.copyProperties(request, ${className});
+        #foreach ($column in $columns)
+            #if($column.isQuery)
+                #if($column.queryType == "BETWEEN")
+                    #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
+                        #set($AttrName=$column.javaField)
+                    #else
+                        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+                    #end
+        ${className}.getParams().put("begin$AttrName",request.getBegin$AttrName());
+        ${className}.getParams().put("end$AttrName",request.getEnd$AttrName());
+                #end
+            #end
+        #end
+        List<${ClassName}> list = ${className}Service.query${ClassName}List(${className});
+        List<${ClassName}ResVO> resList = new ArrayList<>();
+        if (CollUtil.isNotEmpty(list))
+        {
+            for (${ClassName} domain : list)
+            {
+                ${ClassName}ResVO vo = new ${ClassName}ResVO();
+                BeanUtils.copyProperties(domain, vo);
+                resList.add(vo);
+            }
+        }
+        ExcelUtil<${ClassName}ResVO> util = new ExcelUtil<${ClassName}ResVO>(${ClassName}ResVO.class);
+        util.exportExcel(response, resList, "${functionName}数据");
+    }
+
+    /**
+     * 获取${functionName}详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:query')")
+    @GetMapping(value = "/{${pkColumn.javaField}}")
+    @Operation(summary = "获取${functionName}列详细信息",description = "获取${functionName}列详细信息")
+    @Log
+    public R<${ClassName}ResVO> getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        ${ClassName} ${className} = ${className}Service.query${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
+        ${ClassName}ResVO ${className}ResVO = new ${ClassName}ResVO();
+        BeanUtils.copyProperties(${className}, ${className}ResVO);
+        return ok(${className}ResVO);
+    }
+
+    /**
+     * 新增${functionName}
+     */
+    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:add')")
+    @BizOptLog(title = "${businessName}.name", businessType = BusinessType.INSERT)
+    @PostMapping
+    @Operation(summary = "新增${functionName}",description = "新增${functionName}")
+    @Log
+    public R add(@Validated @RequestBody ${ClassName}CreateRequest request)
+    {
+        ${ClassName} ${className} = new ${ClassName}();
+        BeanUtils.copyProperties(request, ${className});
+        ${className}Service.doInsert${ClassName}(${className});
+        return ok();
+    }
+
+    /**
+     * 修改${functionName}
+     */
+    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:edit')")
+    @BizOptLog(title = "${businessName}.name", businessType = BusinessType.UPDATE)
+    @PutMapping
+    @Operation(summary = "修改${functionName}",description = "修改${functionName}")
+    @Log
+    public R edit(@Validated @RequestBody ${ClassName}EditRequest request)
+    {
+        ${ClassName} ${className} = new ${ClassName}();
+        BeanUtils.copyProperties(request, ${className});
+        ${className}Service.doUpdate${ClassName}(${className});
+        return ok();
+    }
+
+    /**
+     * 删除${functionName}
+     */
+    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:remove')")
+    @BizOptLog(title = "${businessName}.name", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{${pkColumn.javaField}s}")
+    @Operation(summary = "删除${functionName}",description = "删除${functionName}")
+    @Parameter(name = "${pkColumn.javaField}s", description = "${functionName}主键列表", in = ParameterIn.PATH)
+    @Log
+    public R remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
+    {
+        ${className}Service.doDelete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s);
+        return ok();
+    }
+}

@@ -1,0 +1,7 @@
+#${functionName}
+${businessName}.name=${functionName}
+${businessName}.not.exist=${functionName}[{0}]不存在
+${businessName}.create.failed=${functionName}创建失败
+${businessName}.update.failed=${functionName}[{0}]更新失败
+${businessName}s.delete.failed=${functionName}{0}删除失败
+${businessName}.delete.failed=${functionName}[{0}]删除失败

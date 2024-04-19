@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jianwoo.system.mapper.AsyncProcAutoTaskMapper">
+
+    <resultMap type="AsyncProcAutoTask" id="AsyncProcAutoTaskResult">
+        <result property="taskId"    column="task_id"    />
+        <result property="taskType"    column="task_type"    />
+        <result property="taskData"    column="task_data"    />
+        <result property="parentTaskId"    column="parent_task_id"    />
+        <result property="delayTime"    column="delay_time"    />
+        <result property="isDelayTask"    column="is_delay_task"    />
+        <result property="timesMaxRetry"    column="times_max_retry"    />
+        <result property="statusProc"    column="status_proc"    />
+        <result property="statusProcDesc"    column="status_proc_desc"    />
+        <result property="procStartTime"    column="proc_start_time"    />
+        <result property="procEndTime"    column="proc_end_time"    />
+        <result property="timesProcFailed"    column="times_proc_failed"    />
+        <result property="failedReasonCode"    column="failed_reason_code"    />
+        <result property="failedReasonDesc"    column="failed_reason_desc"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        `task_id`, `task_type`, `task_data`, `parent_task_id`, `delay_time`, `is_delay_task`, `times_max_retry`, `status_proc`, `status_proc_desc`, `proc_start_time`, `proc_end_time`, `times_proc_failed`, `failed_reason_code`, `failed_reason_desc`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`    </sql>
+
+    <sql id="selectAsyncProcAutoTaskVo">
+        select `task_id`, `task_type`, `task_data`, `parent_task_id`, `delay_time`, `is_delay_task`, `times_max_retry`, `status_proc`, `status_proc_desc`, `proc_start_time`, `proc_end_time`, `times_proc_failed`, `failed_reason_code`, `failed_reason_desc`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from async_proc_auto_task
+    </sql>
+
+    <select id="selectByExample" parameterType="AsyncProcAutoTaskExample" resultMap="AsyncProcAutoTaskResult">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from async_proc_auto_task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <include refid="MySQLDialectSuffix" />
+    </select>
+
+    <delete id="deleteByExample" parameterType="AsyncProcAutoTaskExample">
+        delete from async_proc_auto_task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="AsyncProcAutoTask" useGeneratedKeys="true">
+        insert into async_proc_auto_task (
+                `task_id`,
+                `task_type`,
+                `task_data`,
+                `parent_task_id`,
+                `delay_time`,
+                `is_delay_task`,
+                `times_max_retry`,
+                `status_proc`,
+                `status_proc_desc`,
+                `proc_start_time`,
+                `proc_end_time`,
+                `times_proc_failed`,
+                `failed_reason_code`,
+                `failed_reason_desc`,
+                `create_by`,
+                `create_time`,
+                `update_by`,
+                `update_time`,
+                `remark`
+                )
+        values (
+                       #{taskId},
+                       #{taskType},
+                       #{taskData},
+                       #{parentTaskId},
+                       #{delayTime},
+                       #{isDelayTask},
+                       #{timesMaxRetry},
+                       #{statusProc},
+                       #{statusProcDesc},
+                       #{procStartTime},
+                       #{procEndTime},
+                       #{timesProcFailed},
+                       #{failedReasonCode},
+                       #{failedReasonDesc},
+                       #{createBy},
+                       #{createTime},
+                       #{updateBy},
+                       #{updateTime},
+                       #{remark}
+                       )
+    </insert>
+    <select id="countByExample" parameterType="AsyncProcAutoTaskExample" resultType="java.lang.Long">
+        select count(*) from async_proc_auto_task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update async_proc_auto_task
+        <set>
+            <if test="record.taskId != null">
+                `task_id` = #{record.taskId},
+            </if>
+            <if test="record.taskType != null">
+                `task_type` = #{record.taskType},
+            </if>
+            <if test="record.taskData != null">
+                `task_data` = #{record.taskData},
+            </if>
+            <if test="record.parentTaskId != null">
+                `parent_task_id` = #{record.parentTaskId},
+            </if>
+            <if test="record.delayTime != null">
+                `delay_time` = #{record.delayTime},
+            </if>
+            <if test="record.isDelayTask != null">
+                `is_delay_task` = #{record.isDelayTask},
+            </if>
+            <if test="record.timesMaxRetry != null">
+                `times_max_retry` = #{record.timesMaxRetry},
+            </if>
+            <if test="record.statusProc != null">
+                `status_proc` = #{record.statusProc},
+            </if>
+            <if test="record.statusProcDesc != null">
+                `status_proc_desc` = #{record.statusProcDesc},
+            </if>
+            <if test="record.procStartTime != null">
+                `proc_start_time` = #{record.procStartTime},
+            </if>
+            <if test="record.procEndTime != null">
+                `proc_end_time` = #{record.procEndTime},
+            </if>
+            <if test="record.timesProcFailed != null">
+                `times_proc_failed` = #{record.timesProcFailed},
+            </if>
+            <if test="record.failedReasonCode != null">
+                `failed_reason_code` = #{record.failedReasonCode},
+            </if>
+            <if test="record.failedReasonDesc != null">
+                `failed_reason_desc` = #{record.failedReasonDesc},
+            </if>
+            <if test="record.createBy != null">
+                `create_by` = #{record.createBy},
+            </if>
+            <if test="record.createTime != null">
+                `create_time` = #{record.createTime},
+            </if>
+            <if test="record.updateBy != null">
+                `update_by` = #{record.updateBy},
+            </if>
+            <if test="record.updateTime != null">
+                `update_time` = #{record.updateTime},
+            </if>
+            <if test="record.remark != null">
+                `remark` = #{record.remark},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update async_proc_auto_task
+        set
+        `task_id` = #{taskId},
+        `task_type` = #{taskType},
+        `task_data` = #{taskData},
+        `parent_task_id` = #{parentTaskId},
+        `delay_time` = #{delayTime},
+        `is_delay_task` = #{isDelayTask},
+        `times_max_retry` = #{timesMaxRetry},
+        `status_proc` = #{statusProc},
+        `status_proc_desc` = #{statusProcDesc},
+        `proc_start_time` = #{procStartTime},
+        `proc_end_time` = #{procEndTime},
+        `times_proc_failed` = #{timesProcFailed},
+        `failed_reason_code` = #{failedReasonCode},
+        `failed_reason_desc` = #{failedReasonDesc},
+        `create_by` = #{createBy},
+        `create_time` = #{createTime},
+        `update_by` = #{updateBy},
+        `update_time` = #{updateTime},
+        `remark` = #{remark}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="AsyncProcAutoTask">
+        update async_proc_auto_task
+        set
+                `task_type` = #{taskType},
+                `task_data` = #{taskData},
+                `parent_task_id` = #{parentTaskId},
+                `delay_time` = #{delayTime},
+                `is_delay_task` = #{isDelayTask},
+                `times_max_retry` = #{timesMaxRetry},
+                `status_proc` = #{statusProc},
+                `status_proc_desc` = #{statusProcDesc},
+                `proc_start_time` = #{procStartTime},
+                `proc_end_time` = #{procEndTime},
+                `times_proc_failed` = #{timesProcFailed},
+                `failed_reason_code` = #{failedReasonCode},
+                `failed_reason_desc` = #{failedReasonDesc},
+                `create_by` = #{createBy},
+                `create_time` = #{createTime},
+                `update_by` = #{updateBy},
+                `update_time` = #{updateTime},
+                `remark` = #{remark}
+        where `task_id` = #{taskId}
+    </update>
+    <sql id="MySQLDialectSuffix">
+        <if test="start != null and rows != null">
+            <![CDATA[  limit #{start},#{rows} ]]>
+        </if>
+    </sql>
+
+    <select id="selectList" parameterType="AsyncProcAutoTask" resultMap="AsyncProcAutoTaskResult">
+        <include refid="selectAsyncProcAutoTaskVo"/>
+        <where>
+            <if test="taskId != null  and taskId != ''"> and `task_id`= #{taskId}</if>
+            <if test="taskType != null  and taskType != ''"> and `task_type`= #{taskType}</if>
+            <if test="taskData != null  and taskData != ''"> and `task_data`= #{taskData}</if>
+            <if test="parentTaskId != null  and parentTaskId != ''"> and `parent_task_id`= #{parentTaskId}</if>
+            <if test="delayTime != null "> and `delay_time`= #{delayTime}</if>
+            <if test="isDelayTask != null "> and `is_delay_task`= #{isDelayTask}</if>
+            <if test="timesMaxRetry != null "> and `times_max_retry`= #{timesMaxRetry}</if>
+            <if test="statusProc != null  and statusProc != ''"> and `status_proc`= #{statusProc}</if>
+            <if test="statusProcDesc != null  and statusProcDesc != ''"> and `status_proc_desc`= #{statusProcDesc}</if>
+            <if test="procStartTime != null "> and `proc_start_time`= #{procStartTime}</if>
+            <if test="procEndTime != null "> and `proc_end_time`= #{procEndTime}</if>
+            <if test="timesProcFailed != null "> and `times_proc_failed`= #{timesProcFailed}</if>
+            <if test="failedReasonCode != null  and failedReasonCode != ''"> and `failed_reason_code`= #{failedReasonCode}</if>
+            <if test="failedReasonDesc != null  and failedReasonDesc != ''"> and `failed_reason_desc`= #{failedReasonDesc}</if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="String" resultMap="AsyncProcAutoTaskResult">
+        <include refid="selectAsyncProcAutoTaskVo"/>
+        where `task_id` = #{taskId}
+    </select>
+
+    <insert id="insertSelective" parameterType="AsyncProcAutoTask">
+        insert into async_proc_auto_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">`task_id`,</if>
+            <if test="taskType != null">`task_type`,</if>
+            <if test="taskData != null">`task_data`,</if>
+            <if test="parentTaskId != null">`parent_task_id`,</if>
+            <if test="delayTime != null">`delay_time`,</if>
+            <if test="isDelayTask != null">`is_delay_task`,</if>
+            <if test="timesMaxRetry != null">`times_max_retry`,</if>
+            <if test="statusProc != null">`status_proc`,</if>
+            <if test="statusProcDesc != null">`status_proc_desc`,</if>
+            <if test="procStartTime != null">`proc_start_time`,</if>
+            <if test="procEndTime != null">`proc_end_time`,</if>
+            <if test="timesProcFailed != null">`times_proc_failed`,</if>
+            <if test="failedReasonCode != null">`failed_reason_code`,</if>
+            <if test="failedReasonDesc != null">`failed_reason_desc`,</if>
+            <if test="createBy != null">`create_by`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateBy != null">`update_by`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="remark != null">`remark`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">#{taskId},</if>
+            <if test="taskType != null">#{taskType},</if>
+            <if test="taskData != null">#{taskData},</if>
+            <if test="parentTaskId != null">#{parentTaskId},</if>
+            <if test="delayTime != null">#{delayTime},</if>
+            <if test="isDelayTask != null">#{isDelayTask},</if>
+            <if test="timesMaxRetry != null">#{timesMaxRetry},</if>
+            <if test="statusProc != null">#{statusProc},</if>
+            <if test="statusProcDesc != null">#{statusProcDesc},</if>
+            <if test="procStartTime != null">#{procStartTime},</if>
+            <if test="procEndTime != null">#{procEndTime},</if>
+            <if test="timesProcFailed != null">#{timesProcFailed},</if>
+            <if test="failedReasonCode != null">#{failedReasonCode},</if>
+            <if test="failedReasonDesc != null">#{failedReasonDesc},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AsyncProcAutoTask">
+        update async_proc_auto_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskType != null">`task_type` = #{taskType},</if>
+            <if test="taskData != null">`task_data` = #{taskData},</if>
+            <if test="parentTaskId != null">`parent_task_id` = #{parentTaskId},</if>
+            <if test="delayTime != null">`delay_time` = #{delayTime},</if>
+            <if test="isDelayTask != null">`is_delay_task` = #{isDelayTask},</if>
+            <if test="timesMaxRetry != null">`times_max_retry` = #{timesMaxRetry},</if>
+            <if test="statusProc != null">`status_proc` = #{statusProc},</if>
+            <if test="statusProcDesc != null">`status_proc_desc` = #{statusProcDesc},</if>
+            <if test="procStartTime != null">`proc_start_time` = #{procStartTime},</if>
+            <if test="procEndTime != null">`proc_end_time` = #{procEndTime},</if>
+            <if test="timesProcFailed != null">`times_proc_failed` = #{timesProcFailed},</if>
+            <if test="failedReasonCode != null">`failed_reason_code` = #{failedReasonCode},</if>
+            <if test="failedReasonDesc != null">`failed_reason_desc` = #{failedReasonDesc},</if>
+            <if test="createBy != null">`create_by` = #{createBy},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="updateBy != null">`update_by` = #{updateBy},</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+        </trim>
+        where `task_id` = #{taskId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="String">
+        delete from async_proc_auto_task where `task_id` = #{taskId}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="String">
+        delete from async_proc_auto_task where `task_id` in
+        <foreach item="taskId" collection="array" open="(" separator="," close=")">
+            #{taskId}
+        </foreach>
+    </delete>
+</mapper>

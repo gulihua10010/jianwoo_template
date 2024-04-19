@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${packageName}.${moduleName}.mapper.${ClassName}Mapper">
+
+    <resultMap type="${ClassName}" id="${ClassName}Result">
+#foreach ($column in $columns)
+        <result property="${column.javaField}"    column="${column.columnName}"    />
+#end
+    </resultMap>
+#if($table.sub)
+
+    <resultMap id="${ClassName}${subClassName}Result" type="${ClassName}" extends="${ClassName}Result">
+        <collection property="${subclassName}List" notNullColumn="sub_${subTable.pkColumn.columnName}" javaType="java.util.List" resultMap="${subClassName}Result" />
+    </resultMap>
+
+    <resultMap type="${subClassName}" id="${subClassName}Result">
+#foreach ($column in $subTable.columns)
+        <result property="${column.javaField}"    column="sub_${column.columnName}"    />
+#end
+    </resultMap>
+#end
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+      #foreach($column in $columns) `$column.columnName`#if($foreach.count != $columns.size()),#end#end
+    </sql>
+
+    <sql id="select${ClassName}Vo">
+        select#foreach($column in $columns) `$column.columnName`#if($foreach.count != $columns.size()),#end#end from ${tableName}
+    </sql>
+
+    <select id="selectByExample" parameterType="${ClassName}Example" resultMap="${ClassName}Result">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from ${tableName}
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <include refid="MySQLDialectSuffix" />
+    </select>
+
+    <delete id="deleteByExample" parameterType="${ClassName}Example">
+        delete from ${tableName}
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="${ClassName}" useGeneratedKeys="true">
+        insert into ${tableName} (
+        #foreach($column in $columns)
+            #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                `$column.columnName`#if($foreach.count != $columns.size()),#end
+            #end
+        #end
+        )
+        values (
+        #foreach($column in $columns)
+            #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                #{$column.javaField}#if($foreach.count != $columns.size()),#end
+            #end
+        #end
+               )
+    </insert>
+    <select id="countByExample" parameterType="${ClassName}Example" resultType="java.lang.Long">
+        select count(*) from ${tableName}
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update ${tableName}
+        <set>
+            #foreach($column in $columns)
+                <if test="record.$column.javaField != null">
+                    `$column.columnName` = #{record.$column.javaField},
+                </if>
+            #end
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update ${tableName}
+        set
+        #foreach($column in $columns)
+            `$column.columnName` = #{$column.javaField}#if($foreach.count != $columns.size()),#end
+        #end
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="${ClassName}">
+        update ${tableName}
+        set
+        #foreach($column in $columns)
+            #if($column.columnName != $pkColumn.columnName)
+                `$column.columnName` = #{$column.javaField}#if($foreach.count != $columns.size()),#end
+                #end
+        #end
+        where `${pkColumn.columnName}` = #{${pkColumn.javaField}}
+    </update>
+    <sql id="MySQLDialectSuffix">
+        <if test="start != null and rows != null">
+            <![CDATA[  limit #{start},#{rows} ]]>
+        </if>
+    </sql>
+
+    <select id="selectList" parameterType="${ClassName}" resultMap="${ClassName}Result">
+        <include refid="select${ClassName}Vo"/>
+        <where>
+#foreach($column in $columns)
+#set($queryType=$column.queryType)
+#set($javaField=$column.javaField)
+#set($javaType=$column.javaType)
+#set($columnName=$column.columnName)
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+#if($column.query)
+#if($column.queryType == "EQ")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName`= #{$javaField}</if>
+#elseif($queryType == "NE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName`!= #{$javaField}</if>
+#elseif($queryType == "GT")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName`&gt; #{$javaField}</if>
+#elseif($queryType == "GTE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName`&gt;= #{$javaField}</if>
+#elseif($queryType == "LT")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName`&lt; #{$javaField}</if>
+#elseif($queryType == "LTE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName`&lt;= #{$javaField}</if>
+#elseif($queryType == "LIKE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName`like concat('%', #{$javaField}, '%')</if>
+#elseif($queryType == "BETWEEN")
+            <if test="params.begin$AttrName != null and params.begin$AttrName != '' and params.end$AttrName != null and params.end$AttrName != ''"> and `$columnName`between #{params.begin$AttrName} and #{params.end$AttrName}</if>
+#end
+#end
+#end
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="${pkColumn.javaType}" resultMap="#if($table.sub)${ClassName}${subClassName}Result#else${ClassName}Result#end">
+#if($table.crud || $table.tree)
+        <include refid="select${ClassName}Vo"/>
+        where `${pkColumn.columnName}` = #{${pkColumn.javaField}}
+#elseif($table.sub)
+        select#foreach($column in $columns) a.`$column.columnName`#if($foreach.count != $columns.size()),#end#end,
+           #foreach($column in $subTable.columns) b.`$column.columnName` as sub_$column.columnName#if($foreach.count != $subTable.columns.size()),#end#end
+
+        from ${tableName} a
+        left join ${subTableName} b on b.${subTableFkName} = a.`${pkColumn.columnName}`
+        where a.`${pkColumn.columnName}` = #{${pkColumn.javaField}}
+#end
+    </select>
+
+    <insert id="insertSelective" parameterType="${ClassName}"#if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+#foreach($column in $columns)
+#if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+            <if test="$column.javaField != null">`$column.columnName`,</if>
+#end
+#end
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+#foreach($column in $columns)
+#if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+            <if test="$column.javaField != null">#{$column.javaField},</if>
+#end
+#end
+         </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="${ClassName}">
+        update ${tableName}
+        <trim prefix="SET" suffixOverrides=",">
+#foreach($column in $columns)
+#if($column.columnName != $pkColumn.columnName)
+            <if test="$column.javaField != null">`$column.columnName` = #{$column.javaField},</if>
+#end
+#end
+        </trim>
+        where `${pkColumn.columnName}` = #{${pkColumn.javaField}}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="${pkColumn.javaType}">
+        delete from ${tableName} where `${pkColumn.columnName}` = #{${pkColumn.javaField}}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="String">
+        delete from ${tableName} where `${pkColumn.columnName}` in
+        <foreach item="${pkColumn.javaField}" collection="array" open="(" separator="," close=")">
+            #{${pkColumn.javaField}}
+        </foreach>
+    </delete>
+#if($table.sub)
+
+    <delete id="delete${subClassName}By${subTableFkClassName}s" parameterType="String">
+        delete from ${subTableName} where ${subTableFkName} in
+        <foreach item="${subTableFkclassName}" collection="array" open="(" separator="," close=")">
+            #{${subTableFkclassName}}
+        </foreach>
+    </delete>
+    <delete id="delete${subClassName}By${subTableFkClassName}" parameterType="${pkColumn.javaType}">
+        delete from ${subTableName} where ${subTableFkName} = #{${subTableFkclassName}}
+    </delete>
+
+    <insert id="batch${subClassName}">
+        insert into ${subTableName}(#foreach($column in $subTable.columns) $column.columnName#if($foreach.count != $subTable.columns.size()),#end#end) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            (#foreach($column in $subTable.columns) #{item.$column.javaField}#if($foreach.count != $subTable.columns.size()),#end#end)
+        </foreach>
+    </insert>
+#end
+</mapper>

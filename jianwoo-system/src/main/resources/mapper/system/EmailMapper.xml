@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jianwoo.system.mapper.EmailMapper">
+
+    <resultMap type="Email" id="EmailResult">
+        <result property="oid"    column="oid"    />
+        <result property="toEmail"    column="to_email"    />
+        <result property="emailTplCode"    column="email_tpl_code"    />
+        <result property="subject"    column="subject"    />
+        <result property="content"    column="content"    />
+        <result property="jsonData"    column="json_data"    />
+        <result property="files"    column="files"    />
+        <result property="procStatus"    column="proc_status"    />
+        <result property="procDesc"    column="proc_desc"    />
+        <result property="procTime"    column="proc_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+ `oid`, `to_email`, `email_tpl_code`, `subject`, `content`, `json_data`, `files`, `proc_status`, `proc_desc`, `proc_time`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`    </sql>
+
+    <sql id="selectEmailVo">
+        select `oid`, `to_email`, `email_tpl_code`, `subject`, `content`, `json_data`, `files`, `proc_status`, `proc_desc`, `proc_time`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from email
+    </sql>
+
+    <select id="selectByExample" parameterType="EmailExample" resultMap="EmailResult">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from email
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <include refid="MySQLDialectSuffix" />
+    </select>
+
+    <delete id="deleteByExample" parameterType="EmailExample">
+        delete from email
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="Email" useGeneratedKeys="true">
+        insert into email (
+                `to_email`,
+                `email_tpl_code`,
+                `subject`,
+                `content`,
+                `json_data`,
+                `files`,
+                `proc_status`,
+                `proc_desc`,
+                `proc_time`,
+                `create_by`,
+                `create_time`,
+                `update_by`,
+                `update_time`,
+                `remark`
+        )
+        values (
+                #{toEmail},
+                #{emailTplCode},
+                #{subject},
+                #{content},
+                #{jsonData},
+                #{files},
+                #{procStatus},
+                #{procDesc},
+                #{procTime},
+                #{createBy},
+                #{createTime},
+                #{updateBy},
+                #{updateTime},
+                #{remark}
+               )
+    </insert>
+    <select id="countByExample" parameterType="EmailExample" resultType="java.lang.Long">
+        select count(*) from email
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update email
+        <set>
+                <if test="record.oid != null">
+                    `oid` = #{record.oid},
+                </if>
+                <if test="record.toEmail != null">
+                    `to_email` = #{record.toEmail},
+                </if>
+                <if test="record.emailTplCode != null">
+                    `email_tpl_code` = #{record.emailTplCode},
+                </if>
+                <if test="record.subject != null">
+                    `subject` = #{record.subject},
+                </if>
+                <if test="record.content != null">
+                    `content` = #{record.content},
+                </if>
+                <if test="record.jsonData != null">
+                    `json_data` = #{record.jsonData},
+                </if>
+                <if test="record.files != null">
+                    `files` = #{record.files},
+                </if>
+                <if test="record.procStatus != null">
+                    `proc_status` = #{record.procStatus},
+                </if>
+                <if test="record.procDesc != null">
+                    `proc_desc` = #{record.procDesc},
+                </if>
+                <if test="record.procTime != null">
+                    `proc_time` = #{record.procTime},
+                </if>
+                <if test="record.createBy != null">
+                    `create_by` = #{record.createBy},
+                </if>
+                <if test="record.createTime != null">
+                    `create_time` = #{record.createTime},
+                </if>
+                <if test="record.updateBy != null">
+                    `update_by` = #{record.updateBy},
+                </if>
+                <if test="record.updateTime != null">
+                    `update_time` = #{record.updateTime},
+                </if>
+                <if test="record.remark != null">
+                    `remark` = #{record.remark},
+                </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update email
+        set
+            `oid` = #{oid},
+            `to_email` = #{toEmail},
+            `email_tpl_code` = #{emailTplCode},
+            `subject` = #{subject},
+            `content` = #{content},
+            `json_data` = #{jsonData},
+            `files` = #{files},
+            `proc_status` = #{procStatus},
+            `proc_desc` = #{procDesc},
+            `proc_time` = #{procTime},
+            `create_by` = #{createBy},
+            `create_time` = #{createTime},
+            `update_by` = #{updateBy},
+            `update_time` = #{updateTime},
+            `remark` = #{remark}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="Email">
+        update email
+        set
+                `to_email` = #{toEmail},
+                `email_tpl_code` = #{emailTplCode},
+                `subject` = #{subject},
+                `content` = #{content},
+                `json_data` = #{jsonData},
+                `files` = #{files},
+                `proc_status` = #{procStatus},
+                `proc_desc` = #{procDesc},
+                `proc_time` = #{procTime},
+                `create_by` = #{createBy},
+                `create_time` = #{createTime},
+                `update_by` = #{updateBy},
+                `update_time` = #{updateTime},
+                `remark` = #{remark}
+        where oid = #{oid}
+    </update>
+    <sql id="MySQLDialectSuffix">
+        <if test="start != null and rows != null">
+            <![CDATA[  limit #{start},#{rows} ]]>
+        </if>
+    </sql>
+
+    <select id="selectList" parameterType="Email" resultMap="EmailResult">
+        <include refid="selectEmailVo"/>
+        <where>
+            <if test="oid != null "> and `oid`= #{oid}</if>
+            <if test="toEmail != null  and toEmail != ''"> and `to_email`= #{toEmail}</if>
+            <if test="emailTplCode != null  and emailTplCode != ''"> and `email_tpl_code`= #{emailTplCode}</if>
+            <if test="subject != null  and subject != ''"> and `subject`= #{subject}</if>
+            <if test="content != null "> and `content`= #{content}</if>
+            <if test="jsonData != null  and jsonData != ''"> and `json_data`= #{jsonData}</if>
+            <if test="files != null  and files != ''"> and `files`= #{files}</if>
+            <if test="procStatus != null  and procStatus != ''"> and `proc_status`= #{procStatus}</if>
+            <if test="procDesc != null  and procDesc != ''"> and `proc_desc`= #{procDesc}</if>
+            <if test="procTime != null "> and `proc_time`= #{procTime}</if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Long" resultMap="EmailResult">
+        <include refid="selectEmailVo"/>
+        where oid = #{oid}
+    </select>
+
+    <insert id="insertSelective" parameterType="Email" useGeneratedKeys="true" keyProperty="oid">
+        insert into email
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="toEmail != null">`to_email`,</if>
+            <if test="emailTplCode != null">`email_tpl_code`,</if>
+            <if test="subject != null">`subject`,</if>
+            <if test="content != null">`content`,</if>
+            <if test="jsonData != null">`json_data`,</if>
+            <if test="files != null">`files`,</if>
+            <if test="procStatus != null">`proc_status`,</if>
+            <if test="procDesc != null">`proc_desc`,</if>
+            <if test="procTime != null">`proc_time`,</if>
+            <if test="createBy != null">`create_by`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateBy != null">`update_by`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="remark != null">`remark`,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="toEmail != null">#{toEmail},</if>
+            <if test="emailTplCode != null">#{emailTplCode},</if>
+            <if test="subject != null">#{subject},</if>
+            <if test="content != null">#{content},</if>
+            <if test="jsonData != null">#{jsonData},</if>
+            <if test="files != null">#{files},</if>
+            <if test="procStatus != null">#{procStatus},</if>
+            <if test="procDesc != null">#{procDesc},</if>
+            <if test="procTime != null">#{procTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="Email">
+        update email
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="toEmail != null">`to_email` = #{toEmail},</if>
+            <if test="emailTplCode != null">`email_tpl_code` = #{emailTplCode},</if>
+            <if test="subject != null">`subject` = #{subject},</if>
+            <if test="content != null">`content` = #{content},</if>
+            <if test="jsonData != null">`json_data` = #{jsonData},</if>
+            <if test="files != null">`files` = #{files},</if>
+            <if test="procStatus != null">`proc_status` = #{procStatus},</if>
+            <if test="procDesc != null">`proc_desc` = #{procDesc},</if>
+            <if test="procTime != null">`proc_time` = #{procTime},</if>
+            <if test="createBy != null">`create_by` = #{createBy},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="updateBy != null">`update_by` = #{updateBy},</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+        </trim>
+        where oid = #{oid}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from email where oid = #{oid}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="String">
+        delete from email where oid in
+        <foreach item="oid" collection="array" open="(" separator="," close=")">
+            #{oid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jianwoo.system.mapper.AsyncProcTaskTypeCfgMapper">
+
+    <resultMap type="AsyncProcTaskTypeCfg" id="AsyncProcTaskTypeCfgResult">
+        <result property="taskType"    column="task_type"    />
+        <result property="taskTypeName"    column="task_type_name"    />
+        <result property="execSrvId"    column="exec_srv_id"    />
+        <result property="isDelayTask"    column="is_delay_task"    />
+        <result property="delayTime"    column="delay_time"    />
+        <result property="timesMaxRetry"    column="times_max_retry"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        `task_type`, `task_type_name`, `exec_srv_id`, `is_delay_task`, `delay_time`, `times_max_retry`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`    </sql>
+
+    <sql id="selectAsyncProcTaskTypeCfgVo">
+        select `task_type`, `task_type_name`, `exec_srv_id`, `is_delay_task`, `delay_time`, `times_max_retry`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from async_proc_task_type_cfg
+    </sql>
+
+    <select id="selectByExample" parameterType="AsyncProcTaskTypeCfgExample" resultMap="AsyncProcTaskTypeCfgResult">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from async_proc_task_type_cfg
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <include refid="MySQLDialectSuffix" />
+    </select>
+
+    <delete id="deleteByExample" parameterType="AsyncProcTaskTypeCfgExample">
+        delete from async_proc_task_type_cfg
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="AsyncProcTaskTypeCfg" useGeneratedKeys="true">
+        insert into async_proc_task_type_cfg (
+                `task_type`,
+                `task_type_name`,
+                `exec_srv_id`,
+                `is_delay_task`,
+                `delay_time`,
+                `times_max_retry`,
+                `create_by`,
+                `create_time`,
+                `update_by`,
+                `update_time`,
+                `remark`
+                )
+        values (
+                       #{taskType},
+                       #{taskTypeName},
+                       #{execSrvId},
+                       #{isDelayTask},
+                       #{delayTime},
+                       #{timesMaxRetry},
+                       #{createBy},
+                       #{createTime},
+                       #{updateBy},
+                       #{updateTime},
+                       #{remark}
+                       )
+    </insert>
+    <select id="countByExample" parameterType="AsyncProcTaskTypeCfgExample" resultType="java.lang.Long">
+        select count(*) from async_proc_task_type_cfg
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update async_proc_task_type_cfg
+        <set>
+            <if test="record.taskType != null">
+                `task_type` = #{record.taskType},
+            </if>
+            <if test="record.taskTypeName != null">
+                `task_type_name` = #{record.taskTypeName},
+            </if>
+            <if test="record.execSrvId != null">
+                `exec_srv_id` = #{record.execSrvId},
+            </if>
+            <if test="record.isDelayTask != null">
+                `is_delay_task` = #{record.isDelayTask},
+            </if>
+            <if test="record.delayTime != null">
+                `delay_time` = #{record.delayTime},
+            </if>
+            <if test="record.timesMaxRetry != null">
+                `times_max_retry` = #{record.timesMaxRetry},
+            </if>
+            <if test="record.createBy != null">
+                `create_by` = #{record.createBy},
+            </if>
+            <if test="record.createTime != null">
+                `create_time` = #{record.createTime},
+            </if>
+            <if test="record.updateBy != null">
+                `update_by` = #{record.updateBy},
+            </if>
+            <if test="record.updateTime != null">
+                `update_time` = #{record.updateTime},
+            </if>
+            <if test="record.remark != null">
+                `remark` = #{record.remark},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update async_proc_task_type_cfg
+        set
+        `task_type` = #{taskType},
+        `task_type_name` = #{taskTypeName},
+        `exec_srv_id` = #{execSrvId},
+        `is_delay_task` = #{isDelayTask},
+        `delay_time` = #{delayTime},
+        `times_max_retry` = #{timesMaxRetry},
+        `create_by` = #{createBy},
+        `create_time` = #{createTime},
+        `update_by` = #{updateBy},
+        `update_time` = #{updateTime},
+        `remark` = #{remark}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="AsyncProcTaskTypeCfg">
+        update async_proc_task_type_cfg
+        set
+                `task_type_name` = #{taskTypeName},
+                `exec_srv_id` = #{execSrvId},
+                `is_delay_task` = #{isDelayTask},
+                `delay_time` = #{delayTime},
+                `times_max_retry` = #{timesMaxRetry},
+                `create_by` = #{createBy},
+                `create_time` = #{createTime},
+                `update_by` = #{updateBy},
+                `update_time` = #{updateTime},
+                `remark` = #{remark}
+        where `task_type` = #{taskType}
+    </update>
+    <sql id="MySQLDialectSuffix">
+        <if test="start != null and rows != null">
+            <![CDATA[  limit #{start},#{rows} ]]>
+        </if>
+    </sql>
+
+    <select id="selectList" parameterType="AsyncProcTaskTypeCfg" resultMap="AsyncProcTaskTypeCfgResult">
+        <include refid="selectAsyncProcTaskTypeCfgVo"/>
+        <where>
+            <if test="taskType != null  and taskType != ''"> and `task_type`= #{taskType}</if>
+            <if test="taskTypeName != null  and taskTypeName != ''"> and `task_type_name`like concat('%', #{taskTypeName}, '%')</if>
+            <if test="execSrvId != null  and execSrvId != ''"> and `exec_srv_id`= #{execSrvId}</if>
+            <if test="isDelayTask != null "> and `is_delay_task`= #{isDelayTask}</if>
+            <if test="delayTime != null "> and `delay_time`= #{delayTime}</if>
+            <if test="timesMaxRetry != null "> and `times_max_retry`= #{timesMaxRetry}</if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="String" resultMap="AsyncProcTaskTypeCfgResult">
+        <include refid="selectAsyncProcTaskTypeCfgVo"/>
+        where `task_type` = #{taskType}
+    </select>
+
+    <insert id="insertSelective" parameterType="AsyncProcTaskTypeCfg">
+        insert into async_proc_task_type_cfg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskType != null">`task_type`,</if>
+            <if test="taskTypeName != null">`task_type_name`,</if>
+            <if test="execSrvId != null">`exec_srv_id`,</if>
+            <if test="isDelayTask != null">`is_delay_task`,</if>
+            <if test="delayTime != null">`delay_time`,</if>
+            <if test="timesMaxRetry != null">`times_max_retry`,</if>
+            <if test="createBy != null">`create_by`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateBy != null">`update_by`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="remark != null">`remark`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskType != null">#{taskType},</if>
+            <if test="taskTypeName != null">#{taskTypeName},</if>
+            <if test="execSrvId != null">#{execSrvId},</if>
+            <if test="isDelayTask != null">#{isDelayTask},</if>
+            <if test="delayTime != null">#{delayTime},</if>
+            <if test="timesMaxRetry != null">#{timesMaxRetry},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="AsyncProcTaskTypeCfg">
+        update async_proc_task_type_cfg
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskTypeName != null">`task_type_name` = #{taskTypeName},</if>
+            <if test="execSrvId != null">`exec_srv_id` = #{execSrvId},</if>
+            <if test="isDelayTask != null">`is_delay_task` = #{isDelayTask},</if>
+            <if test="delayTime != null">`delay_time` = #{delayTime},</if>
+            <if test="timesMaxRetry != null">`times_max_retry` = #{timesMaxRetry},</if>
+            <if test="createBy != null">`create_by` = #{createBy},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="updateBy != null">`update_by` = #{updateBy},</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+        </trim>
+        where `task_type` = #{taskType}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="String">
+        delete from async_proc_task_type_cfg where `task_type` = #{taskType}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="String">
+        delete from async_proc_task_type_cfg where `task_type` in
+        <foreach item="taskType" collection="array" open="(" separator="," close=")">
+            #{taskType}
+        </foreach>
+    </delete>
+</mapper>

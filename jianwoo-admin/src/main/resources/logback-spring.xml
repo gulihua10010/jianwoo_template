@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+    <springProperty scope="context" name="log.tag"
+                    source="log.tag"/>
+    <springProperty scope="context" name="log.base" source="log.base"/>
+    <springProperty scope="context" name="log.filename"
+                    source="log.filename"/>
+    <springProperty scope="context" name="log.level.root"
+                    source="log.level.root"/>
+    <springProperty scope="context" name="log.level.springframework"
+                    source="log.level.springframework"/>
+    <springProperty scope="context" name="log.level.busi"
+                    source="log.level.busi"/>
+
+    <!-- 日志输出格式 -->
+	<property name="log.pattern" value="%date [%thread] [${log.tag}] %-5level %logger{80} - [%method,%line] - %msg%n" />
+
+	<!-- 控制台输出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+    <appender name="rootLoggerFileOut"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/${log.filename}_root.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/${log.filename}_root.%d{yyyy-MM-dd}.%i.log.zip
+            </FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+	<!-- 系统日志输出 -->
+    <appender name="busiLoggerFileOut"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/${log.filename}_busi.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/${log.filename}_busi.%d{yyyy-MM-dd}.%i.log.zip
+            </FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+	<appender name="systemExceptionLoggerFileOut" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/${log.filename}_error.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${log.base}/${log.filename}_error.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>ERROR</level>
+			<!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+			<!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+	<!-- 用户访问日志输出  -->
+    <appender name="sysUserLoggerFileOut" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/${log.filename}_user.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <FileNamePattern>${log.base}/${log.filename}_user.%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 定时任务日志输出  -->
+    <appender name="sysTaskLoggerFileOut" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/${log.filename}_task.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <FileNamePattern>${log.base}/${log.filename}_task.%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="druidLoggerFileOut"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/${log.filename}_druid.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/${log.filename}_ibatis.%d{yyyy-MM-dd}.%i.log.zip
+            </FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="druid" level="${log.level.busi}" additivity="false">
+        <appender-ref ref="druidLoggerFileOut"/>
+    </logger>
+
+    <logger name="cn.jianwoo" level="${log.level.busi}"
+            additivity="false">
+        <appender-ref ref="busiLoggerFileOut"/>
+    </logger>
+
+	<!-- Spring日志级别控制  -->
+	<logger name="org.springframework" level="${log.level.springframework}" />
+
+	<root level="${log.level.root}">
+		<appender-ref ref="console" />
+        <appender-ref ref="rootLoggerFileOut"/>
+	</root>
+
+    <!-- 控制台输出日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %msg%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!--系统操作日志-->
+    <root level="info" additivity="false">>
+        <appender-ref ref="systemExceptionLoggerFileOut" />
+    </root>
+	
+	<!--系统用户操作日志-->
+    <logger name="sys-user" level="${log.level.busi}" additivity="false">
+        <appender-ref ref="sysUserLoggerFileOut"/>
+    </logger>
+    <!--系统用户操作日志-->
+    <logger name="sys-task" level="${log.level.busi}" additivity="false">
+        <appender-ref ref="sysTaskLoggerFileOut"/>
+    </logger>
+</configuration> 

@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jianwoo.system.mapper.MessageProfileMapper">
+
+    <resultMap type="MessageProfile" id="MessageProfileResult">
+        <result property="id"    column="id"    />
+        <result property="busiSceneCode"    column="busi_scene_code"    />
+        <result property="busiType"    column="busi_type"    />
+        <result property="msgType"    column="msg_type"    />
+        <result property="receiverType"    column="receiver_type"    />
+        <result property="msgTitle"    column="msg_title"    />
+        <result property="msgContent"    column="msg_content"    />
+        <result property="msgLink"    column="msg_link"    />
+        <result property="bizId"    column="biz_id"    />
+        <result property="bizParam"    column="biz_param"    />
+        <result property="receiverId"    column="receiver_id"    />
+        <result property="receiverName"    column="receiver_name"    />
+        <result property="receiverEmail"    column="receiver_email"    />
+        <result property="receiverMobileNo"    column="receiver_mobile_no"    />
+        <result property="emailNotify"    column="email_notify"    />
+        <result property="emailTplCode"    column="email_tpl_code"    />
+        <result property="flagRead"    column="flag_read"    />
+        <result property="flagPopup"    column="flag_popup"    />
+        <result property="readTime"    column="read_time"    />
+        <result property="procRslt"    column="proc_rslt"    />
+        <result property="procTime"    column="proc_time"    />
+        <result property="sendTime"    column="send_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        `id`, `busi_scene_code`, `busi_type`, `msg_type`, `receiver_type`, `msg_title`, `msg_content`, `msg_link`, `biz_id`, `biz_param`, `receiver_id`, `receiver_name`, `receiver_email`, `receiver_mobile_no`, `email_notify`, `email_tpl_code`, `flag_read`, `flag_popup`, `read_time`, `proc_rslt`, `proc_time`, `send_time`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`    </sql>
+
+    <sql id="selectMessageProfileVo">
+        select `id`, `busi_scene_code`, `busi_type`, `msg_type`, `receiver_type`, `msg_title`, `msg_content`, `msg_link`, `biz_id`, `biz_param`, `receiver_id`, `receiver_name`, `receiver_email`, `receiver_mobile_no`, `email_notify`, `email_tpl_code`, `flag_read`, `flag_popup`, `read_time`, `proc_rslt`, `proc_time`, `send_time`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from message_profile
+    </sql>
+
+    <select id="selectByExample" parameterType="MessageProfileExample" resultMap="MessageProfileResult">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from message_profile
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <include refid="MySQLDialectSuffix" />
+    </select>
+
+    <delete id="deleteByExample" parameterType="MessageProfileExample">
+        delete from message_profile
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="MessageProfile" useGeneratedKeys="true">
+        insert into message_profile (
+                `busi_scene_code`,
+                `busi_type`,
+                `msg_type`,
+                `receiver_type`,
+                `msg_title`,
+                `msg_content`,
+                `msg_link`,
+                `biz_id`,
+                `biz_param`,
+                `receiver_id`,
+                `receiver_name`,
+                `receiver_email`,
+                `receiver_mobile_no`,
+                `email_notify`,
+                `email_tpl_code`,
+                `flag_read`,
+                `flag_popup`,
+                `read_time`,
+                `proc_rslt`,
+                `proc_time`,
+                `send_time`,
+                `create_by`,
+                `create_time`,
+                `update_by`,
+                `update_time`,
+                `remark`
+                )
+        values (
+                       #{busiSceneCode},
+                       #{busiType},
+                       #{msgType},
+                       #{receiverType},
+                       #{msgTitle},
+                       #{msgContent},
+                       #{msgLink},
+                       #{bizId},
+                       #{bizParam},
+                       #{receiverId},
+                       #{receiverName},
+                       #{receiverEmail},
+                       #{receiverMobileNo},
+                       #{emailNotify},
+                       #{emailTplCode},
+                       #{flagRead},
+                       #{flagPopup},
+                       #{readTime},
+                       #{procRslt},
+                       #{procTime},
+                       #{sendTime},
+                       #{createBy},
+                       #{createTime},
+                       #{updateBy},
+                       #{updateTime},
+                       #{remark}
+                       )
+    </insert>
+    <select id="countByExample" parameterType="MessageProfileExample" resultType="java.lang.Long">
+        select count(*) from message_profile
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update message_profile
+        <set>
+            <if test="record.id != null">
+                `id` = #{record.id},
+            </if>
+            <if test="record.busiSceneCode != null">
+                `busi_scene_code` = #{record.busiSceneCode},
+            </if>
+            <if test="record.busiType != null">
+                `busi_type` = #{record.busiType},
+            </if>
+            <if test="record.msgType != null">
+                `msg_type` = #{record.msgType},
+            </if>
+            <if test="record.receiverType != null">
+                `receiver_type` = #{record.receiverType},
+            </if>
+            <if test="record.msgTitle != null">
+                `msg_title` = #{record.msgTitle},
+            </if>
+            <if test="record.msgContent != null">
+                `msg_content` = #{record.msgContent},
+            </if>
+            <if test="record.msgLink != null">
+                `msg_link` = #{record.msgLink},
+            </if>
+            <if test="record.bizId != null">
+                `biz_id` = #{record.bizId},
+            </if>
+            <if test="record.bizParam != null">
+                `biz_param` = #{record.bizParam},
+            </if>
+            <if test="record.receiverId != null">
+                `receiver_id` = #{record.receiverId},
+            </if>
+            <if test="record.receiverName != null">
+                `receiver_name` = #{record.receiverName},
+            </if>
+            <if test="record.receiverEmail != null">
+                `receiver_email` = #{record.receiverEmail},
+            </if>
+            <if test="record.receiverMobileNo != null">
+                `receiver_mobile_no` = #{record.receiverMobileNo},
+            </if>
+            <if test="record.emailNotify != null">
+                `email_notify` = #{record.emailNotify},
+            </if>
+            <if test="record.emailTplCode != null">
+                `email_tpl_code` = #{record.emailTplCode},
+            </if>
+            <if test="record.flagRead != null">
+                `flag_read` = #{record.flagRead},
+            </if>
+            <if test="record.flagPopup != null">
+                `flag_popup` = #{record.flagPopup},
+            </if>
+            <if test="record.readTime != null">
+                `read_time` = #{record.readTime},
+            </if>
+            <if test="record.procRslt != null">
+                `proc_rslt` = #{record.procRslt},
+            </if>
+            <if test="record.procTime != null">
+                `proc_time` = #{record.procTime},
+            </if>
+            <if test="record.sendTime != null">
+                `send_time` = #{record.sendTime},
+            </if>
+            <if test="record.createBy != null">
+                `create_by` = #{record.createBy},
+            </if>
+            <if test="record.createTime != null">
+                `create_time` = #{record.createTime},
+            </if>
+            <if test="record.updateBy != null">
+                `update_by` = #{record.updateBy},
+            </if>
+            <if test="record.updateTime != null">
+                `update_time` = #{record.updateTime},
+            </if>
+            <if test="record.remark != null">
+                `remark` = #{record.remark},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update message_profile
+        set
+        `id` = #{id},
+        `busi_scene_code` = #{busiSceneCode},
+        `busi_type` = #{busiType},
+        `msg_type` = #{msgType},
+        `receiver_type` = #{receiverType},
+        `msg_title` = #{msgTitle},
+        `msg_content` = #{msgContent},
+        `msg_link` = #{msgLink},
+        `biz_id` = #{bizId},
+        `biz_param` = #{bizParam},
+        `receiver_id` = #{receiverId},
+        `receiver_name` = #{receiverName},
+        `receiver_email` = #{receiverEmail},
+        `receiver_mobile_no` = #{receiverMobileNo},
+        `email_notify` = #{emailNotify},
+        `email_tpl_code` = #{emailTplCode},
+        `flag_read` = #{flagRead},
+        `flag_popup` = #{flagPopup},
+        `read_time` = #{readTime},
+        `proc_rslt` = #{procRslt},
+        `proc_time` = #{procTime},
+        `send_time` = #{sendTime},
+        `create_by` = #{createBy},
+        `create_time` = #{createTime},
+        `update_by` = #{updateBy},
+        `update_time` = #{updateTime},
+        `remark` = #{remark}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="MessageProfile">
+        update message_profile
+        set
+                `busi_scene_code` = #{busiSceneCode},
+                `busi_type` = #{busiType},
+                `msg_type` = #{msgType},
+                `receiver_type` = #{receiverType},
+                `msg_title` = #{msgTitle},
+                `msg_content` = #{msgContent},
+                `msg_link` = #{msgLink},
+                `biz_id` = #{bizId},
+                `biz_param` = #{bizParam},
+                `receiver_id` = #{receiverId},
+                `receiver_name` = #{receiverName},
+                `receiver_email` = #{receiverEmail},
+                `receiver_mobile_no` = #{receiverMobileNo},
+                `email_notify` = #{emailNotify},
+                `email_tpl_code` = #{emailTplCode},
+                `flag_read` = #{flagRead},
+                `flag_popup` = #{flagPopup},
+                `read_time` = #{readTime},
+                `proc_rslt` = #{procRslt},
+                `proc_time` = #{procTime},
+                `send_time` = #{sendTime},
+                `create_by` = #{createBy},
+                `create_time` = #{createTime},
+                `update_by` = #{updateBy},
+                `update_time` = #{updateTime},
+                `remark` = #{remark}
+        where id = #{id}
+    </update>
+    <sql id="MySQLDialectSuffix">
+        <if test="start != null and rows != null">
+            <![CDATA[  limit #{start},#{rows} ]]>
+        </if>
+    </sql>
+
+    <select id="selectList" parameterType="MessageProfile" resultMap="MessageProfileResult">
+        <include refid="selectMessageProfileVo"/>
+        <where>
+            <if test="id != null "> and `id`= #{id}</if>
+            <if test="busiSceneCode != null  and busiSceneCode != ''"> and `busi_scene_code`= #{busiSceneCode}</if>
+            <if test="busiType != null  and busiType != ''"> and `busi_type`= #{busiType}</if>
+            <if test="msgType != null  and msgType != ''"> and `msg_type`= #{msgType}</if>
+            <if test="receiverType != null  and receiverType != ''"> and `receiver_type`= #{receiverType}</if>
+            <if test="msgTitle != null  and msgTitle != ''"> and `msg_title`= #{msgTitle}</if>
+            <if test="msgContent != null "> and `msg_content`= #{msgContent}</if>
+            <if test="msgLink != null  and msgLink != ''"> and `msg_link`= #{msgLink}</if>
+            <if test="bizId != null  and bizId != ''"> and `biz_id`= #{bizId}</if>
+            <if test="bizParam != null "> and `biz_param`= #{bizParam}</if>
+            <if test="receiverId != null  and receiverId != ''"> and `receiver_id`= #{receiverId}</if>
+            <if test="receiverName != null  and receiverName != ''"> and `receiver_name`like concat('%', #{receiverName}, '%')</if>
+            <if test="receiverEmail != null  and receiverEmail != ''"> and `receiver_email`= #{receiverEmail}</if>
+            <if test="receiverMobileNo != null  and receiverMobileNo != ''"> and `receiver_mobile_no`= #{receiverMobileNo}</if>
+            <if test="emailNotify != null  and emailNotify != ''"> and `email_notify`= #{emailNotify}</if>
+            <if test="emailTplCode != null  and emailTplCode != ''"> and `email_tpl_code`= #{emailTplCode}</if>
+            <if test="flagRead != null  and flagRead != ''"> and `flag_read`= #{flagRead}</if>
+            <if test="flagPopup != null  and flagPopup != ''"> and `flag_popup`= #{flagPopup}</if>
+            <if test="readTime != null "> and `read_time`= #{readTime}</if>
+            <if test="procRslt != null  and procRslt != ''"> and `proc_rslt`= #{procRslt}</if>
+            <if test="procTime != null "> and `proc_time`= #{procTime}</if>
+            <if test="sendTime != null "> and `send_time`= #{sendTime}</if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Long" resultMap="MessageProfileResult">
+        <include refid="selectMessageProfileVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSelective" parameterType="MessageProfile" useGeneratedKeys="true" keyProperty="id">
+        insert into message_profile
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="busiSceneCode != null">`busi_scene_code`,</if>
+            <if test="busiType != null">`busi_type`,</if>
+            <if test="msgType != null">`msg_type`,</if>
+            <if test="receiverType != null">`receiver_type`,</if>
+            <if test="msgTitle != null">`msg_title`,</if>
+            <if test="msgContent != null">`msg_content`,</if>
+            <if test="msgLink != null">`msg_link`,</if>
+            <if test="bizId != null">`biz_id`,</if>
+            <if test="bizParam != null">`biz_param`,</if>
+            <if test="receiverId != null">`receiver_id`,</if>
+            <if test="receiverName != null">`receiver_name`,</if>
+            <if test="receiverEmail != null">`receiver_email`,</if>
+            <if test="receiverMobileNo != null">`receiver_mobile_no`,</if>
+            <if test="emailNotify != null">`email_notify`,</if>
+            <if test="emailTplCode != null">`email_tpl_code`,</if>
+            <if test="flagRead != null">`flag_read`,</if>
+            <if test="flagPopup != null">`flag_popup`,</if>
+            <if test="readTime != null">`read_time`,</if>
+            <if test="procRslt != null">`proc_rslt`,</if>
+            <if test="procTime != null">`proc_time`,</if>
+            <if test="sendTime != null">`send_time`,</if>
+            <if test="createBy != null">`create_by`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateBy != null">`update_by`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="remark != null">`remark`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="busiSceneCode != null">#{busiSceneCode},</if>
+            <if test="busiType != null">#{busiType},</if>
+            <if test="msgType != null">#{msgType},</if>
+            <if test="receiverType != null">#{receiverType},</if>
+            <if test="msgTitle != null">#{msgTitle},</if>
+            <if test="msgContent != null">#{msgContent},</if>
+            <if test="msgLink != null">#{msgLink},</if>
+            <if test="bizId != null">#{bizId},</if>
+            <if test="bizParam != null">#{bizParam},</if>
+            <if test="receiverId != null">#{receiverId},</if>
+            <if test="receiverName != null">#{receiverName},</if>
+            <if test="receiverEmail != null">#{receiverEmail},</if>
+            <if test="receiverMobileNo != null">#{receiverMobileNo},</if>
+            <if test="emailNotify != null">#{emailNotify},</if>
+            <if test="emailTplCode != null">#{emailTplCode},</if>
+            <if test="flagRead != null">#{flagRead},</if>
+            <if test="flagPopup != null">#{flagPopup},</if>
+            <if test="readTime != null">#{readTime},</if>
+            <if test="procRslt != null">#{procRslt},</if>
+            <if test="procTime != null">#{procTime},</if>
+            <if test="sendTime != null">#{sendTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="MessageProfile">
+        update message_profile
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="busiSceneCode != null">`busi_scene_code` = #{busiSceneCode},</if>
+            <if test="busiType != null">`busi_type` = #{busiType},</if>
+            <if test="msgType != null">`msg_type` = #{msgType},</if>
+            <if test="receiverType != null">`receiver_type` = #{receiverType},</if>
+            <if test="msgTitle != null">`msg_title` = #{msgTitle},</if>
+            <if test="msgContent != null">`msg_content` = #{msgContent},</if>
+            <if test="msgLink != null">`msg_link` = #{msgLink},</if>
+            <if test="bizId != null">`biz_id` = #{bizId},</if>
+            <if test="bizParam != null">`biz_param` = #{bizParam},</if>
+            <if test="receiverId != null">`receiver_id` = #{receiverId},</if>
+            <if test="receiverName != null">`receiver_name` = #{receiverName},</if>
+            <if test="receiverEmail != null">`receiver_email` = #{receiverEmail},</if>
+            <if test="receiverMobileNo != null">`receiver_mobile_no` = #{receiverMobileNo},</if>
+            <if test="emailNotify != null">`email_notify` = #{emailNotify},</if>
+            <if test="emailTplCode != null">`email_tpl_code` = #{emailTplCode},</if>
+            <if test="flagRead != null">`flag_read` = #{flagRead},</if>
+            <if test="flagPopup != null">`flag_popup` = #{flagPopup},</if>
+            <if test="readTime != null">`read_time` = #{readTime},</if>
+            <if test="procRslt != null">`proc_rslt` = #{procRslt},</if>
+            <if test="procTime != null">`proc_time` = #{procTime},</if>
+            <if test="sendTime != null">`send_time` = #{sendTime},</if>
+            <if test="createBy != null">`create_by` = #{createBy},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="updateBy != null">`update_by` = #{updateBy},</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from message_profile where id = #{id}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="String">
+        delete from message_profile where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

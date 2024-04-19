@@ -1,0 +1,150 @@
+package ${packageName}.${moduleName}.mapper;
+
+import java.util.List;
+import ${packageName}.${moduleName}.domain.${ClassName};
+import ${packageName}.${moduleName}.domain.example.${ClassName}Example;
+#if($table.sub)
+import ${packageName}.${moduleName}.domain.${subClassName};
+#end
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * ${functionName}Mapper接口
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${ClassName}Mapper 
+{
+
+    /**
+     * 根据条件统计${functionName}
+     *
+     * @param example example查询条件
+     * @return count
+     */
+    long countByExample(${ClassName}Example example);
+
+    /**
+     * 根据条件删除${functionName}
+     *
+     * @param example example查询条件
+     * @return count
+     */
+    int deleteByExample(${ClassName}Example example);
+
+    /**
+     * 新增${functionName}
+     *
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    int insert(${ClassName} ${className});
+
+    /**
+     * 根据条件查询${functionName}列表
+     *
+     * @param example example查询条件
+     * @return List<${ClassName}>
+     */
+    List<${ClassName}> selectByExample(${ClassName}Example example);
+
+    /**
+     * 根据条件更新${functionName}列表, 忽略 null 字段
+     *
+     * @param record 记录
+     * @param example example查询条件
+     */
+    int updateByExampleSelective(@Param("record") ${ClassName} record, @Param("example") ${ClassName}Example example);
+
+    /**
+     * 根据条件更新${functionName}列表
+     *
+     * @param record 记录
+     * @param example example查询条件
+     */
+    int updateByExample(@Param("record") ${ClassName} record, @Param("example") ${ClassName}Example example);
+
+    /**
+     * 修改${functionName}
+     *
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    int updateByPrimaryKey(${ClassName} ${className});
+
+    /**
+     * 查询${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}主键
+     * @return ${functionName}
+     */
+    ${ClassName} selectByPrimaryKey(${pkColumn.javaType} ${pkColumn.javaField});
+
+    /**
+     * 查询${functionName}列表
+     * 
+     * @param ${className} ${functionName}
+     * @return ${functionName}集合
+     */
+    List<${ClassName}> selectList(${ClassName} ${className});
+
+    /**
+     * 新增${functionName}, 忽略 null 字段
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    int insertSelective(${ClassName} ${className});
+
+    /**
+     * 修改${functionName}, 忽略 null 字段
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    int updateByPrimaryKeySelective(${ClassName} ${className});
+
+    /**
+     * 删除${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}主键
+     * @return 结果
+     */
+    int deleteByPrimaryKey(${pkColumn.javaType} ${pkColumn.javaField});
+
+    /**
+     * 批量删除${functionName}
+     * 
+     * @param ${pkColumn.javaField}s 需要删除的数据主键集合
+     * @return 结果
+     */
+    int deleteByPrimaryKeys(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+#if($table.sub)
+
+    /**
+     * 批量删除${subTable.functionName}
+     * 
+     * @param ${pkColumn.javaField}s 需要删除的数据主键集合
+     * @return 结果
+     */
+    int delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+    
+    /**
+     * 批量新增${subTable.functionName}
+     * 
+     * @param ${subclassName}List ${subTable.functionName}列表
+     * @return 结果
+     */
+    int batch${subClassName}(List<${subClassName}> ${subclassName}List);
+    
+
+    /**
+     * 通过${functionName}主键删除${subTable.functionName}信息
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return 结果
+     */
+    int delete${subClassName}By${subTableFkClassName}(${pkColumn.javaType} ${pkColumn.javaField});
+#end
+}

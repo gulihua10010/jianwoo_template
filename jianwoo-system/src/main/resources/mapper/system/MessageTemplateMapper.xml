@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jianwoo.system.mapper.MessageTemplateMapper">
+
+    <resultMap type="MessageTemplate" id="MessageTemplateResult">
+        <result property="busiSceneCode"    column="busi_scene_code"    />
+        <result property="busiType"    column="busi_type"    />
+        <result property="msgType"    column="msg_type"    />
+        <result property="receiverType"    column="receiver_type"    />
+        <result property="msgDesc"    column="msg_desc"    />
+        <result property="msgTitleTemplate"    column="msg_title_template"    />
+        <result property="msgContentTemplate"    column="msg_content_template"    />
+        <result property="msgLinkTemplate"    column="msg_link_template"    />
+        <result property="status"    column="status"    />
+        <result property="emailNotify"    column="email_notify"    />
+        <result property="emailTplCode"    column="email_tpl_code"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        `busi_scene_code`, `busi_type`, `msg_type`, `receiver_type`, `msg_desc`, `msg_title_template`, `msg_content_template`, `msg_link_template`, `status`, `email_notify`, `email_tpl_code`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`    </sql>
+
+    <sql id="selectMessageTemplateVo">
+        select `busi_scene_code`, `busi_type`, `msg_type`, `receiver_type`, `msg_desc`, `msg_title_template`, `msg_content_template`, `msg_link_template`, `status`, `email_notify`, `email_tpl_code`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from message_template
+    </sql>
+
+    <select id="selectByExample" parameterType="MessageTemplateExample" resultMap="MessageTemplateResult">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from message_template
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <include refid="MySQLDialectSuffix" />
+    </select>
+
+    <delete id="deleteByExample" parameterType="MessageTemplateExample">
+        delete from message_template
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="MessageTemplate" useGeneratedKeys="true">
+        insert into message_template (
+                `busi_scene_code`,
+                `busi_type`,
+                `msg_type`,
+                `receiver_type`,
+                `msg_desc`,
+                `msg_title_template`,
+                `msg_content_template`,
+                `msg_link_template`,
+                `status`,
+                `email_notify`,
+                `email_tpl_code`,
+                `create_by`,
+                `create_time`,
+                `update_by`,
+                `update_time`,
+                `remark`
+                )
+        values (
+                       #{busiSceneCode},
+                       #{busiType},
+                       #{msgType},
+                       #{receiverType},
+                       #{msgDesc},
+                       #{msgTitleTemplate},
+                       #{msgContentTemplate},
+                       #{msgLinkTemplate},
+                       #{status},
+                       #{emailNotify},
+                       #{emailTplCode},
+                       #{createBy},
+                       #{createTime},
+                       #{updateBy},
+                       #{updateTime},
+                       #{remark}
+                       )
+    </insert>
+    <select id="countByExample" parameterType="MessageTemplateExample" resultType="java.lang.Long">
+        select count(*) from message_template
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update message_template
+        <set>
+            <if test="record.busiSceneCode != null">
+                `busi_scene_code` = #{record.busiSceneCode},
+            </if>
+            <if test="record.busiType != null">
+                `busi_type` = #{record.busiType},
+            </if>
+            <if test="record.msgType != null">
+                `msg_type` = #{record.msgType},
+            </if>
+            <if test="record.receiverType != null">
+                `receiver_type` = #{record.receiverType},
+            </if>
+            <if test="record.msgDesc != null">
+                `msg_desc` = #{record.msgDesc},
+            </if>
+            <if test="record.msgTitleTemplate != null">
+                `msg_title_template` = #{record.msgTitleTemplate},
+            </if>
+            <if test="record.msgContentTemplate != null">
+                `msg_content_template` = #{record.msgContentTemplate},
+            </if>
+            <if test="record.msgLinkTemplate != null">
+                `msg_link_template` = #{record.msgLinkTemplate},
+            </if>
+            <if test="record.status != null">
+                `status` = #{record.status},
+            </if>
+            <if test="record.emailNotify != null">
+                `email_notify` = #{record.emailNotify},
+            </if>
+            <if test="record.emailTplCode != null">
+                `email_tpl_code` = #{record.emailTplCode},
+            </if>
+            <if test="record.createBy != null">
+                `create_by` = #{record.createBy},
+            </if>
+            <if test="record.createTime != null">
+                `create_time` = #{record.createTime},
+            </if>
+            <if test="record.updateBy != null">
+                `update_by` = #{record.updateBy},
+            </if>
+            <if test="record.updateTime != null">
+                `update_time` = #{record.updateTime},
+            </if>
+            <if test="record.remark != null">
+                `remark` = #{record.remark},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update message_template
+        set
+        `busi_scene_code` = #{busiSceneCode},
+        `busi_type` = #{busiType},
+        `msg_type` = #{msgType},
+        `receiver_type` = #{receiverType},
+        `msg_desc` = #{msgDesc},
+        `msg_title_template` = #{msgTitleTemplate},
+        `msg_content_template` = #{msgContentTemplate},
+        `msg_link_template` = #{msgLinkTemplate},
+        `status` = #{status},
+        `email_notify` = #{emailNotify},
+        `email_tpl_code` = #{emailTplCode},
+        `create_by` = #{createBy},
+        `create_time` = #{createTime},
+        `update_by` = #{updateBy},
+        `update_time` = #{updateTime},
+        `remark` = #{remark}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="MessageTemplate">
+        update message_template
+        set
+                `busi_type` = #{busiType},
+                `msg_type` = #{msgType},
+                `receiver_type` = #{receiverType},
+                `msg_desc` = #{msgDesc},
+                `msg_title_template` = #{msgTitleTemplate},
+                `msg_content_template` = #{msgContentTemplate},
+                `msg_link_template` = #{msgLinkTemplate},
+                `status` = #{status},
+                `email_notify` = #{emailNotify},
+                `email_tpl_code` = #{emailTplCode},
+                `create_by` = #{createBy},
+                `create_time` = #{createTime},
+                `update_by` = #{updateBy},
+                `update_time` = #{updateTime},
+                `remark` = #{remark}
+        where busi_scene_code = #{busiSceneCode}
+    </update>
+    <sql id="MySQLDialectSuffix">
+        <if test="start != null and rows != null">
+            <![CDATA[  limit #{start},#{rows} ]]>
+        </if>
+    </sql>
+
+    <select id="selectList" parameterType="MessageTemplate" resultMap="MessageTemplateResult">
+        <include refid="selectMessageTemplateVo"/>
+        <where>
+            <if test="busiSceneCode != null  and busiSceneCode != ''"> and `busi_scene_code`= #{busiSceneCode}</if>
+            <if test="busiType != null  and busiType != ''"> and `busi_type`= #{busiType}</if>
+            <if test="msgType != null  and msgType != ''"> and `msg_type`= #{msgType}</if>
+            <if test="receiverType != null  and receiverType != ''"> and `receiver_type`= #{receiverType}</if>
+            <if test="msgDesc != null  and msgDesc != ''"> and `msg_desc`= #{msgDesc}</if>
+            <if test="msgTitleTemplate != null  and msgTitleTemplate != ''"> and `msg_title_template`= #{msgTitleTemplate}</if>
+            <if test="msgContentTemplate != null "> and `msg_content_template`= #{msgContentTemplate}</if>
+            <if test="msgLinkTemplate != null  and msgLinkTemplate != ''"> and `msg_link_template`= #{msgLinkTemplate}</if>
+            <if test="status != null  and status != ''"> and `status`= #{status}</if>
+            <if test="emailNotify != null  and emailNotify != ''"> and `email_notify`= #{emailNotify}</if>
+            <if test="emailTplCode != null  and emailTplCode != ''"> and `email_tpl_code`= #{emailTplCode}</if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="String" resultMap="MessageTemplateResult">
+        <include refid="selectMessageTemplateVo"/>
+        where busi_scene_code = #{busiSceneCode}
+    </select>
+
+    <insert id="insertSelective" parameterType="MessageTemplate">
+        insert into message_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="busiSceneCode != null">`busi_scene_code`,</if>
+            <if test="busiType != null">`busi_type`,</if>
+            <if test="msgType != null">`msg_type`,</if>
+            <if test="receiverType != null">`receiver_type`,</if>
+            <if test="msgDesc != null">`msg_desc`,</if>
+            <if test="msgTitleTemplate != null">`msg_title_template`,</if>
+            <if test="msgContentTemplate != null">`msg_content_template`,</if>
+            <if test="msgLinkTemplate != null">`msg_link_template`,</if>
+            <if test="status != null">`status`,</if>
+            <if test="emailNotify != null">`email_notify`,</if>
+            <if test="emailTplCode != null">`email_tpl_code`,</if>
+            <if test="createBy != null">`create_by`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateBy != null">`update_by`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+            <if test="remark != null">`remark`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="busiSceneCode != null">#{busiSceneCode},</if>
+            <if test="busiType != null">#{busiType},</if>
+            <if test="msgType != null">#{msgType},</if>
+            <if test="receiverType != null">#{receiverType},</if>
+            <if test="msgDesc != null">#{msgDesc},</if>
+            <if test="msgTitleTemplate != null">#{msgTitleTemplate},</if>
+            <if test="msgContentTemplate != null">#{msgContentTemplate},</if>
+            <if test="msgLinkTemplate != null">#{msgLinkTemplate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="emailNotify != null">#{emailNotify},</if>
+            <if test="emailTplCode != null">#{emailTplCode},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="MessageTemplate">
+        update message_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="busiType != null">`busi_type` = #{busiType},</if>
+            <if test="msgType != null">`msg_type` = #{msgType},</if>
+            <if test="receiverType != null">`receiver_type` = #{receiverType},</if>
+            <if test="msgDesc != null">`msg_desc` = #{msgDesc},</if>
+            <if test="msgTitleTemplate != null">`msg_title_template` = #{msgTitleTemplate},</if>
+            <if test="msgContentTemplate != null">`msg_content_template` = #{msgContentTemplate},</if>
+            <if test="msgLinkTemplate != null">`msg_link_template` = #{msgLinkTemplate},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="emailNotify != null">`email_notify` = #{emailNotify},</if>
+            <if test="emailTplCode != null">`email_tpl_code` = #{emailTplCode},</if>
+            <if test="createBy != null">`create_by` = #{createBy},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="updateBy != null">`update_by` = #{updateBy},</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+        </trim>
+        where busi_scene_code = #{busiSceneCode}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="String">
+        delete from message_template where busi_scene_code = #{busiSceneCode}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="String">
+        delete from message_template where busi_scene_code in
+        <foreach item="busiSceneCode" collection="array" open="(" separator="," close=")">
+            #{busiSceneCode}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,23 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.bizOptLog*
+yarn-debug.bizOptLog*
+yarn-error.bizOptLog*
+**/*.bizOptLog
+
+tests/**/coverage/
+tests/e2e/reports
+selenium-debug.bizOptLog
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.local
+
+package-lock.json
+yarn.lock

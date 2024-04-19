@@ -1,0 +1,46 @@
+package ${packageName}.${moduleName}.domain;
+
+#foreach ($import in $importList)
+import ${import};
+#end
+#if($table.crud || $table.sub)
+import cn.jianwoo.common.core.domain.BaseEntity;
+#elseif($table.tree)
+import cn.jianwoo.common.core.domain.TreeEntity;
+#end
+
+import lombok.Data;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
+
+/**
+ * ${functionName}对象 ${tableName}
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+#if($table.crud || $table.sub)
+#set($Entity="BaseEntity")
+#elseif($table.tree)
+#set($Entity="TreeEntity")
+#end
+@EqualsAndHashCode(callSuper = true)
+@Data
+@ToString(callSuper = true)
+public class ${ClassName} extends ${Entity}
+{
+    private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+#if(!$table.isSuperColumn($column.javaField))
+    /** $column.columnComment */
+    private $column.javaType $column.javaField;
+
+#end
+#end
+#if($table.sub)
+    /** $table.subTable.functionName信息 */
+    private List<${subClassName}> ${subclassName}List;
+
+#end
+}
