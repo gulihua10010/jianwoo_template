@@ -14,15 +14,15 @@
                     source="log.level.busi"/>
 
     <!-- 日志输出格式 -->
-	<property name="log.pattern" value="%date [%thread] [${log.tag}] %-5level %logger{80} - [%method,%line] - %msg%n" />
+    <property name="log.pattern" value="%date [%thread] [${log.tag}] %-5level %logger{80} - [%method,%line] - %msg%n" />
 
-	<!-- 控制台输出 -->
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>${log.pattern}</pattern>
+    <!-- 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
             <charset>UTF-8</charset>
-		</encoder>
-	</appender>
+        </encoder>
+    </appender>
 
     <appender name="rootLoggerFileOut"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -42,7 +42,7 @@
         </encoder>
     </appender>
 
-	<!-- 系统日志输出 -->
+    <!-- 系统日志输出 -->
     <appender name="busiLoggerFileOut"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.base}/${log.filename}_busi.log</file>
@@ -60,7 +60,7 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-	<appender name="systemExceptionLoggerFileOut" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="systemExceptionLoggerFileOut" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.base}/${log.filename}_error.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -79,14 +79,14 @@
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 过滤的级别 -->
             <level>ERROR</level>
-			<!-- 匹配时的操作：接收（记录） -->
+            <!-- 匹配时的操作：接收（记录） -->
             <onMatch>ACCEPT</onMatch>
-			<!-- 不匹配时的操作：拒绝（不记录） -->
+            <!-- 不匹配时的操作：拒绝（不记录） -->
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
-	<!-- 用户访问日志输出  -->
+    <!-- 用户访问日志输出  -->
     <appender name="sysUserLoggerFileOut" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.base}/${log.filename}_user.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -140,23 +140,6 @@
         </encoder>
     </appender>
 
-    <logger name="druid" level="${log.level.busi}" additivity="false">
-        <appender-ref ref="druidLoggerFileOut"/>
-    </logger>
-
-    <logger name="cn.jianwoo" level="${log.level.busi}"
-            additivity="false">
-        <appender-ref ref="busiLoggerFileOut"/>
-    </logger>
-
-	<!-- Spring日志级别控制  -->
-	<logger name="org.springframework" level="${log.level.springframework}" />
-
-	<root level="${log.level.root}">
-		<appender-ref ref="console" />
-        <appender-ref ref="rootLoggerFileOut"/>
-	</root>
-
     <!-- 控制台输出日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -165,18 +148,41 @@
         </encoder>
     </appender>
 
+    <logger name="druid" level="${log.level.busi}" additivity="false">
+        <appender-ref ref="druidLoggerFileOut"/>
+    </logger>
+
+    <logger name="cn.jianwoo" level="${log.level.busi}"
+            additivity="false">
+        <appender-ref ref="busiLoggerFileOut"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- Spring日志级别控制  -->
+    <logger name="org.springframework" level="${log.level.springframework}" />
+
+    <root level="${log.level.root}">
+        <appender-ref ref="console" />
+        <appender-ref ref="rootLoggerFileOut"/>
+    </root>
+
 
     <!--系统操作日志-->
     <root level="info" additivity="false">>
         <appender-ref ref="systemExceptionLoggerFileOut" />
+        <appender-ref ref="STDOUT" />
     </root>
-	
-	<!--系统用户操作日志-->
+
+
+
+    <!--系统用户操作日志-->
     <logger name="sys-user" level="${log.level.busi}" additivity="false">
         <appender-ref ref="sysUserLoggerFileOut"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
     <!--系统用户操作日志-->
     <logger name="sys-task" level="${log.level.busi}" additivity="false">
         <appender-ref ref="sysTaskLoggerFileOut"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 </configuration> 
