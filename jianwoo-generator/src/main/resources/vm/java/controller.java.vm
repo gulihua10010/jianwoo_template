@@ -46,7 +46,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
  * @date ${datetime}
  */
 @RestController
-@RequestMapping("/${businessName}")
+@RequestMapping("/system/${businessName}")
 @Tag(name = "${functionName}模块")
 public class ${ClassName}Controller extends BaseController
 {
