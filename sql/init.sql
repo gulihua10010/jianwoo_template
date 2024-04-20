@@ -211,7 +211,7 @@ DROP TABLE IF EXISTS `message_profile`;
 CREATE TABLE `message_profile` (
                                    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '表自增唯一id',
                                    `busi_scene_code` varchar(8) NOT NULL COMMENT 'busi_type+msg_type+receiver_type+编号',
-                                   `busi_type` varchar(2) NOT NULL COMMENT '10:项目,11:任务,12:云平台,13:镜像,14:云集群,15:云服务器,16:云存储,17:本地集群,18:本地服务器,19资源池,20:调度配置',
+                                   `busi_type` varchar(2) NOT NULL COMMENT '业务类型',
                                    `msg_type` varchar(2) NOT NULL COMMENT '10:任务通知,20:资源调整',
                                    `receiver_type` varchar(2) NOT NULL COMMENT '接收类型:10:用户',
                                    `msg_title` varchar(256) DEFAULT NULL,
@@ -254,7 +254,7 @@ COMMIT;
 DROP TABLE IF EXISTS `message_template`;
 CREATE TABLE `message_template` (
                                     `busi_scene_code` varchar(8) NOT NULL COMMENT 'busi_type+msg_type+receiver_type组成',
-                                    `busi_type` varchar(2) NOT NULL COMMENT ' 10:项目,11:任务,12:云平台,13:镜像,14:云集群,15:云服务器,16:云存储,17:本地集群,18:本地服务器,19资源池,20:调度配置',
+                                    `busi_type` varchar(2) NOT NULL COMMENT '业务类型',
                                     `msg_type` varchar(2) NOT NULL COMMENT '10:任务通知,20:资源调整',
                                     `receiver_type` varchar(2) NOT NULL COMMENT '接收类型:10:用户',
                                     `msg_desc` varchar(100) DEFAULT NULL COMMENT '消息描述',
