@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jianwoo.system.mapper.MessageTemplateMapper">
 
-    <resultMap type="MessageTemplate" id="MessageTemplateResult">
+    <resultMap type="cn.jianwoo.system.domain.MessageTemplate" id="MessageTemplateResult">
         <result property="busiSceneCode"    column="busi_scene_code"    />
         <result property="busiType"    column="busi_type"    />
         <result property="msgType"    column="msg_type"    />
@@ -89,7 +89,7 @@
         select `busi_scene_code`, `busi_type`, `msg_type`, `receiver_type`, `msg_desc`, `msg_title_template`, `msg_content_template`, `msg_link_template`, `status`, `email_notify`, `email_tpl_code`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from message_template
     </sql>
 
-    <select id="selectByExample" parameterType="MessageTemplateExample" resultMap="MessageTemplateResult">
+    <select id="selectByExample" parameterType="cn.jianwoo.system.domain.example.MessageTemplateExample" resultMap="MessageTemplateResult">
         select
         <if test="distinct">
             distinct
@@ -105,14 +105,14 @@
         <include refid="MySQLDialectSuffix" />
     </select>
 
-    <delete id="deleteByExample" parameterType="MessageTemplateExample">
+    <delete id="deleteByExample" parameterType="cn.jianwoo.system.domain.example.MessageTemplateExample">
         delete from message_template
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="MessageTemplate" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="cn.jianwoo.system.domain.MessageTemplate" useGeneratedKeys="true">
         insert into message_template (
                 `busi_scene_code`,
                 `busi_type`,
@@ -150,7 +150,7 @@
                        #{remark}
                        )
     </insert>
-    <select id="countByExample" parameterType="MessageTemplateExample" resultType="java.lang.Long">
+    <select id="countByExample" parameterType="cn.jianwoo.system.domain.example.MessageTemplateExample" resultType="java.lang.Long">
         select count(*) from message_template
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />
@@ -235,7 +235,7 @@
             <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
-    <update id="updateByPrimaryKey" parameterType="MessageTemplate">
+    <update id="updateByPrimaryKey" parameterType="cn.jianwoo.system.domain.MessageTemplate">
         update message_template
         set
                 `busi_type` = #{busiType},
@@ -261,7 +261,7 @@
         </if>
     </sql>
 
-    <select id="selectList" parameterType="MessageTemplate" resultMap="MessageTemplateResult">
+    <select id="selectList" parameterType="cn.jianwoo.system.domain.MessageTemplate" resultMap="MessageTemplateResult">
         <include refid="selectMessageTemplateVo"/>
         <where>
             <if test="busiSceneCode != null  and busiSceneCode != ''"> and `busi_scene_code`= #{busiSceneCode}</if>
@@ -283,7 +283,7 @@
         where busi_scene_code = #{busiSceneCode}
     </select>
 
-    <insert id="insertSelective" parameterType="MessageTemplate">
+    <insert id="insertSelective" parameterType="cn.jianwoo.system.domain.MessageTemplate">
         insert into message_template
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="busiSceneCode != null">`busi_scene_code`,</if>
@@ -323,7 +323,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="MessageTemplate">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jianwoo.system.domain.MessageTemplate">
         update message_template
         <trim prefix="SET" suffixOverrides=",">
             <if test="busiType != null">`busi_type` = #{busiType},</if>

@@ -21,7 +21,7 @@ import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.common.utils.spring.SpringUtils;
 import cn.jianwoo.system.mapper.SysDeptMapper;
 import cn.jianwoo.system.mapper.SysRoleMapper;
-import cn.jianwoo.system.service.ISysDeptService;
+import cn.jianwoo.system.service.SysDeptService;
 
 /**
  * 部门管理 服务实现
@@ -29,7 +29,7 @@ import cn.jianwoo.system.service.ISysDeptService;
  * @author jianwoo
  */
 @Service
-public class SysDeptServiceImpl implements ISysDeptService
+public class SysDeptServiceImpl implements SysDeptService
 {
     @Autowired
     private SysDeptMapper deptMapper;

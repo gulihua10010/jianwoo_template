@@ -20,7 +20,7 @@ import cn.jianwoo.common.core.domain.entity.SysDictType;
 import cn.jianwoo.common.core.page.TableDataInfo;
 import cn.jianwoo.common.enums.BusinessType;
 import cn.jianwoo.common.utils.poi.ExcelUtil;
-import cn.jianwoo.system.service.ISysDictTypeService;
+import cn.jianwoo.system.service.SysDictTypeService;
 
 /**
  * 数据字典信息
@@ -32,7 +32,7 @@ import cn.jianwoo.system.service.ISysDictTypeService;
 public class SysDictTypeController extends BaseController
 {
     @Autowired
-    private ISysDictTypeService dictTypeService;
+    private SysDictTypeService dictTypeService;
 
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")

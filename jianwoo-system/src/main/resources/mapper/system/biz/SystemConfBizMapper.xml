@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.jianwoo.system.mapper.biz.SystemConfBizMapper">
+    <resultMap id="BaseResultMap" type="cn.jianwoo.system.domain.extend.SystemConfigExt">
+        <result column="key" jdbcType="VARCHAR" property="key"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="cfg_type" jdbcType="VARCHAR" property="cfgType"/>
+        <result column="value_type" jdbcType="VARCHAR" property="valueType"/>
+        <result column="string_value" jdbcType="VARCHAR" property="stringValue"/>
+        <result column="int_value" jdbcType="INTEGER" property="intValue"/>
+        <result column="float_value" jdbcType="DECIMAL" property="floatValue"/>
+        <result column="boolean_value" jdbcType="CHAR" property="booleanValue"/>
+        <result column="date_value" jdbcType="TIMESTAMP" property="dateValue"/>
+        <result column="index" jdbcType="INTEGER" property="index"/>
+        <result column="valid" jdbcType="CHAR" property="valid"/>
+        <result column="title_dsp" jdbcType="VARCHAR" property="titleDsp"/>
+        <result column="tips_dsp" jdbcType="VARCHAR" property="tipsDsp"/>
+        <result column="form_type" jdbcType="VARCHAR" property="formType"/>
+        <result column="tab_type" jdbcType="VARCHAR" property="tabType"/>
+        <result column="tab_type_dsp" jdbcType="VARCHAR" property="tabTypeDsp"/>
+        <result column="required" jdbcType="CHAR" property="required"/>
+        <result column="options" jdbcType="VARCHAR" property="options"/>
+        <result column="validate_type" jdbcType="VARCHAR" property="validateType"/>
+        <result column="validate_value" jdbcType="VARCHAR" property="validateValue"/>
+    </resultMap>
+
+    <sql id="Ext_Column_List">
+        `key`, w.`desc`, value_type, string_value, float_value, int_value, boolean_value, date_value,
+    `index`, `valid`,title_dsp, tips_dsp, form_type, tab_type, tab_type_dsp, required,`options`,
+    validate_type, validate_value
+    </sql>
+    <sql id="Base_Column_List">
+        `key`, `desc`, cfg_type, value_type, string_value, float_value, int_value, boolean_value, date_value,
+        `valid`, create_time, update_time
+    </sql>
+    <select id="selectAllSystemConf" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM system_config
+    </select>
+    <select id="selectEffectiveSystemConf" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Ext_Column_List"/>
+        from system_config  w inner join system_config_facade f
+        on w.key = f.cfg_key
+        where w.valid = '1'
+    </select>
+
+    <update id="updateSystemConfByKey" parameterType="map">
+        UPDATE system_config
+        SET
+                string_value  = #{systemConf.stringValue,jdbcType=VARCHAR},
+                int_value     = #{systemConf.intValue,jdbcType=INTEGER},
+                float_value   = #{systemConf.floatValue,jdbcType=DECIMAL},
+                boolean_value = #{systemConf.booleanValue,jdbcType=CHAR},
+                date_value    = #{systemConf.dateValue,jdbcType=TIMESTAMP},
+                update_by    = #{systemConf.updateBy,jdbcType=VARCHAR},
+                update_time   = NOW()
+        WHERE
+            `key` = #{key,jdbcType=VARCHAR};
+    </update>
+
+</mapper>

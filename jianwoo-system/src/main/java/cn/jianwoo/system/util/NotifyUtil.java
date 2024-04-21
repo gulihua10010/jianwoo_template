@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson2.JSON;
 import cn.jianwoo.common.constant.ConfigConstants;
 import cn.jianwoo.common.exception.E;
-import cn.jianwoo.system.service.ISysConfigService;
+import cn.jianwoo.system.service.SysConfigService;
 
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
@@ -30,7 +30,7 @@ public class NotifyUtil
 {
 
     @Autowired
-    private ISysConfigService sysConfigService;
+    private SysConfigService sysConfigService;
 
     private void sendEmail(List<String> emailTo, String subject, String content, boolean isHtml)
     {

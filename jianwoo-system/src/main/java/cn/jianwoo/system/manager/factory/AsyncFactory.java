@@ -14,8 +14,8 @@ import cn.jianwoo.common.utils.ip.IpUtils;
 import cn.jianwoo.common.utils.spring.SpringUtils;
 import cn.jianwoo.system.domain.SysLogininfor;
 import cn.jianwoo.system.domain.SysOperLog;
-import cn.jianwoo.system.service.ISysLogininforService;
-import cn.jianwoo.system.service.ISysOperLogService;
+import cn.jianwoo.system.service.SysLogininforService;
+import cn.jianwoo.system.service.SysOperLogService;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +79,7 @@ public class AsyncFactory
                     logininfor.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                SpringUtils.getBean(SysLogininforService.class).insertLogininfor(logininfor);
             }
         };
     }
@@ -99,7 +99,7 @@ public class AsyncFactory
             {
                 // 远程查询操作地点
                 operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));
-                SpringUtils.getBean(ISysOperLogService.class).insertOperlog(operLog);
+                SpringUtils.getBean(SysOperLogService.class).insertOperlog(operLog);
             }
         };
     }

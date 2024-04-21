@@ -21,7 +21,7 @@ import cn.jianwoo.common.core.redis.RedisCache;
 import cn.jianwoo.common.enums.BusinessType;
 import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.system.domain.SysUserOnline;
-import cn.jianwoo.system.service.ISysUserOnlineService;
+import cn.jianwoo.system.service.SysUserOnlineService;
 
 /**
  * 在线用户监控
@@ -33,7 +33,7 @@ import cn.jianwoo.system.service.ISysUserOnlineService;
 public class SysUserOnlineController extends BaseController
 {
     @Autowired
-    private ISysUserOnlineService userOnlineService;
+    private SysUserOnlineService userOnlineService;
 
     @Autowired
     private RedisCache redisCache;

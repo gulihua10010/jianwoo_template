@@ -17,8 +17,8 @@ import cn.jianwoo.common.utils.poi.ExcelUtil;
 import cn.jianwoo.framework.web.service.SysPermissionService;
 import cn.jianwoo.framework.web.service.TokenService;
 import cn.jianwoo.system.domain.SysUserRole;
-import cn.jianwoo.system.service.ISysRoleService;
-import cn.jianwoo.system.service.ISysUserService;
+import cn.jianwoo.system.service.SysRoleService;
+import cn.jianwoo.system.service.SysUserService;
 import cn.jianwoo.web.dto.user.vo.SysRoleVO;
 import cn.jianwoo.web.dto.user.vo.SysUserRoleVO;
 import cn.jianwoo.web.dto.user.vo.SysUserVO;
@@ -53,7 +53,7 @@ import java.util.List;
 @Tag(name = "角色模块")
 public class SysRoleController extends BaseController {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
     private TokenService tokenService;
@@ -62,7 +62,7 @@ public class SysRoleController extends BaseController {
     private SysPermissionService permissionService;
 
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/list")

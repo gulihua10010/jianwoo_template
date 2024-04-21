@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 #if($table.sub)
 import ${packageName}.${moduleName}.domain.${subClassName};
 #end
+import lombok.extern.slf4j.Slf4j;
 import ${packageName}.${moduleName}.mapper.${ClassName}Mapper;
 import ${packageName}.${moduleName}.domain.${ClassName};
-import ${packageName}.${moduleName}.service.I${ClassName}Service;
+import ${packageName}.${moduleName}.service.${ClassName}Service;
 
 
 /**
@@ -24,7 +25,8 @@ import ${packageName}.${moduleName}.service.I${ClassName}Service;
  * @date ${datetime}
  */
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+@Slf4j
+public class ${ClassName}ServiceImpl implements ${ClassName}Service
 {
     @Autowired
     private ${ClassName}Mapper ${className}Mapper;

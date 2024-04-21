@@ -3,15 +3,13 @@ package cn.jianwoo.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import com.alibaba.fastjson2.JSON;
 import cn.jianwoo.common.constant.HttpStatus;
 import cn.jianwoo.common.exception.E;
 import cn.jianwoo.common.utils.MessageUtils;
-import org.springframework.transaction.annotation.Transactional;
 import cn.jianwoo.system.mapper.AsyncProcTaskTypeCfgMapper;
 import cn.jianwoo.system.domain.AsyncProcTaskTypeCfg;
-import cn.jianwoo.system.service.IAsyncProcTaskTypeCfgService;
+import cn.jianwoo.system.service.AsyncProcTaskTypeCfgService;
 
 
 /**
@@ -21,7 +19,7 @@ import cn.jianwoo.system.service.IAsyncProcTaskTypeCfgService;
  * @date 2023-11-03
  */
 @Service
-public class AsyncProcTaskTypeCfgServiceImpl implements IAsyncProcTaskTypeCfgService 
+public class AsyncProcTaskTypeCfgServiceImpl implements AsyncProcTaskTypeCfgService
 {
     @Autowired
     private AsyncProcTaskTypeCfgMapper asyncProcTaskTypeCfgMapper;

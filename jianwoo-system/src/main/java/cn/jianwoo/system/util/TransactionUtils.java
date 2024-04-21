@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import cn.jianwoo.system.service.IAsyncProcAutoTaskService;
+import cn.jianwoo.system.service.AsyncProcAutoTaskService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,7 @@ public class TransactionUtils
 {
 
     @Autowired
-    private IAsyncProcAutoTaskService asyncProcAutoTaskService;
+    private AsyncProcAutoTaskService asyncProcAutoTaskService;
 
     public void doTriggerTaskAfterCommit(String taskId)
     {

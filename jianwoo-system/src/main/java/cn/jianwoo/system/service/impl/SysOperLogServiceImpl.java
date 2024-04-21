@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.jianwoo.system.domain.SysOperLog;
 import cn.jianwoo.system.mapper.SysOperLogMapper;
-import cn.jianwoo.system.service.ISysOperLogService;
+import cn.jianwoo.system.service.SysOperLogService;
 
 /**
  * 操作日志 服务层处理
@@ -13,7 +13,7 @@ import cn.jianwoo.system.service.ISysOperLogService;
  * @author jianwoo
  */
 @Service
-public class SysOperLogServiceImpl implements ISysOperLogService
+public class SysOperLogServiceImpl implements SysOperLogService
 {
     @Autowired
     private SysOperLogMapper operLogMapper;

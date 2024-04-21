@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson2.JSON;
 import cn.jianwoo.common.constant.HttpStatus;
-import cn.jianwoo.common.constant.QueueName;
 import cn.jianwoo.common.enums.ProcessStatus;
 import cn.jianwoo.common.exception.E;
 import cn.jianwoo.common.utils.CommUtils;
@@ -22,9 +21,9 @@ import cn.jianwoo.common.utils.MessageUtils;
 import cn.jianwoo.system.domain.AsyncProcAutoTask;
 import cn.jianwoo.system.domain.AsyncProcTaskTypeCfg;
 import cn.jianwoo.system.mapper.AsyncProcAutoTaskMapper;
-import cn.jianwoo.system.service.IAsyncProcAutoTaskService;
-import cn.jianwoo.system.service.IAsyncProcTaskTypeCfgService;
-import cn.jianwoo.system.service.ISequenceService;
+import cn.jianwoo.system.service.AsyncProcAutoTaskService;
+import cn.jianwoo.system.service.AsyncProcTaskTypeCfgService;
+import cn.jianwoo.system.service.SequenceService;
 
 import cn.hutool.core.util.StrUtil;
 
@@ -36,7 +35,7 @@ import cn.hutool.core.util.StrUtil;
  */
 @Service
 @Slf4j
-public class AsyncProcAutoTaskServiceImpl implements IAsyncProcAutoTaskService
+public class AsyncProcAutoTaskServiceImpl implements AsyncProcAutoTaskService
 {
     @Autowired
     private AsyncProcAutoTaskMapper asyncProcAutoTaskMapper;
@@ -45,10 +44,10 @@ public class AsyncProcAutoTaskServiceImpl implements IAsyncProcAutoTaskService
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
-    private ISequenceService sequenceService;
+    private SequenceService sequenceService;
 
     @Autowired
-    private IAsyncProcTaskTypeCfgService asyncProcTaskTypeCfgService;
+    private AsyncProcTaskTypeCfgService asyncProcTaskTypeCfgService;
 
     @Value("${mq.queue.task_name}")
     private String taskName;

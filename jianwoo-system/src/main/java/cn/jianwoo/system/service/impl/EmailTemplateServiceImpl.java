@@ -3,15 +3,13 @@ package cn.jianwoo.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import com.alibaba.fastjson2.JSON;
 import cn.jianwoo.common.constant.HttpStatus;
 import cn.jianwoo.common.exception.E;
 import cn.jianwoo.common.utils.MessageUtils;
-import org.springframework.transaction.annotation.Transactional;
 import cn.jianwoo.system.mapper.EmailTemplateMapper;
 import cn.jianwoo.system.domain.EmailTemplate;
-import cn.jianwoo.system.service.IEmailTemplateService;
+import cn.jianwoo.system.service.EmailTemplateService;
 
 
 /**
@@ -21,7 +19,7 @@ import cn.jianwoo.system.service.IEmailTemplateService;
  * @date 2023-11-09
  */
 @Service
-public class EmailTemplateServiceImpl implements IEmailTemplateService 
+public class EmailTemplateServiceImpl implements EmailTemplateService
 {
     @Autowired
     private EmailTemplateMapper emailTemplateMapper;

@@ -297,35 +297,94 @@ CREATE TABLE `sequence` (
 BEGIN;
 COMMIT;
 
--- ----------------------------
--- Table structure for sys_config
--- ----------------------------
-DROP TABLE IF EXISTS `sys_config`;
-CREATE TABLE `sys_config` (
-                              `config_id` int(5) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
-                              `config_name` varchar(100) DEFAULT '' COMMENT '参数名称',
-                              `config_key` varchar(100) DEFAULT '' COMMENT '参数键名',
-                              `config_value` varchar(500) DEFAULT '' COMMENT '参数键值',
-                              `config_type` char(1) DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
-                              `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                              `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-                              `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-                              `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                              PRIMARY KEY (`config_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4 COMMENT='参数配置表';
 
--- ----------------------------
--- Records of sys_config
--- ----------------------------
-BEGIN;
-INSERT INTO `sys_config` (`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-blue', 'Y', 'admin', '2023-09-01 17:33:53', '', NULL, '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow');
-INSERT INTO `sys_config` (`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', '2023-09-01 17:33:53', '', NULL, '初始化密码 123456');
-INSERT INTO `sys_config` (`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', '2023-09-01 17:33:53', '', NULL, '深色主题theme-dark，浅色主题theme-light');
-INSERT INTO `sys_config` (`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (4, '账号自助-验证码开关', 'sys.account.captchaEnabled', 'true', 'Y', 'admin', '2023-09-01 17:33:53', '', NULL, '是否开启验证码功能（true开启，false关闭）');
-INSERT INTO `sys_config` (`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', '2023-09-01 17:33:53', '', NULL, '是否开启注册用户功能（true开启，false关闭）');
-INSERT INTO `sys_config` (`config_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (6, '用户登录-黑名单列表', 'sys.login.blackIPList', '', 'Y', 'admin', '2023-09-01 17:33:53', '', NULL, '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）');
-COMMIT;
+DROP table if exists `system_config_facade`;
+create table `system_config_facade` (
+                                        `cfg_key` varchar(50) not null comment '配置参数字段名',
+                                        `desc` varchar(200) default null comment '描述',
+                                        `title_dsp` varchar(50) default null comment '标题显示',
+                                        `tips_dsp` varchar(100) default null comment '提示显示',
+                                        `form_type` varchar(20) default null comment 'input_text, textarea; input_file_image; input_text_number,input_checkbox:,select, default:input_text',
+                                        `tab_type` varchar(20) default null comment '类别名称',
+                                        `tab_type_dsp` varchar(50) default null comment '类别显示',
+                                        `required` char(1) not null default '0' comment '是否必填',
+                                        `options` varchar(1000) default null comment '可选类型,json数据,eg:[{''value'':''on'',''dsp'':''开启''}]',
+                                        `validate_type` varchar(200) default null comment 'maxlength|number|integer|minnum|maxnum|regex... ''|''分隔',
+                                        `validate_value` varchar(1000) default null comment '验证值,json数据 eg: {\\"maxlength\\":{\\"value\\":50,\\"lay-verify\\":\\"lay-max=''50''\\"}}',
+                                        `index` int not null default '1' comment '排序索引',
+                                        `create_time` datetime not null comment '创建时间',
+                                        `update_time` datetime not null comment '更新时间',
+                                        primary key (`cfg_key`)
+) engine=innodb default charset=utf8 comment='系统配置表';
+
+
+
+DROP table if exists `system_config`;
+create table `system_config` (
+                                 `key` varchar(50) not null comment '键',
+                                 `desc` varchar(200) default null comment '描述',
+                                 `cfg_type` varchar(20) character set utf8 collate utf8_general_ci default 'sys' comment '配置类型',
+                                 `value_type` varchar(10) default null comment 's:string, n:number; d:date; b:boolean, default:s',
+                                 `string_value` varchar(2000) default null comment '字符串类型',
+                                 `int_value` int default null comment 'int 类型',
+                                 `float_value` decimal(10,4) default null comment 'float 类型',
+                                 `boolean_value` char(1) default null comment 'boolean 类型',
+                                 `date_value` datetime default null comment 'date 类型',
+                                 `valid` char(1) default '1' comment '是否有效',
+                                 `create_time` datetime not null comment '创建时间',
+                                 `create_by` varchar(20) not null default 'admin' comment '创建者',
+                                 `update_time` datetime not null comment '更新时间',
+                                 `update_by` varchar(20) not null default 'admin' comment '更新者',
+                                 primary key (`key`),
+                                 unique key `web_cfg_index` (`key`)
+) engine=innodb default charset=utf8 comment='系统配置表';
+
+INSERT INTO `system_config` VALUES ('sys_app_name', '应用名称', 'system', 'S', '简窝面试宝', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_app_name', '应用名称', '应用名称', NULL, 'input_text', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":20}}', 100, NOW(), NOW());
+
+INSERT INTO `system_config` VALUES ('sys_index_skinName', '默认皮肤样式名称', 'system', 'S', 'skin-blue', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_index_skinName', '默认皮肤样式名称', '默认皮肤样式名称', NULL, 'input_text', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":20}}', 101, NOW(), NOW());
+
+INSERT INTO `system_config` VALUES ('sys_user_initPassword', '账号初始密码', 'system', 'S', '123456', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_user_initPassword', '账号初始密码', '账号初始密码', NULL, 'input_text', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":20}}', 102, NOW(), NOW());
+
+INSERT INTO `system_config` VALUES ('sys_index_sideTheme', '侧边栏主题', 'system', 'S', 'theme-dark', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_index_sideTheme', '侧边栏主题', '侧边栏主题', NULL, 'input_text', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":20}}', 103, NOW(), NOW());
+
+INSERT INTO `system_config` VALUES ('sys_account_captchaEnabled', '验证码开关', 'system', 'B', NULL, NULL, NULL, '0', NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_account_captchaEnabled', '验证码开关', '验证码开关', NULL, 'input_checkbox', 'system', '系统配置', '1', NULL, NULL, NULL, 104, NOW(), NOW());
+
+INSERT INTO `system_config` VALUES ('sys_account_registerUser', '开启用户注册', 'system', 'B', NULL, NULL, NULL, '0', NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_account_registerUser', '开启用户注册', '开启用户注册', NULL, 'input_checkbox', 'system', '系统配置', '1', NULL, NULL, NULL, 105, NOW(), NOW());
+
+
+INSERT INTO `system_config` VALUES ('sys_login_black_ip_list', '黑名单列表', 'system', 'S', '', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_login_black_ip_list', '黑名单列表', '黑名单列表', NULL, 'input_text', 'system', '系统配置', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":2000}}', 106, NOW(), NOW());
+
+INSERT INTO `system_config` VALUES ('sys_admin_email_address', '管理员邮箱', 'email', 'S', '1729846470@qq.com', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config` VALUES ('sys_exception_email_notify', ' 异常邮件发送', 'email', 'B', NULL, NULL, NULL, '1', NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config` VALUES ('sys_email_host', '邮箱主机', 'email', 'S', 'smtp.mxhichina.com', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config` VALUES ('sys_email_user_nick', '邮箱用户昵称', 'email', 'S', '简窝AI', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config` VALUES ('sys_email_port', '邮箱端口', 'email', 'I', NULL, 465, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config` VALUES ('sys_email_password', '邮箱密码', 'email', 'S', 'lihua0105@', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config` VALUES ('sys_email_username', '邮箱用户名', 'email', 'S', 'system@jianwoo.cn', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+
+
+
+INSERT INTO `system_config_facade` VALUES ('sys_admin_email_address', '管理员邮箱', '管理员邮箱', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 215, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('sys_exception_email_notify', '异常邮件发送', '异常邮件发送', NULL, 'input_checkbox', 'email', '邮箱', '0', NULL, NULL, NULL, 216,  NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('sys_email_host', '邮箱主机', '主机', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 210, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('sys_email_user_nick', '邮箱用户昵称', '用户昵称', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 214, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('sys_email_port', '邮箱端口', '端口', NULL, 'input_text_number', 'email', '邮箱', '0', NULL, 'integer', NULL, 211, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('sys_email_password', '邮箱密码', '密码', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 213, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('sys_email_username', '邮箱用户名', '用户名', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 212, NOW(), NOW());
+
+INSERT INTO `system_config` VALUES ('sys_app_logo', '应用LOGO', 'system', 'S', 'https://cdn.jianwoo.cn/image/chatgpt/logo.png', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
+INSERT INTO `system_config_facade` VALUES ('sys_app_logo', '应用LOGO', '应用LOGO', NULL, 'input_file_image', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":2000}}', 104,NOW(), NOW());
+
+
+
+
 
 -- ----------------------------
 -- Table structure for sys_dept

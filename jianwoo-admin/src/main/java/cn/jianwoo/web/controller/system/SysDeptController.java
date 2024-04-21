@@ -20,7 +20,7 @@ import cn.jianwoo.common.core.domain.AjaxResult;
 import cn.jianwoo.common.core.domain.entity.SysDept;
 import cn.jianwoo.common.enums.BusinessType;
 import cn.jianwoo.common.utils.StringUtils;
-import cn.jianwoo.system.service.ISysDeptService;
+import cn.jianwoo.system.service.SysDeptService;
 
 /**
  * 部门信息
@@ -32,7 +32,7 @@ import cn.jianwoo.system.service.ISysDeptService;
 public class SysDeptController extends BaseController
 {
     @Autowired
-    private ISysDeptService deptService;
+    private SysDeptService deptService;
 
     /**
      * 获取部门列表

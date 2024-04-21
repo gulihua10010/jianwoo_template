@@ -27,7 +27,7 @@ import cn.jianwoo.common.utils.bean.CopyBeanUtil;
 import cn.jianwoo.common.utils.poi.ExcelUtil;
 import cn.jianwoo.framework.web.service.SysPasswordService;
 import cn.jianwoo.system.domain.SysLogininfor;
-import cn.jianwoo.system.service.ISysLogininforService;
+import cn.jianwoo.system.service.SysLogininforService;
 import cn.jianwoo.web.dto.log.SysLogininforVO;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +46,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class SysLogininforController extends BaseController
 {
     @Autowired
-    private ISysLogininforService logininforService;
+    private SysLogininforService logininforService;
 
     @Autowired
     private SysPasswordService passwordService;

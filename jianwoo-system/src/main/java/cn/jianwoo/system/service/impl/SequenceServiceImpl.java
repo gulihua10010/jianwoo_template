@@ -4,7 +4,7 @@ import cn.jianwoo.system.mapper.biz.SequenceBizMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.jianwoo.system.service.ISequenceService;
+import cn.jianwoo.system.service.SequenceService;
 
 /**
  * 索引 DAO 实现
@@ -14,7 +14,7 @@ import cn.jianwoo.system.service.ISequenceService;
  * @date 2023-07-20 22:00
  */
 @Service
-public class SequenceServiceImpl implements ISequenceService
+public class SequenceServiceImpl implements SequenceService
 {
 
     @Autowired

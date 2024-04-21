@@ -22,8 +22,8 @@ import cn.jianwoo.common.core.page.TableDataInfo;
 import cn.jianwoo.common.enums.BusinessType;
 import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.common.utils.poi.ExcelUtil;
-import cn.jianwoo.system.service.ISysDictDataService;
-import cn.jianwoo.system.service.ISysDictTypeService;
+import cn.jianwoo.system.service.SysDictDataService;
+import cn.jianwoo.system.service.SysDictTypeService;
 
 /**
  * 数据字典信息
@@ -35,10 +35,10 @@ import cn.jianwoo.system.service.ISysDictTypeService;
 public class SysDictDataController extends BaseController
 {
     @Autowired
-    private ISysDictDataService dictDataService;
+    private SysDictDataService dictDataService;
 
     @Autowired
-    private ISysDictTypeService dictTypeService;
+    private SysDictTypeService dictTypeService;
 
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")

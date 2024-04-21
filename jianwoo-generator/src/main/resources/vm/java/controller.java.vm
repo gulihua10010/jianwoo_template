@@ -27,12 +27,13 @@ import ${packageName}.web.dto.${businessName}.${ClassName}ResVO;
 import ${packageName}.web.dto.${businessName}.${ClassName}QueryRequest;
 import ${packageName}.web.dto.${businessName}.${ClassName}CreateRequest;
 import ${packageName}.web.dto.${businessName}.${ClassName}EditRequest;
-import ${packageName}.${moduleName}.service.I${ClassName}Service;
+import ${packageName}.${moduleName}.service.${ClassName}Service;
 import cn.jianwoo.common.utils.poi.ExcelUtil;
 #if($table.crud || $table.sub)
 import cn.jianwoo.common.core.page.TableDataInfo;
 #elseif($table.tree)
 #end
+import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
@@ -41,17 +42,18 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 
 /**
  * ${functionName}Controller
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
 @RestController
 @RequestMapping("/system/${businessName}")
 @Tag(name = "${functionName}模块")
+@Slf4j
 public class ${ClassName}Controller extends BaseController
 {
     @Autowired
-    private I${ClassName}Service ${className}Service;
+    private ${ClassName}Service ${className}Service;
 
     /**
      * 查询${functionName}列表
@@ -75,8 +77,8 @@ public class ${ClassName}Controller extends BaseController
                     #else
                         #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
                     #end
-        ${className}.getParams().put("begin$AttrName",request.getBegin$AttrName());
-        ${className}.getParams().put("end$AttrName",request.getEnd$AttrName());
+        ${className}.getParams().put("begin$AttrName", request.getBegin$AttrName());
+        ${className}.getParams().put("end$AttrName", request.getEnd$AttrName());
                 #end
             #end
         #end
@@ -106,8 +108,8 @@ public class ${ClassName}Controller extends BaseController
                     #else
                         #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
                     #end
-         ${className}.getParams().put("begin$AttrName",request.getBegin$AttrName());
-         ${className}.getParams().put("end$AttrName",request.getEnd$AttrName());
+         ${className}.getParams().put("begin$AttrName", request.getBegin$AttrName());
+         ${className}.getParams().put("end$AttrName", request.getEnd$AttrName());
                 #end
             #end
         #end
@@ -146,8 +148,8 @@ public class ${ClassName}Controller extends BaseController
                     #else
                         #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
                     #end
-        ${className}.getParams().put("begin$AttrName",request.getBegin$AttrName());
-        ${className}.getParams().put("end$AttrName",request.getEnd$AttrName());
+        ${className}.getParams().put("begin$AttrName", request.getBegin$AttrName());
+        ${className}.getParams().put("end$AttrName", request.getEnd$AttrName());
                 #end
             #end
         #end

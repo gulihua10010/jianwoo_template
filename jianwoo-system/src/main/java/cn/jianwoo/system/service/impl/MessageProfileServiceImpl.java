@@ -9,20 +9,18 @@ import cn.jianwoo.common.core.domain.entity.SysUser;
 import cn.jianwoo.common.enums.ProcessStatus;
 import cn.jianwoo.common.utils.CommUtils;
 import cn.jianwoo.system.domain.MessageTemplate;
-import cn.jianwoo.system.service.IMessageTemplateService;
-import cn.jianwoo.system.service.ISysUserService;
+import cn.jianwoo.system.service.MessageTemplateService;
+import cn.jianwoo.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import com.alibaba.fastjson2.JSON;
 import cn.jianwoo.common.constant.HttpStatus;
 import cn.jianwoo.common.exception.E;
 import cn.jianwoo.common.utils.MessageUtils;
-import org.springframework.transaction.annotation.Transactional;
 import cn.jianwoo.system.mapper.MessageProfileMapper;
 import cn.jianwoo.system.domain.MessageProfile;
-import cn.jianwoo.system.service.IMessageProfileService;
+import cn.jianwoo.system.service.MessageProfileService;
 
 /**
  * 消息Service业务层处理
@@ -32,14 +30,14 @@ import cn.jianwoo.system.service.IMessageProfileService;
  */
 @Service
 @Slf4j
-public class MessageProfileServiceImpl implements IMessageProfileService
+public class MessageProfileServiceImpl implements MessageProfileService
 {
     @Autowired
     private MessageProfileMapper messageProfileMapper;
     @Autowired
-    private IMessageTemplateService messageTemplateService;
+    private MessageTemplateService messageTemplateService;
     @Autowired
-    private ISysUserService sysUserService;
+    private SysUserService sysUserService;
 
     /**
      * 查询消息

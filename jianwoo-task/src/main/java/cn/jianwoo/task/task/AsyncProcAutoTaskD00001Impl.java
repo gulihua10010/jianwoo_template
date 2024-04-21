@@ -1,16 +1,14 @@
 package cn.jianwoo.task.task;
 
 import com.alibaba.fastjson2.JSONArray;
-import cn.jianwoo.common.constant.HttpStatus;
 import cn.jianwoo.common.enums.ProcessStatus;
-import cn.jianwoo.common.exception.E;
 import cn.jianwoo.system.domain.Email;
 import cn.jianwoo.system.util.NotifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson2.JSON;
-import cn.jianwoo.system.service.IEmailService;
+import cn.jianwoo.system.service.EmailService;
 import cn.jianwoo.system.task.domain.TaskDataD00001BO;
 import cn.jianwoo.system.task.domain.TaskResultBO;
 import cn.jianwoo.task.service.AsyncAutoTaskService;
@@ -31,7 +29,7 @@ import java.util.Date;
 public class AsyncProcAutoTaskD00001Impl implements AsyncAutoTaskService
 {
     @Autowired
-    private IEmailService emailService;
+    private EmailService emailService;
     @Autowired
     private NotifyUtil notifyUtil;
 

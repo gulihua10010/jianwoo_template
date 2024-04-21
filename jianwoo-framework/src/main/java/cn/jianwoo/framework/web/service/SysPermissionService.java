@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import cn.jianwoo.common.core.domain.entity.SysRole;
 import cn.jianwoo.common.core.domain.entity.SysUser;
-import cn.jianwoo.system.service.ISysMenuService;
-import cn.jianwoo.system.service.ISysRoleService;
+import cn.jianwoo.system.service.SysMenuService;
+import cn.jianwoo.system.service.SysRoleService;
 
 /**
  * 用户权限处理
@@ -20,10 +20,10 @@ import cn.jianwoo.system.service.ISysRoleService;
 public class SysPermissionService
 {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     /**
      * 获取角色数据权限

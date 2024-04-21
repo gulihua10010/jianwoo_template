@@ -1,7 +1,30 @@
 package cn.jianwoo.web.controller.system;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
+import cn.hutool.core.collection.CollUtil;
+import cn.jianwoo.common.annotation.BizOptLog;
+import cn.jianwoo.common.core.controller.BaseController;
+import cn.jianwoo.common.core.domain.R;
+import cn.jianwoo.common.core.domain.model.LoginUser;
+import cn.jianwoo.common.enums.BusinessType;
+import cn.jianwoo.common.enums.ValidateType;
+import cn.jianwoo.common.utils.BizValidationUtils;
+import cn.jianwoo.common.utils.MessageUtils;
+import cn.jianwoo.common.utils.SecurityUtils;
+import cn.jianwoo.common.utils.bean.CopyBeanUtil;
+import cn.jianwoo.system.domain.bo.SystemConfigBO;
+import cn.jianwoo.system.domain.bo.SystemConfigResBO;
+import cn.jianwoo.system.service.SysConfigService;
+import cn.jianwoo.system.util.NotifyUtil;
+import cn.jianwoo.web.dto.config.EmailTestRequest;
+import cn.jianwoo.web.dto.config.SystemConfigDataVO;
+import cn.jianwoo.web.dto.config.SystemConfigGroupVO;
+import cn.jianwoo.web.dto.config.SystemConfigRequest;
+import cn.jianwoo.web.dto.config.SystemConfigResVO;
+import cn.jianwoo.web.dto.config.SystemConfigVO;
+import com.alibaba.fastjson2.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -13,14 +36,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import cn.jianwoo.common.annotation.BizOptLog;
-import cn.jianwoo.common.core.controller.BaseController;
-import cn.jianwoo.common.core.domain.AjaxResult;
-import cn.jianwoo.common.core.page.TableDataInfo;
-import cn.jianwoo.common.enums.BusinessType;
-import cn.jianwoo.common.utils.poi.ExcelUtil;
-import cn.jianwoo.system.domain.SysConfig;
-import cn.jianwoo.system.service.ISysConfigService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 参数配置 信息操作处理
@@ -29,95 +47,24 @@ import cn.jianwoo.system.service.ISysConfigService;
  */
 @RestController
 @RequestMapping("/system/config")
+@Slf4j
 public class SysConfigController extends BaseController
 {
     @Autowired
-    private ISysConfigService configService;
-
-    /**
-     * 获取参数配置列表
-     */
-    @PreAuthorize("@ss.hasPermi('system:config:list')")
-    @GetMapping("/list")
-    public TableDataInfo list(SysConfig config)
-    {
-        startPage();
-        List<SysConfig> list = configService.selectConfigList(config);
-        return getDataTable(list);
-    }
-
-    @BizOptLog(title = "参数管理", businessType = BusinessType.EXPORT)
-    @PreAuthorize("@ss.hasPermi('system:config:export')")
-    @PostMapping("/export")
-    public void export(HttpServletResponse response, SysConfig config)
-    {
-        List<SysConfig> list = configService.selectConfigList(config);
-        ExcelUtil<SysConfig> util = new ExcelUtil<SysConfig>(SysConfig.class);
-        util.exportExcel(response, list, "参数数据");
-    }
-
-    /**
-     * 根据参数编号获取详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('system:config:query')")
-    @GetMapping(value = "/{configId}")
-    public AjaxResult getInfo(@PathVariable Long configId)
-    {
-        return success(configService.selectConfigById(configId));
-    }
+    private SysConfigService configService;
+    @Autowired
+    private NotifyUtil notifyUtil;
 
     /**
      * 根据参数键名查询参数值
      */
     @GetMapping(value = "/configKey/{configKey}")
-    public AjaxResult getConfigKey(@PathVariable String configKey)
+    public R<String> getConfigKey(@Validated @PathVariable
+    String configKey)
     {
-        return success(configService.selectConfigByKey(configKey));
+        return ok(configService.selectConfigByKey(configKey));
     }
 
-    /**
-     * 新增参数配置
-     */
-    @PreAuthorize("@ss.hasPermi('system:config:add')")
-    @BizOptLog(title = "参数管理", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysConfig config)
-    {
-        if (!configService.checkConfigKeyUnique(config))
-        {
-            return error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
-        }
-        config.setCreateBy(getUsername());
-        return toAjax(configService.insertConfig(config));
-    }
-
-    /**
-     * 修改参数配置
-     */
-    @PreAuthorize("@ss.hasPermi('system:config:edit')")
-    @BizOptLog(title = "参数管理", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysConfig config)
-    {
-        if (!configService.checkConfigKeyUnique(config))
-        {
-            return error("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
-        }
-        config.setUpdateBy(getUsername());
-        return toAjax(configService.updateConfig(config));
-    }
-
-    /**
-     * 删除参数配置
-     */
-    @PreAuthorize("@ss.hasPermi('system:config:remove')")
-    @BizOptLog(title = "参数管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{configIds}")
-    public AjaxResult remove(@PathVariable Long[] configIds)
-    {
-        configService.deleteConfigByIds(configIds);
-        return success();
-    }
 
     /**
      * 刷新参数缓存
@@ -125,9 +72,153 @@ public class SysConfigController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     @BizOptLog(title = "参数管理", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")
-    public AjaxResult refreshCache()
+    public R refreshCache()
     {
         configService.resetConfigCache();
-        return success();
+        return ok();
     }
+
+
+    /**
+     * 修改参数配置
+     */
+    @PreAuthorize("@ss.hasPermi('system:config:edit')")
+    @BizOptLog(title = "参数管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public R edit(@Validated @RequestBody
+    SystemConfigRequest request)
+    {
+
+        if (CollUtil.isNotEmpty(request.getList()))
+        {
+            List<SystemConfigBO> list = new ArrayList<>();
+            for (SystemConfigVO o : request.getList())
+            {
+                validateReqSystemConfig(o);
+                SystemConfigBO bo = new SystemConfigBO();
+                BeanUtils.copyProperties(o, bo);
+
+                list.add(bo);
+            }
+            LoginUser loginUser = SecurityUtils.getLoginUser();
+            configService.doUpdateConfig(list, loginUser.getUsername());
+        }
+        return ok();
+    }
+
+
+    private void validateReqSystemConfig(SystemConfigVO o)
+    {
+        if (null != o.getRequired() && o.getRequired())
+        {
+            BizValidationUtils.paramValidate(o.getValue(), o.getTitleDsp());
+
+        }
+        if (StringUtils.isNotBlank(o.getValidateType()))
+        {
+            String[] validateArr = o.getValidateType().split("\\|");
+            JSONObject validateValue = null;
+            try
+            {
+                validateValue = JSONObject.parseObject(o.getValidateValue());
+            }
+            catch (Exception e)
+            {
+                log.error("JSON validate Value parse failed, e:", e);
+                return;
+            }
+            for (String valid : validateArr)
+            {
+                if (ValidateType.MAX_LENGTH.getValue().equals(valid.trim()))
+                {
+                    JSONObject v = (JSONObject) validateValue.get(ValidateType.MAX_LENGTH.getValue());
+                    BizValidationUtils.paramLengthValidate(o.getValue(), Integer.parseInt(v.getString("value")),
+                            MessageUtils.message("sys.cfg.length", o.getTitleDsp(), v.getString("value")));
+                }
+                if (ValidateType.REGEX.getValue().equals(valid.trim()))
+                {
+                    JSONObject v = (JSONObject) validateValue.get(ValidateType.REGEX.getValue());
+                    BizValidationUtils.paramRegexValidate(o.getValue(), v.getString("value"),
+                            MessageUtils.message("sys.cfg.regex", v.getString("value"), o.getTitleDsp(), o.getValue()));
+                }
+                if (ValidateType.NUMBER.getValue().equals(valid.trim()))
+                {
+                    BizValidationUtils.paramNumberValidate(o.getValue(),
+                            MessageUtils.message("sys.cfg.number", o.getTitleDsp()));
+                    JSONObject v = (JSONObject) validateValue.get("minNum");
+                    if (null != v)
+                    {
+                        BizValidationUtils.paramNumberMinValidate(o.getValue(), v.getString("value"),
+                                MessageUtils.message("sys.cfg.value.little", o.getTitleDsp(), v.getString("value")));
+                    }
+                    v = (JSONObject) validateValue.get("maxNum");
+                    if (null != v)
+                    {
+                        BizValidationUtils.paramNumberMaxValidate(o.getValue(), v.getString("value"),
+                                MessageUtils.message("sys.cfg.value.large", o.getTitleDsp(), v.getString("value")));
+                    }
+
+                }
+
+                if (ValidateType.INTEGER.getValue().equals(valid.trim()))
+                {
+                    BizValidationUtils.paramNumberValidate(o.getValue(),
+                            MessageUtils.message("sys.cfg.int", o.getTitleDsp()));
+                    JSONObject v = (JSONObject) validateValue.get("minNum");
+                    if (null != v)
+                    {
+                        BizValidationUtils.paramNumberMinValidate(o.getValue(), v.getString("value"),
+                                MessageUtils.message("sys.cfg.value.little", o.getTitleDsp(), v.getString("value")));
+                    }
+                    v = (JSONObject) validateValue.get("maxNum");
+                    if (null != v)
+                    {
+                        BizValidationUtils.paramNumberMaxValidate(o.getValue(), v.getString("value"),
+                                MessageUtils.message("sys.cfg.value.large", o.getTitleDsp(), v.getString("value")));
+                    }
+                }
+            }
+
+        }
+
+    }
+
+
+    @PreAuthorize("@ss.hasPermi('system:config:list')")
+    @GetMapping("/list")
+    public R<SystemConfigResVO> list()
+    {
+        SystemConfigResVO response = SystemConfigResVO.getInstance();
+        SystemConfigResBO resBO = configService.queryConfig();
+        List<SystemConfigGroupVO> list = new ArrayList<>();
+        if (CollUtil.isNotEmpty(resBO.getData()))
+        {
+            resBO.getData().forEach(o -> {
+                SystemConfigGroupVO vo = new SystemConfigGroupVO();
+                CopyBeanUtil.copyProperties(o, vo);
+                list.add(vo);
+            });
+        }
+        SystemConfigDataVO data = new SystemConfigDataVO();
+        data.setDataList(list);
+        data.setTabList(resBO.getTabList());
+        response.setData(data);
+        return ok(response);
+    }
+
+
+    /**
+     * 修改参数配置
+     */
+    @PreAuthorize("@ss.hasPermi('system:config:edit')")
+    @BizOptLog(title = "参数管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/email/test")
+    public R doTestEmail(@Validated @RequestBody
+    EmailTestRequest request)
+    {
+
+        notifyUtil.sendEmail("邮件测试", "<hr>邮件测试</hr><br>这是测试的内容。", request.getEmailTo());
+        return ok();
+    }
+
 }

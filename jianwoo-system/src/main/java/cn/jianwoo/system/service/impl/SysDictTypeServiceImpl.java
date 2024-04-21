@@ -18,7 +18,7 @@ import cn.jianwoo.common.utils.DictUtils;
 import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.system.mapper.SysDictDataMapper;
 import cn.jianwoo.system.mapper.SysDictTypeMapper;
-import cn.jianwoo.system.service.ISysDictTypeService;
+import cn.jianwoo.system.service.SysDictTypeService;
 
 /**
  * 字典 业务层处理
@@ -26,7 +26,7 @@ import cn.jianwoo.system.service.ISysDictTypeService;
  * @author jianwoo
  */
 @Service
-public class SysDictTypeServiceImpl implements ISysDictTypeService
+public class SysDictTypeServiceImpl implements SysDictTypeService
 {
     @Autowired
     private SysDictTypeMapper dictTypeMapper;

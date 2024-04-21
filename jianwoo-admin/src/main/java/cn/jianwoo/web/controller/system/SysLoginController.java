@@ -17,7 +17,7 @@ import cn.jianwoo.common.utils.SecurityUtils;
 import cn.jianwoo.framework.web.service.SysLoginService;
 import cn.jianwoo.framework.web.service.SysPermissionService;
 import cn.jianwoo.system.domain.vo.RouterVo;
-import cn.jianwoo.system.service.ISysMenuService;
+import cn.jianwoo.system.service.SysMenuService;
 import cn.jianwoo.web.dto.login.LoginRequest;
 import cn.jianwoo.web.dto.login.LoginResponse;
 import cn.jianwoo.web.dto.login.UserInfoResponse;
@@ -39,7 +39,7 @@ public class SysLoginController
     private SysLoginService loginService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     @Autowired
     private SysPermissionService permissionService;

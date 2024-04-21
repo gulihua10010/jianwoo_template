@@ -8,8 +8,8 @@ import cn.jianwoo.common.constant.TaskConstants;
 import cn.jianwoo.common.enums.ProcessStatus;
 import cn.jianwoo.system.domain.AsyncProcAutoTask;
 import cn.jianwoo.system.domain.AsyncProcTaskTypeCfg;
-import cn.jianwoo.system.service.IAsyncProcAutoTaskService;
-import cn.jianwoo.system.service.IAsyncProcTaskTypeCfgService;
+import cn.jianwoo.system.service.AsyncProcAutoTaskService;
+import cn.jianwoo.system.service.AsyncProcTaskTypeCfgService;
 import cn.jianwoo.system.task.domain.TaskResultBO;
 import cn.jianwoo.task.service.AsyncAutoTaskService;
 
@@ -29,9 +29,9 @@ public class SpringRabbitListener
 {
 
     @Autowired
-    private IAsyncProcTaskTypeCfgService asyncProcTaskTypeCfgService;
+    private AsyncProcTaskTypeCfgService asyncProcTaskTypeCfgService;
     @Autowired
-    private IAsyncProcAutoTaskService asyncProcAutoTaskService;
+    private AsyncProcAutoTaskService asyncProcAutoTaskService;
 
     @RabbitListener(queues = { "${mq.queue.task_name}", "${mq.queue.dead_name}" })
     public void listenTaskMessage(String msg)

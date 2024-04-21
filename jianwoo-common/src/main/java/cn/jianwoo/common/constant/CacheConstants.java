@@ -2,11 +2,10 @@ package cn.jianwoo.common.constant;
 
 /**
  * 缓存的key 常量
- * 
+ *
  * @author jianwoo
  */
-public class CacheConstants
-{
+public class CacheConstants {
     /**
      * 登录用户 redis key
      */
@@ -17,10 +16,16 @@ public class CacheConstants
      */
     public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
 
+
     /**
-     * 参数管理 cache key
+     * 网站配置
      */
-    public static final String SYS_CONFIG_KEY = "sys_config:";
+    public final static String SYSTEM_CONFIG_KEY = "system:web:config:{0}";
+    public final static String SYS_CONFIG_KEY = "system:web:config:";
+    /**
+     * 网站配置类型
+     */
+    public final static String SYSTEM_CONFIG_TYPE = "system:web:config:type:{0}";
 
     /**
      * 字典管理 cache key
@@ -41,15 +46,5 @@ public class CacheConstants
      * 登录账户密码错误次数 redis key
      */
     public static final String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
-
-    /**
-     * 云服务密钥管理 cache key
-     */
-    public static final String CLOUD_SECRET = "cloud_secret:";
-
-    /**
-     * Slurm token cache key
-     */
-    public static final String SLURM_TOKEN = "slurm_token";
 
 }

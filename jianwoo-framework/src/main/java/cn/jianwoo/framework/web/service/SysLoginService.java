@@ -2,6 +2,7 @@ package cn.jianwoo.framework.web.service;
 
 import javax.annotation.Resource;
 
+import cn.jianwoo.common.constant.ConfigConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,8 +31,8 @@ import cn.jianwoo.common.utils.ip.IpUtils;
 import cn.jianwoo.framework.security.context.AuthenticationContextHolder;
 import cn.jianwoo.system.manager.AsyncManager;
 import cn.jianwoo.system.manager.factory.AsyncFactory;
-import cn.jianwoo.system.service.ISysConfigService;
-import cn.jianwoo.system.service.ISysUserService;
+import cn.jianwoo.system.service.SysConfigService;
+import cn.jianwoo.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -53,10 +54,10 @@ public class SysLoginService
     private RedisCache redisCache;
 
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     @Value("${aes.privateKey}")
     private String privateKey;
@@ -179,7 +180,7 @@ public class SysLoginService
             throw new UserPasswordNotMatchException();
         }
         // IP黑名单校验
-        String blackStr = configService.selectConfigByKey("sys.login.blackIPList");
+        String blackStr = configService.selectConfigByKey(ConfigConstants.SYS_LOGIN_BLACK_IP_LIST);
         if (IpUtils.isMatchedIp(blackStr, IpUtils.getIpAddr()))
         {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,

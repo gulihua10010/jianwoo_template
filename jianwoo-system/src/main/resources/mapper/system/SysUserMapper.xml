@@ -4,12 +4,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jianwoo.system.mapper.SysUserMapper">
 
-    <resultMap type="SysUser" id="SysUserResult">
+    <resultMap type="cn.jianwoo.common.core.domain.entity.SysUser" id="SysUserResult">
         <id     property="userId"       column="user_id"      />
         <result property="deptId"       column="dept_id"      />
         <result property="userName"     column="user_name"    />
         <result property="nickName"     column="nick_name"    />
         <result property="email"        column="email"        />
+        <result property="openId"    column="open_id"    />
         <result property="phonenumber"  column="phonenumber"  />
         <result property="sex"          column="sex"          />
         <result property="avatar"       column="avatar"       />
@@ -23,11 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"     column="update_by"    />
         <result property="updateTime"   column="update_time"  />
         <result property="remark"       column="remark"       />
-        <association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
+        <association property="dept"    column="dept_id" javaType="cn.jianwoo.common.core.domain.entity.SysDept" resultMap="deptResult" />
         <collection  property="roles"   javaType="java.util.List"           resultMap="RoleResult" />
     </resultMap>
 	
-    <resultMap id="deptResult" type="SysDept">
+    <resultMap id="deptResult" type="cn.jianwoo.common.core.domain.entity.SysDept">
         <id     property="deptId"    column="dept_id"     />
         <result property="parentId"  column="parent_id"   />
         <result property="deptName"  column="dept_name"   />
@@ -37,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status"    column="dept_status" />
     </resultMap>
 	
-    <resultMap id="RoleResult" type="SysRole">
+    <resultMap id="RoleResult" type="cn.jianwoo.common.core.domain.entity.SysRole">
         <id     property="roleId"       column="role_id"        />
         <result property="roleName"     column="role_name"      />
         <result property="roleKey"      column="role_key"       />
@@ -47,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectUserVo">
-        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, 
+        select u.user_id,u.open_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,
         d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.status as dept_status,
         r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
         from sys_user u
@@ -57,12 +58,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
 
-    <select id="selectUserPageList" parameterType="SysUser" resultMap="SysUserResult">
-        select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.status,
+    <select id="selectUserPageList" parameterType="cn.jianwoo.common.core.domain.entity.SysUser" resultMap="SysUserResult">
+        select u.user_id, u.open_id,u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.status,
         u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark from sys_user u
         where u.del_flag = '0'
         <if test="userId != null and userId != 0">
             AND u.user_id = #{userId}
+        </if>
+        <if test="openId != null and openId != ''">
+            AND u.open_id = #{openId}
         </if>
         <if test="userName != null and userName != ''">
             AND u.user_name like concat('%', #{userName}, '%')
@@ -89,8 +93,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <!--        ${params.dataScope}-->
     </select>
     
-    <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
-        select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.status,
+    <select id="selectUserList" parameterType="cn.jianwoo.common.core.domain.entity.SysUser" resultMap="SysUserResult">
+        select u.user_id, u.open_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.status,
         u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader, r.role_id,
         r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status from sys_user u
         left join sys_dept d on u.dept_id = d.dept_id
@@ -99,6 +103,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where u.del_flag = '0'
         <if test="userId != null and userId != 0">
             AND u.user_id = #{userId}
+        </if>
+        <if test="openId != null and openId != ''">
+            AND u.open_id = #{openId}
         </if>
         <if test="userName != null and userName != ''">
             AND u.user_name like concat('%', #{userName}, '%')
@@ -125,8 +132,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--        ${params.dataScope}-->
     </select>
 	
-	<select id="selectAllocatedList" parameterType="SysUser" resultMap="SysUserResult">
-	    select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time
+	<select id="selectAllocatedList" parameterType="cn.jianwoo.common.core.domain.entity.SysUser" resultMap="SysUserResult">
+	    select distinct u.user_id,u.open_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time
 	    from sys_user u
 			 left join sys_dept d on u.dept_id = d.dept_id
 			 left join sys_user_role ur on u.user_id = ur.user_id
@@ -143,8 +150,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-    <select id="selectByRoleKey" parameterType="SysUser" resultMap="SysUserResult">
-        select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time, d.dept_id, d.dept_name
+    <select id="selectByRoleKey" parameterType="cn.jianwoo.common.core.domain.entity.SysUser" resultMap="SysUserResult">
+        select distinct u.user_id,u.open_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time, d.dept_id, d.dept_name
         from sys_user u
         left join sys_dept d on u.dept_id = d.dept_id
         left join sys_user_role ur on u.user_id = ur.user_id
@@ -157,8 +164,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--        ${params.dataScope}-->
     </select>
 	
-	<select id="selectUnallocatedList" parameterType="SysUser" resultMap="SysUserResult">
-	    select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time
+	<select id="selectUnallocatedList" parameterType="cn.jianwoo.common.core.domain.entity.SysUser" resultMap="SysUserResult">
+	    select distinct u.user_id,u.open_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time
 	    from sys_user u
 			 left join sys_dept d on u.dept_id = d.dept_id
 			 left join sys_user_role ur on u.user_id = ur.user_id
@@ -197,7 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select user_id, email from sys_user where email = #{email} and del_flag = '0' limit 1
 	</select>
 	
-	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
+	<insert id="insertUser" parameterType="cn.jianwoo.common.core.domain.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
  		insert into sys_user(
  			<if test="userId != null and userId != 0">user_id,</if>
  			<if test="deptId != null and deptId != 0">dept_id,</if>
@@ -211,6 +218,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="status != null and status != ''">status,</if>
  			<if test="createBy != null and createBy != ''">create_by,</if>
  			<if test="remark != null and remark != ''">remark,</if>
+            <if test="openId != null and openId != ''">open_id,</if>
  			create_time
  		)values(
  			<if test="userId != null and userId != ''">#{userId},</if>
@@ -225,11 +233,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="status != null and status != ''">#{status},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
  			<if test="remark != null and remark != ''">#{remark},</if>
+            <if test="openId != null and openId != ''">#{openId},</if>
  			sysdate()
  		)
 	</insert>
 	
-	<update id="updateUser" parameterType="SysUser">
+	<update id="updateUser" parameterType="cn.jianwoo.common.core.domain.entity.SysUser">
  		update sys_user
  		<set>
  			<if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>
@@ -245,20 +254,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="loginDate != null">login_date = #{loginDate},</if>
  			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
  			<if test="remark != null">remark = #{remark},</if>
+            <if test="openId != null">open_id = #{openId},</if>
  			update_time = sysdate()
  		</set>
  		where user_id = #{userId}
 	</update>
 	
-	<update id="updateUserStatus" parameterType="SysUser">
+	<update id="updateUserStatus" parameterType="cn.jianwoo.common.core.domain.entity.SysUser">
  		update sys_user set status = #{status} where user_id = #{userId}
 	</update>
 	
-	<update id="updateUserAvatar" parameterType="SysUser">
+	<update id="updateUserAvatar" parameterType="cn.jianwoo.common.core.domain.entity.SysUser">
  		update sys_user set avatar = #{avatar} where user_name = #{userName}
 	</update>
 	
-	<update id="resetUserPwd" parameterType="SysUser">
+	<update id="resetUserPwd" parameterType="cn.jianwoo.common.core.domain.entity.SysUser">
  		update sys_user set password = #{password} where user_name = #{userName}
 	</update>
 	

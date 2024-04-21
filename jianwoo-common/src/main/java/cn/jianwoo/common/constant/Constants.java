@@ -11,16 +11,6 @@ public class Constants
 {
 
     /**
-     * true
-     */
-    public static final String TRUE = "true";
-
-    /**
-     * false
-     */
-    public static final String FALSE = "false";
-
-    /**
      * 配置参数加密关键词
      */
     public static final String SECRET = "secret";
@@ -38,8 +28,6 @@ public class Constants
      * GBK 字符集
      */
     public static final String GBK = "GBK";
-
-
 
     /**
      * 空字符串
@@ -176,5 +164,91 @@ public class Constants
     public static final String DELAYED_ROUTE = "DELAYED_ROUTE";
     public static final String DEAD_ROUTE = "DEAD_ROUTE";
 
+    public static final String YES = "Y";
+    public static final String NO = "N";
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
+    public static final String TRUE_1 = "1";
+    public static final String FALSE_0 = "0";
+
+    public static final String ONE = "1";
+    public static final String ZERO = "0";
+    public static final String FAILED = "FAILED";
+
+    public static final String NEGATIVE_ONE = "-1";
+
+    public static final String URL_SEPARATOR = "/";
+    public static final String BLANK = "";
+    public static final String SPACE = " ";
+    public static final String SEMICOLON = ";";
+    public static final String FILE_END_LINE = "\r\n";
+    public static final String ELLIPSIS = "...";
+    public static final String URL_PARAM_PREFIX = "?";
+    public static final String SYMBOL_AMD = "&";
+    public static final String SYMBOL_EQUALS = "=";
+
+    public static final String SYMBOL_PERCENT = "%";
+    public static final String SYMBOL_AIT = "@";
+    public static final String DEFAULT_CHARSET = "UTF-8";
+    public static final String HASH_ALGORITHM = "MD5";
+    public static final String CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
+
+    public static final String SEPARATE_HYPHEN = "_";
+    public static final String FILE_POINT = ".";
+    // asterisk
+    public static final String ASTERISK = "*";
+    // Protocol
+    public static final String FILE_PROTOCOL = "file:";
+
+    public static final String BLOG_AUTHOR = "博主";
+    public static final String UNKNOW = "未知";
+    public static final String ANAONYMOUS = "匿名";
+    public static final String ALL = "ALL";
+    public static final String RESOURCE_URL = "/res/";
+    public static final String PROTOCOL_HTTPS = "https";
+    public static final String SIGN_TYPE_RSA2 = "RSA2";
+    public static final String SIGN_TYPE_RSA = "RSA";
+
+    // validate length
+    public static final Integer TITLE_LENGTH = 100;
+    public static final Integer AUTHOR_LENGTH = 10;
+    public static final Integer TAGS_LENGTH = 15;
+
+    public static final Integer MENU_TEXT_LENGTH = 10;
+    public static final Integer MENU_NAME_LENGTH = 20;
+    public static final Integer URL_LENGTH = 100;
+    public static final Integer NICK_LENGTH = 20;
+    public static final Integer EMAIL_LENGTH = 30;
+
+    public static final Integer COMMENT_MIN_CONTENT_LENGTH = 5;
+    public static final Integer COMMENT_MAX_CONTENT_LENGTH = 200;
+
+    public static final Integer MESSAGE_BOARD_MIN_CONTENT_LENGTH = 5;
+    public static final Integer MESSAGE_BOARD_MAX_CONTENT_LENGTH = 200;
+    // reg
+    public static final String MENU_NAME_REGEX = "^[_#$@\\d\\w]*$";
+    public static final String CLEAR_HTML_TAGS_WITHOUT_MEDIA_REGEX = "\\<(?!img |/?video|source ).*?>";
+    public static final String CLEAR_HTML_TAGS_REGEX = "\\<.*?>";
+    public static final String NEW_LINE_REGEX = "\n";
+    public static final String EMAIL_REGEX = "^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$";
+    public static final String PHONE_REGEX = "^1\\d{10}$";
+    // 密码包含 数字,英文,字符中的两种以上，长度6-20
+    public static final String PASSWORD_REGEX = "^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{6,20}$";
+    // 日期正则:yyyy-MM-dd
+    public static final String DATE_REGEX = "^(\\d{4})[-\\/](\\d{1}|0\\d{1}|1[0-2])([-\\/](\\d{1}|0\\d{1}|[1-2][0-9]|3[0-1]))*$";
+    // 日期时间正则:yyyy-MM-dd HH:mm:ss
+    public static final String DATETIME_REGEX = "^(\\d{4})[-\\/](\\d{1}|0\\d{1}|1[0-2])([-\\/](\\d{1}|0\\d{1}|[1-2][0-9]|3[0-1]))*\\s(\\d{1}|[0-1]\\d{1}|2[0-3])[:]([0-5]\\d{1})[:]([0-5]\\d{1})$";
+    // url正则
+    public static final String URL_REGEX = "^http(s?):\\/\\/(([\\w-]+\\.)+[\\w-]+|((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3})(:\\d{1,5})?(\\/.*)?$";
+    // ipv4正则
+    public static final String IPV4_REGEX = "^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$";
+
+    // 昵称 (中文数字英文和$_)
+    public static final String NICK_REGEX = "^[\u4E00-\u9FFF\\d\\w_$]+$";
+
+
+    public static final String CREATE = "Create";
+    public static final String EDIT = "Edit";
+    public static final String QUERY = "Query";
 
 }

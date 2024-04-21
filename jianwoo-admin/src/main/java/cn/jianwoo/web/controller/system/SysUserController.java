@@ -37,10 +37,10 @@ import cn.jianwoo.common.utils.SecurityUtils;
 import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.common.utils.bean.CopyBeanUtil;
 import cn.jianwoo.common.utils.poi.ExcelUtil;
-import cn.jianwoo.system.service.ISysDeptService;
-import cn.jianwoo.system.service.ISysPostService;
-import cn.jianwoo.system.service.ISysRoleService;
-import cn.jianwoo.system.service.ISysUserService;
+import cn.jianwoo.system.service.SysDeptService;
+import cn.jianwoo.system.service.SysPostService;
+import cn.jianwoo.system.service.SysRoleService;
+import cn.jianwoo.system.service.SysUserService;
 import cn.jianwoo.web.dto.user.AuthRoleResponse;
 import cn.jianwoo.web.dto.user.UserInfoDetResponse;
 import cn.jianwoo.web.dto.user.vo.SysDeptVO;
@@ -66,16 +66,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class SysUserController extends BaseController
 {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
-    private ISysDeptService deptService;
+    private SysDeptService deptService;
 
     @Autowired
-    private ISysPostService postService;
+    private SysPostService postService;
 
 
     /**

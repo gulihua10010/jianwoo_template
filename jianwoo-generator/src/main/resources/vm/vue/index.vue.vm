@@ -13,12 +13,22 @@
 #end
 #if($column.htmlType == "input")
       <el-form-item label="${comment}" prop="${column.javaField}">
+        #if($column.javaType == "Integer" || $column.javaType == "Long" || $column.javaType == "Double" || $column.javaType == "BigDecimal" )
         <el-input
-          v-model="queryParams.${column.javaField}"
+          v-model.number="queryParams.${column.javaField}"
           placeholder="请输入${comment}"
           clearable
+          type="number"
           @keyup.enter.native="handleQuery"
         />
+        #else
+            <el-input
+                    v-model="queryParams.${column.javaField}"
+                    placeholder="请输入${comment}"
+                    clearable
+                    @keyup.enter.native="handleQuery"
+            />
+        #end
       </el-form-item>
 #elseif(($column.htmlType == "select" || $column.htmlType == "radio") && "" != $dictType)
       <el-form-item label="${comment}" prop="${column.javaField}">
@@ -170,7 +180,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -195,11 +205,16 @@
 #set($dictType=$column.dictType)
 #if($column.htmlType == "input")
         <el-form-item label="${comment}" prop="${field}">
-          <el-input v-model="form.${field}" placeholder="请输入${comment}" />
+    #if($column.javaType == "Integer" || $column.javaType == "Long" || $column.javaType == "Double" || $column.javaType == "BigDecimal" )
+          <el-input v-model.number="form.${field}" placeholder="请输入${comment}" type="number" />
+        #else
+            <el-input v-model="form.${field}" placeholder="请输入${comment}" />
+        #end
+
         </el-form-item>
 #elseif($column.htmlType == "imageUpload")
         <el-form-item label="${comment}" prop="${field}">
-          <image-upload v-model="form.${field}"/>
+          <image-upload v-model="form.${field}" :limit="1"/>
         </el-form-item>
 #elseif($column.htmlType == "fileUpload")
         <el-form-item label="${comment}" prop="${field}">

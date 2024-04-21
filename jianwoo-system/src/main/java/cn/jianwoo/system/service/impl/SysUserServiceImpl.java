@@ -2,6 +2,7 @@ package cn.jianwoo.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.jianwoo.common.annotation.DataScope;
+import cn.jianwoo.common.constant.ConfigConstants;
 import cn.jianwoo.common.constant.HttpStatus;
 import cn.jianwoo.common.constant.UserConstants;
 import cn.jianwoo.common.core.domain.entity.SysDept;
@@ -22,8 +23,8 @@ import cn.jianwoo.system.mapper.SysRoleMapper;
 import cn.jianwoo.system.mapper.SysUserMapper;
 import cn.jianwoo.system.mapper.SysUserPostMapper;
 import cn.jianwoo.system.mapper.SysUserRoleMapper;
-import cn.jianwoo.system.service.ISysConfigService;
-import cn.jianwoo.system.service.ISysUserService;
+import cn.jianwoo.system.service.SysConfigService;
+import cn.jianwoo.system.service.SysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ import java.util.stream.Collectors;
  * @author jianwoo
  */
 @Service
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl implements SysUserService {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Autowired
@@ -64,7 +65,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserPostMapper userPostMapper;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     @Autowired
     protected Validator validator;
@@ -512,7 +513,7 @@ public class SysUserServiceImpl implements ISysUserService {
         int failureNum = 0;
         StringBuilder successMsg = new StringBuilder();
         StringBuilder failureMsg = new StringBuilder();
-        String password = configService.selectConfigByKey("sys.user.initPassword");
+        String password = configService.selectConfigByKey(ConfigConstants.SYS_USER_INIT_PASSWORD);
         for (SysUser user : userList) {
             try {
                 // 验证是否存在这个用户

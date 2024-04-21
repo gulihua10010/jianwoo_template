@@ -16,10 +16,10 @@ import cn.jianwoo.system.domain.Email;
 import cn.jianwoo.system.domain.EmailTemplate;
 import cn.jianwoo.system.domain.example.EmailExample;
 import cn.jianwoo.system.mapper.EmailMapper;
-import cn.jianwoo.system.service.IAsyncProcAutoTaskService;
-import cn.jianwoo.system.service.IEmailService;
-import cn.jianwoo.system.service.IEmailTemplateService;
-import cn.jianwoo.system.service.ISysConfigService;
+import cn.jianwoo.system.service.AsyncProcAutoTaskService;
+import cn.jianwoo.system.service.EmailService;
+import cn.jianwoo.system.service.EmailTemplateService;
+import cn.jianwoo.system.service.SysConfigService;
 import cn.jianwoo.system.task.domain.TaskDataD00001BO;
 import cn.jianwoo.system.task.domain.TaskDataD00002BO;
 import cn.jianwoo.system.util.NotifyUtil;
@@ -42,21 +42,21 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class EmailServiceImpl implements IEmailService
+public class EmailServiceImpl implements EmailService
 {
     @Autowired
     private EmailMapper emailMapper;
 
     @Autowired
-    private IAsyncProcAutoTaskService asyncProcAutoTaskService;
+    private AsyncProcAutoTaskService asyncProcAutoTaskService;
     @Autowired
     private TransactionUtils transactionUtils;
     @Autowired
     private NotifyUtil notifyUtil;
     @Autowired
-    private ISysConfigService sysConfigService;
+    private SysConfigService sysConfigService;
     @Autowired
-    private IEmailTemplateService emailTemplateService;
+    private EmailTemplateService emailTemplateService;
 
     /**
      * 查询邮箱

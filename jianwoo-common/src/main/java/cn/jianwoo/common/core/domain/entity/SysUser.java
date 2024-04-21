@@ -36,6 +36,10 @@ public class SysUser extends BaseEntity
     /** 用户邮箱 */
     private String email;
 
+    /** 微信openid */
+    private String openId;
+
+
     /** 手机号码 */
     private String phonenumber;
 

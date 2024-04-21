@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jianwoo.system.mapper.MessageProfileMapper">
 
-    <resultMap type="MessageProfile" id="MessageProfileResult">
+    <resultMap type="cn.jianwoo.system.domain.MessageProfile" id="MessageProfileResult">
         <result property="id"    column="id"    />
         <result property="busiSceneCode"    column="busi_scene_code"    />
         <result property="busiType"    column="busi_type"    />
@@ -100,7 +100,7 @@
         select `id`, `busi_scene_code`, `busi_type`, `msg_type`, `receiver_type`, `msg_title`, `msg_content`, `msg_link`, `biz_id`, `biz_param`, `receiver_id`, `receiver_name`, `receiver_email`, `receiver_mobile_no`, `email_notify`, `email_tpl_code`, `flag_read`, `flag_popup`, `read_time`, `proc_rslt`, `proc_time`, `send_time`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from message_profile
     </sql>
 
-    <select id="selectByExample" parameterType="MessageProfileExample" resultMap="MessageProfileResult">
+    <select id="selectByExample" parameterType="cn.jianwoo.system.domain.example.MessageProfileExample" resultMap="MessageProfileResult">
         select
         <if test="distinct">
             distinct
@@ -116,14 +116,14 @@
         <include refid="MySQLDialectSuffix" />
     </select>
 
-    <delete id="deleteByExample" parameterType="MessageProfileExample">
+    <delete id="deleteByExample" parameterType="cn.jianwoo.system.domain.example.MessageProfileExample">
         delete from message_profile
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="MessageProfile" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="cn.jianwoo.system.domain.MessageProfile" useGeneratedKeys="true">
         insert into message_profile (
                 `busi_scene_code`,
                 `busi_type`,
@@ -181,7 +181,7 @@
                        #{remark}
                        )
     </insert>
-    <select id="countByExample" parameterType="MessageProfileExample" resultType="java.lang.Long">
+    <select id="countByExample" parameterType="cn.jianwoo.system.domain.example.MessageProfileExample" resultType="java.lang.Long">
         select count(*) from message_profile
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />
@@ -310,7 +310,7 @@
             <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
-    <update id="updateByPrimaryKey" parameterType="MessageProfile">
+    <update id="updateByPrimaryKey" parameterType="cn.jianwoo.system.domain.MessageProfile">
         update message_profile
         set
                 `busi_scene_code` = #{busiSceneCode},
@@ -347,7 +347,7 @@
         </if>
     </sql>
 
-    <select id="selectList" parameterType="MessageProfile" resultMap="MessageProfileResult">
+    <select id="selectList" parameterType="cn.jianwoo.system.domain.MessageProfile" resultMap="MessageProfileResult">
         <include refid="selectMessageProfileVo"/>
         <where>
             <if test="id != null "> and `id`= #{id}</if>
@@ -380,7 +380,7 @@
         where id = #{id}
     </select>
 
-    <insert id="insertSelective" parameterType="MessageProfile" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="cn.jianwoo.system.domain.MessageProfile" useGeneratedKeys="true" keyProperty="id">
         insert into message_profile
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="busiSceneCode != null">`busi_scene_code`,</if>
@@ -440,7 +440,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="MessageProfile">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jianwoo.system.domain.MessageProfile">
         update message_profile
         <trim prefix="SET" suffixOverrides=",">
             <if test="busiSceneCode != null">`busi_scene_code` = #{busiSceneCode},</if>

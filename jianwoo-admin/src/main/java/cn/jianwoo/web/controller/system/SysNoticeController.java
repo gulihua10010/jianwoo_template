@@ -18,7 +18,7 @@ import cn.jianwoo.common.core.domain.AjaxResult;
 import cn.jianwoo.common.core.page.TableDataInfo;
 import cn.jianwoo.common.enums.BusinessType;
 import cn.jianwoo.system.domain.SysNotice;
-import cn.jianwoo.system.service.ISysNoticeService;
+import cn.jianwoo.system.service.SysNoticeService;
 
 /**
  * 公告 信息操作处理
@@ -30,7 +30,7 @@ import cn.jianwoo.system.service.ISysNoticeService;
 public class SysNoticeController extends BaseController
 {
     @Autowired
-    private ISysNoticeService noticeService;
+    private SysNoticeService noticeService;
 
     /**
      * 获取通知公告列表

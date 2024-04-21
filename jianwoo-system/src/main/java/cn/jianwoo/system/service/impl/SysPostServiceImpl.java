@@ -11,7 +11,7 @@ import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.system.domain.SysPost;
 import cn.jianwoo.system.mapper.SysPostMapper;
 import cn.jianwoo.system.mapper.SysUserPostMapper;
-import cn.jianwoo.system.service.ISysPostService;
+import cn.jianwoo.system.service.SysPostService;
 
 /**
  * 岗位信息 服务层处理
@@ -19,7 +19,7 @@ import cn.jianwoo.system.service.ISysPostService;
  * @author jianwoo
  */
 @Service
-public class SysPostServiceImpl implements ISysPostService
+public class SysPostServiceImpl implements SysPostService
 {
     @Autowired
     private SysPostMapper postMapper;

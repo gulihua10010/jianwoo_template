@@ -18,8 +18,8 @@ import cn.jianwoo.common.constant.Constants;
 import cn.jianwoo.common.exception.E;
 import cn.jianwoo.common.utils.MessageUtils;
 import cn.jianwoo.system.domain.Email;
-import cn.jianwoo.system.service.IEmailService;
-import cn.jianwoo.system.service.ISysConfigService;
+import cn.jianwoo.system.service.EmailService;
+import cn.jianwoo.system.service.SysConfigService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,10 +36,10 @@ public class ExceptionAOPHandler
 {
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     @Autowired
-    private IEmailService emailService;
+    private EmailService emailService;
 
     @Value("${exception.email.subject-prefix}")
     private String subjectPrefix;

@@ -23,7 +23,7 @@ import cn.jianwoo.system.domain.vo.RouterVo;
 import cn.jianwoo.system.mapper.SysMenuMapper;
 import cn.jianwoo.system.mapper.SysRoleMapper;
 import cn.jianwoo.system.mapper.SysRoleMenuMapper;
-import cn.jianwoo.system.service.ISysMenuService;
+import cn.jianwoo.system.service.SysMenuService;
 
 /**
  * 菜单 业务层处理
@@ -31,7 +31,7 @@ import cn.jianwoo.system.service.ISysMenuService;
  * @author jianwoo
  */
 @Service
-public class SysMenuServiceImpl implements ISysMenuService
+public class SysMenuServiceImpl implements SysMenuService
 {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 

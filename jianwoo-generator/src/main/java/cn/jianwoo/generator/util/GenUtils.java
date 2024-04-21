@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Locale;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.commons.lang3.RegExUtils;
 import cn.jianwoo.common.constant.GenConstants;
 import cn.jianwoo.common.utils.StringUtils;
@@ -47,6 +48,7 @@ public class GenUtils
         // 设置默认类型
         column.setJavaType(GenConstants.TYPE_STRING);
         column.setQueryType(GenConstants.QUERY_EQ);
+        column.setColumnComment(StrUtil.isBlank(column.getColumnComment()) ? " " : column.getColumnComment());
         Integer columnLength = getColumnLength(column.getColumnType());
         if (columnLength > 0)
         {

@@ -16,8 +16,8 @@ import cn.jianwoo.system.mapper.SysRoleDeptMapper;
 import cn.jianwoo.system.mapper.SysRoleMapper;
 import cn.jianwoo.system.mapper.SysRoleMenuMapper;
 import cn.jianwoo.system.mapper.SysUserRoleMapper;
-import cn.jianwoo.system.service.ISequenceService;
-import cn.jianwoo.system.service.ISysRoleService;
+import cn.jianwoo.system.service.SequenceService;
+import cn.jianwoo.system.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,7 @@ import java.util.Set;
  * @author jianwoo
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService {
+public class SysRoleServiceImpl implements SysRoleService {
     @Autowired
     private SysRoleMapper roleMapper;
 
@@ -48,7 +48,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private SysRoleDeptMapper roleDeptMapper;
 
     @Autowired
-    private ISequenceService sequenceService;
+    private SequenceService sequenceService;
 
     /**
      * 根据条件分页查询角色数据

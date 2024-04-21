@@ -25,7 +25,7 @@ import cn.jianwoo.common.utils.bean.BeanUtils;
 import cn.jianwoo.common.utils.bean.CopyBeanUtil;
 import cn.jianwoo.common.utils.poi.ExcelUtil;
 import cn.jianwoo.system.domain.SysOperLog;
-import cn.jianwoo.system.service.ISysOperLogService;
+import cn.jianwoo.system.service.SysOperLogService;
 import cn.jianwoo.web.dto.log.SysOperLogVO;
 
 import cn.hutool.core.collection.CollUtil;
@@ -45,7 +45,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class SysOperlogController extends BaseController
 {
     @Autowired
-    private ISysOperLogService operLogService;
+    private SysOperLogService operLogService;
 
     @PreAuthorize("@ss.hasPermi('monitor:operlog:list')")
     @GetMapping("/list")

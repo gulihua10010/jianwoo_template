@@ -146,8 +146,8 @@ export default {
     },
     // 上传成功回调
     handleUploadSuccess(res, file) {
-      if (res.code === 200) {
-        this.uploadList.push({ name: res.fileName, url: res.fileName });
+      if (res.code === 200 || res.code === 0) {
+        this.uploadList.push({ name: res.newFileName, url: res.url });
         this.uploadedSuccessfully();
       } else {
         this.number--;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import cn.jianwoo.common.core.domain.entity.SysDictData;
 import cn.jianwoo.common.utils.DictUtils;
 import cn.jianwoo.system.mapper.SysDictDataMapper;
-import cn.jianwoo.system.service.ISysDictDataService;
+import cn.jianwoo.system.service.SysDictDataService;
 
 /**
  * 字典 业务层处理
@@ -14,7 +14,7 @@ import cn.jianwoo.system.service.ISysDictDataService;
  * @author jianwoo
  */
 @Service
-public class SysDictDataServiceImpl implements ISysDictDataService
+public class SysDictDataServiceImpl implements SysDictDataService
 {
     @Autowired
     private SysDictDataMapper dictDataMapper;

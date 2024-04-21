@@ -20,7 +20,7 @@ import cn.jianwoo.common.core.domain.R;
 import cn.jianwoo.common.core.redis.RedisCache;
 import cn.jianwoo.common.utils.sign.Base64;
 import cn.jianwoo.common.utils.uuid.IdUtils;
-import cn.jianwoo.system.service.ISysConfigService;
+import cn.jianwoo.system.service.SysConfigService;
 import cn.jianwoo.web.dto.comm.CaptchaResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +45,7 @@ public class CaptchaController
     private RedisCache redisCache;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 生成验证码

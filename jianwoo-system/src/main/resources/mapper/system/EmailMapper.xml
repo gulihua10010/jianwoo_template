@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jianwoo.system.mapper.EmailMapper">
 
-    <resultMap type="Email" id="EmailResult">
+    <resultMap type="cn.jianwoo.system.domain.Email" id="EmailResult">
         <result property="oid"    column="oid"    />
         <result property="toEmail"    column="to_email"    />
         <result property="emailTplCode"    column="email_tpl_code"    />
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select `oid`, `to_email`, `email_tpl_code`, `subject`, `content`, `json_data`, `files`, `proc_status`, `proc_desc`, `proc_time`, `create_by`, `create_time`, `update_by`, `update_time`, `remark` from email
     </sql>
 
-    <select id="selectByExample" parameterType="EmailExample" resultMap="EmailResult">
+    <select id="selectByExample" parameterType="cn.jianwoo.system.domain.example.EmailExample" resultMap="EmailResult">
         select
         <if test="distinct">
             distinct
@@ -104,14 +104,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="MySQLDialectSuffix" />
     </select>
 
-    <delete id="deleteByExample" parameterType="EmailExample">
+    <delete id="deleteByExample" parameterType="cn.jianwoo.system.domain.example.EmailExample">
         delete from email
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="Email" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="OID" keyProperty="oid" parameterType="cn.jianwoo.system.domain.Email" useGeneratedKeys="true">
         insert into email (
                 `to_email`,
                 `email_tpl_code`,
@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 #{remark}
                )
     </insert>
-    <select id="countByExample" parameterType="EmailExample" resultType="java.lang.Long">
+    <select id="countByExample" parameterType="cn.jianwoo.system.domain.example.EmailExample" resultType="java.lang.Long">
         select count(*) from email
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />
@@ -226,7 +226,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
-    <update id="updateByPrimaryKey" parameterType="Email">
+    <update id="updateByPrimaryKey" parameterType="cn.jianwoo.system.domain.Email">
         update email
         set
                 `to_email` = #{toEmail},
@@ -251,7 +251,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
     </sql>
 
-    <select id="selectList" parameterType="Email" resultMap="EmailResult">
+    <select id="selectList" parameterType="cn.jianwoo.system.domain.Email" resultMap="EmailResult">
         <include refid="selectEmailVo"/>
         <where>
             <if test="oid != null "> and `oid`= #{oid}</if>
@@ -272,7 +272,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where oid = #{oid}
     </select>
 
-    <insert id="insertSelective" parameterType="Email" useGeneratedKeys="true" keyProperty="oid">
+    <insert id="insertSelective" parameterType="cn.jianwoo.system.domain.Email" useGeneratedKeys="true" keyProperty="oid">
         insert into email
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="toEmail != null">`to_email`,</if>
@@ -308,7 +308,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="Email">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jianwoo.system.domain.Email">
         update email
         <trim prefix="SET" suffixOverrides=",">
             <if test="toEmail != null">`to_email` = #{toEmail},</if>

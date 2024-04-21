@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.jianwoo.system.domain.SysLogininfor;
 import cn.jianwoo.system.mapper.SysLogininforMapper;
-import cn.jianwoo.system.service.ISysLogininforService;
+import cn.jianwoo.system.service.SysLogininforService;
 
 /**
  * 系统访问日志情况信息 服务层处理
@@ -13,7 +13,7 @@ import cn.jianwoo.system.service.ISysLogininforService;
  * @author jianwoo
  */
 @Service
-public class SysLogininforServiceImpl implements ISysLogininforService
+public class SysLogininforServiceImpl implements SysLogininforService
 {
 
     @Autowired

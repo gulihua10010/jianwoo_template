@@ -81,6 +81,11 @@ public class SysUserVO implements Serializable
     @Schema(description = "用户头像")
     private String avatar;
 
+
+    /** 微信openId */
+    @Schema(description = "微信openId")
+    private String openId;
+
     /** 密码 */
     @Schema(description = "密码")
     private String password;

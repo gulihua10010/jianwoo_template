@@ -12,7 +12,7 @@ import cn.jianwoo.common.enums.ProcessStatus;
 import cn.jianwoo.common.exception.E;
 import cn.jianwoo.common.utils.MessageUtils;
 import cn.jianwoo.system.domain.Email;
-import cn.jianwoo.system.service.IEmailService;
+import cn.jianwoo.system.service.EmailService;
 import cn.jianwoo.system.task.domain.TaskDataD00002BO;
 import cn.jianwoo.system.task.domain.TaskResultBO;
 import cn.jianwoo.system.util.NotifyUtil;
@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AsyncProcAutoTaskD00002Impl implements AsyncAutoTaskService
 {
     @Autowired
-    private IEmailService emailService;
+    private EmailService emailService;
     @Autowired
     private NotifyUtil notifyUtil;
 

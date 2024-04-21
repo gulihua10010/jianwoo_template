@@ -1,7 +1,19 @@
 #${functionName}
+#操作
 ${businessName}.name=${functionName}
 ${businessName}.not.exist=${functionName}[{0}]不存在
 ${businessName}.create.failed=${functionName}创建失败
 ${businessName}.update.failed=${functionName}[{0}]更新失败
 ${businessName}s.delete.failed=${functionName}{0}删除失败
 ${businessName}.delete.failed=${functionName}[{0}]删除失败
+#字段
+#foreach ($column in $columns)
+#if(!$table.isSuperColumn($column.javaField))
+${className}Request.$column.javaField=$column.columnComment
+#if($column.queryType == "BETWEEN")
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+${className}Request.begin$AttrName=开始$column.columnComment
+${className}Request.end$AttrName=结束$column.columnComment
+#end
+#end
+#end

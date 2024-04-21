@@ -13,12 +13,22 @@
 #end
 #if($column.htmlType == "input")
       <el-form-item label="${comment}" prop="${column.javaField}">
-        <el-input
-          v-model="queryParams.${column.javaField}"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter="handleQuery"
-        />
+          #if($column.javaType == "Integer" || $column.javaType == "Long" || $column.javaType == "Double" || $column.javaType == "BigDecimal" )
+              <el-input
+                      v-model.number="queryParams.${column.javaField}"
+                      placeholder="请输入${comment}"
+                      clearable
+                      type="number"
+                      @keyup.enter.native="handleQuery"
+              />
+          #else
+              <el-input
+                      v-model="queryParams.${column.javaField}"
+                      placeholder="请输入${comment}"
+                      clearable
+                      @keyup.enter.native="handleQuery"
+              />
+          #end
       </el-form-item>
 #elseif(($column.htmlType == "select" || $column.htmlType == "radio") && "" != $dictType)
       <el-form-item label="${comment}" prop="${column.javaField}">
@@ -170,7 +180,11 @@
         </el-form-item>
 #elseif($column.htmlType == "input")
         <el-form-item label="${comment}" prop="${field}">
-          <el-input v-model="form.${field}" placeholder="请输入${comment}" />
+            #if($column.javaType == "Integer" || $column.javaType == "Long" || $column.javaType == "Double" || $column.javaType == "BigDecimal" )
+                <el-input v-model.number="form.${field}" placeholder="请输入${comment}" type="number" />
+            #else
+                <el-input v-model="form.${field}" placeholder="请输入${comment}" />
+            #end
         </el-form-item>
 #elseif($column.htmlType == "imageUpload")
         <el-form-item label="${comment}" prop="${field}">

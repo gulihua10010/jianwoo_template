@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import cn.jianwoo.common.core.domain.model.LoginUser;
 import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.system.domain.SysUserOnline;
-import cn.jianwoo.system.service.ISysUserOnlineService;
+import cn.jianwoo.system.service.SysUserOnlineService;
 
 /**
  * 在线用户 服务层处理
@@ -12,7 +12,7 @@ import cn.jianwoo.system.service.ISysUserOnlineService;
  * @author jianwoo
  */
 @Service
-public class SysUserOnlineServiceImpl implements ISysUserOnlineService
+public class SysUserOnlineServiceImpl implements SysUserOnlineService
 {
     /**
      * 通过登录地址查询信息

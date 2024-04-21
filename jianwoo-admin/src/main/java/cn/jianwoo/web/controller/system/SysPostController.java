@@ -20,7 +20,7 @@ import cn.jianwoo.common.core.page.TableDataInfo;
 import cn.jianwoo.common.enums.BusinessType;
 import cn.jianwoo.common.utils.poi.ExcelUtil;
 import cn.jianwoo.system.domain.SysPost;
-import cn.jianwoo.system.service.ISysPostService;
+import cn.jianwoo.system.service.SysPostService;
 
 /**
  * 岗位信息操作处理
@@ -32,7 +32,7 @@ import cn.jianwoo.system.service.ISysPostService;
 public class SysPostController extends BaseController
 {
     @Autowired
-    private ISysPostService postService;
+    private SysPostService postService;
 
     /**
      * 获取岗位列表

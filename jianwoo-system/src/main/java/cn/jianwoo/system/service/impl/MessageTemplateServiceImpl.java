@@ -3,15 +3,13 @@ package cn.jianwoo.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import com.alibaba.fastjson2.JSON;
 import cn.jianwoo.common.constant.HttpStatus;
 import cn.jianwoo.common.exception.E;
 import cn.jianwoo.common.utils.MessageUtils;
-import org.springframework.transaction.annotation.Transactional;
 import cn.jianwoo.system.mapper.MessageTemplateMapper;
 import cn.jianwoo.system.domain.MessageTemplate;
-import cn.jianwoo.system.service.IMessageTemplateService;
+import cn.jianwoo.system.service.MessageTemplateService;
 
 
 /**
@@ -21,7 +19,7 @@ import cn.jianwoo.system.service.IMessageTemplateService;
  * @date 2023-10-17
  */
 @Service
-public class MessageTemplateServiceImpl implements IMessageTemplateService 
+public class MessageTemplateServiceImpl implements MessageTemplateService
 {
     @Autowired
     private MessageTemplateMapper messageTemplateMapper;

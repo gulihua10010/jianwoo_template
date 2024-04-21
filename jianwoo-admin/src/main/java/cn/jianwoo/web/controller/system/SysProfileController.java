@@ -21,7 +21,7 @@ import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.common.utils.file.FileUploadUtils;
 import cn.jianwoo.common.utils.file.MimeTypeUtils;
 import cn.jianwoo.framework.web.service.TokenService;
-import cn.jianwoo.system.service.ISysUserService;
+import cn.jianwoo.system.service.SysUserService;
 
 /**
  * 个人信息 业务处理
@@ -33,7 +33,7 @@ import cn.jianwoo.system.service.ISysUserService;
 public class SysProfileController extends BaseController
 {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
     private TokenService tokenService;

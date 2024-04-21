@@ -15,8 +15,8 @@ import cn.jianwoo.common.utils.SecurityUtils;
 import cn.jianwoo.common.utils.StringUtils;
 import cn.jianwoo.system.manager.AsyncManager;
 import cn.jianwoo.system.manager.factory.AsyncFactory;
-import cn.jianwoo.system.service.ISysConfigService;
-import cn.jianwoo.system.service.ISysUserService;
+import cn.jianwoo.system.service.SysConfigService;
+import cn.jianwoo.system.service.SysUserService;
 
 /**
  * 注册校验方法
@@ -27,10 +27,10 @@ import cn.jianwoo.system.service.ISysUserService;
 public class SysRegisterService
 {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     @Autowired
     private RedisCache redisCache;

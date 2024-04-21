@@ -250,7 +250,7 @@ public class BaseController
     /**
      * 返回成功消息
      */
-    public R ok(String message)
+    public R okMsg(String message)
     {
         return R.ok(message);
     }

@@ -19,7 +19,7 @@ import cn.jianwoo.common.core.domain.AjaxResult;
 import cn.jianwoo.common.core.domain.entity.SysMenu;
 import cn.jianwoo.common.enums.BusinessType;
 import cn.jianwoo.common.utils.StringUtils;
-import cn.jianwoo.system.service.ISysMenuService;
+import cn.jianwoo.system.service.SysMenuService;
 
 /**
  * 菜单信息
@@ -31,7 +31,7 @@ import cn.jianwoo.system.service.ISysMenuService;
 public class SysMenuController extends BaseController
 {
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     /**
      * 获取菜单列表
