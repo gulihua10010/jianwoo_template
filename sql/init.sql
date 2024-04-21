@@ -1022,3 +1022,7 @@ end
 delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+ALTER TABLE `sys_user` ADD `open_id`  varchar(100) DEFAULT null  COMMENT '微信openid' AFTER nick_name;
