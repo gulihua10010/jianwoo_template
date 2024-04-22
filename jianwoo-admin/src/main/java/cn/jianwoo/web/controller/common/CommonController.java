@@ -1,9 +1,13 @@
 package cn.jianwoo.web.controller.common;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.date.DateUtil;
+import cn.jianwoo.common.constant.ConfigConstants;
 import cn.jianwoo.common.utils.MessageUtils;
 import cn.jianwoo.system.service.SysConfigService;
 import cn.jianwoo.system.util.QiniuUploadUtil;
@@ -32,14 +36,13 @@ import cn.jianwoo.framework.config.ServerConfig;
 
 /**
  * 通用请求处理
- * 
+ *
  * @author jianwoo
  */
 @RestController
 @RequestMapping("/common")
 @Tag(name = "公共模块")
-public class CommonController
-{
+public class CommonController {
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
     @Autowired
@@ -55,20 +58,17 @@ public class CommonController
 
     /**
      * 通用下载请求
-     * 
+     *
      * @param fileName 文件名称
-     * @param delete 是否删除
+     * @param delete   是否删除
      */
     @GetMapping("/download")
     @Operation(summary = "通用下载请求", description = "通用下载请求")
-    @Parameters({ @Parameter(name = "fileName", description = "文件名", required = true, in = ParameterIn.QUERY),
-            @Parameter(name = "delete", description = "是否删除", required = true, in = ParameterIn.QUERY) })
-    public void fileDownload(String fileName, Boolean delete, HttpServletResponse response)
-    {
-        try
-        {
-            if (!FileUtils.checkAllowDownload(fileName))
-            {
+    @Parameters({@Parameter(name = "fileName", description = "文件名", required = true, in = ParameterIn.QUERY),
+            @Parameter(name = "delete", description = "是否删除", required = true, in = ParameterIn.QUERY)})
+    public void fileDownload(String fileName, Boolean delete, HttpServletResponse response) {
+        try {
+            if (!FileUtils.checkAllowDownload(fileName)) {
                 throw new Exception(MessageUtils.message("file.name.illegal", fileName));
             }
             String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
@@ -77,13 +77,10 @@ public class CommonController
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
             FileUtils.setAttachmentResponseHeader(response, realFileName);
             FileUtils.writeBytes(filePath, response.getOutputStream());
-            if (delete)
-            {
+            if (delete) {
                 FileUtils.deleteFile(filePath);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error("下载文件失败", e);
         }
     }
@@ -95,24 +92,29 @@ public class CommonController
     @PostMapping("/upload")
     @Operation(summary = "通用上传请求（单个）", description = "通用上传请求（单个）")
     @Parameter(name = "file", description = "文件对象", in = ParameterIn.QUERY, required = true)
-    public UploadResponse uploadFile(MultipartFile file) throws Exception
-    {
-        try
-        {
+    public UploadResponse uploadFile(MultipartFile file) throws Exception {
+        try {
             // 上传文件路径
             String filePath = JianwooConfig.getUploadPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
-            String url = serverConfig.getUrl() + fileName;
+            String isUpload2Cdn = sysConfigService.selectConfigByKey(ConfigConstants.QINIUYUN_UPLOAD_ENABLE);
             UploadResponse response = new UploadResponse();
-            response.setUrl(url);
+            if (Constants.TRUE.equalsIgnoreCase(isUpload2Cdn)) {
+                String yyyyMM = DateUtil.format(new Date(), "yyyyMM");
+                String cdnContext = sysConfigService.selectConfigByKey(ConfigConstants.QINIUYUN_CONTEXT);
+                String cdnUrl = qiniuUploadUtil.upload(FileUploadUtils.getRealPath(fileName), cdnContext + File.separator + yyyyMM, FileUtils.getName(fileName));
+                response.setUrl(cdnUrl);
+
+            } else {
+                String url = serverConfig.getUrl() + fileName;
+                response.setUrl(url);
+            }
             response.setFilePath(fileName);
             response.setNewFileName(FileUtils.getName(fileName));
             response.setOriginalFilename(file.getOriginalFilename());
             return response;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return UploadResponse.fail(e.getMessage());
         }
     }
@@ -124,22 +126,28 @@ public class CommonController
     @PostMapping("/uploads")
     @Operation(summary = "通用上传请求（多个）", description = "通用上传请求（多个）")
     @Parameter(name = "files", description = "文件对象列表", in = ParameterIn.QUERY, required = true)
-    public UploadListResponse uploadFiles(List<MultipartFile> files) throws Exception
-    {
-        try
-        {
+    public UploadListResponse uploadFiles(List<MultipartFile> files) throws Exception {
+        try {
             // 上传文件路径
             String filePath = JianwooConfig.getUploadPath();
+            String isUpload2Cdn = sysConfigService.selectConfigByKey(ConfigConstants.QINIUYUN_UPLOAD_ENABLE);
             List<String> urls = new ArrayList<String>();
             List<String> fileNames = new ArrayList<String>();
             List<String> newFileNames = new ArrayList<String>();
             List<String> originalFilenames = new ArrayList<String>();
-            for (MultipartFile file : files)
-            {
+            for (MultipartFile file : files) {
                 // 上传并返回新文件名称
                 String fileName = FileUploadUtils.upload(filePath, file);
-                String url = serverConfig.getUrl() + fileName;
-                urls.add(url);
+                if (Constants.TRUE.equalsIgnoreCase(isUpload2Cdn)) {
+                    String yyyyMM = DateUtil.format(new Date(), "yyyyMM");
+                    String cdnContext = sysConfigService.selectConfigByKey(ConfigConstants.QINIUYUN_CONTEXT);
+                    String cdnUrl = qiniuUploadUtil.upload(FileUploadUtils.getRealPath(fileName), cdnContext + File.separator + yyyyMM, FileUtils.getName(fileName));
+                    urls.add(cdnUrl);
+
+                } else {
+                    String url = serverConfig.getUrl() + fileName;
+                    urls.add(url);
+                }
                 fileNames.add(fileName);
                 newFileNames.add(FileUtils.getName(fileName));
                 originalFilenames.add(file.getOriginalFilename());
@@ -151,9 +159,7 @@ public class CommonController
             response.setOriginalFilenames(StringUtils.join(originalFilenames, FILE_DELIMETER));
 
             return response;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return UploadListResponse.fail(e.getMessage());
         }
     }
@@ -165,12 +171,9 @@ public class CommonController
     @GetMapping("/download/resource")
     @Operation(summary = "本地资源通用下载", description = "本地资源通用下载")
     @Parameter(name = "resource", description = "资源名称", in = ParameterIn.QUERY, required = true)
-    public void resourceDownload(String resource, HttpServletResponse response)
-    {
-        try
-        {
-            if (!FileUtils.checkAllowDownload(resource))
-            {
+    public void resourceDownload(String resource, HttpServletResponse response) {
+        try {
+            if (!FileUtils.checkAllowDownload(resource)) {
                 throw new Exception(MessageUtils.message("resource.name.illegal", resource));
             }
             // 本地资源路径
@@ -182,9 +185,7 @@ public class CommonController
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
             FileUtils.setAttachmentResponseHeader(response, downloadName);
             FileUtils.writeBytes(downloadPath, response.getOutputStream());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(">>>>download resource failed, e: ", e);
         }
     }

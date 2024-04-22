@@ -371,13 +371,13 @@ INSERT INTO `system_config` VALUES ('sys_email_username', '邮箱用户名', 'em
 
 
 
-INSERT INTO `system_config_facade` VALUES ('sys_admin_email_address', '管理员邮箱', '管理员邮箱', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 215, NOW(), NOW());
-INSERT INTO `system_config_facade` VALUES ('sys_exception_email_notify', '异常邮件发送', '异常邮件发送', NULL, 'input_checkbox', 'email', '邮箱', '0', NULL, NULL, NULL, 216,  NOW(), NOW());
-INSERT INTO `system_config_facade` VALUES ('sys_email_host', '邮箱主机', '主机', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 210, NOW(), NOW());
-INSERT INTO `system_config_facade` VALUES ('sys_email_user_nick', '邮箱用户昵称', '用户昵称', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 214, NOW(), NOW());
-INSERT INTO `system_config_facade` VALUES ('sys_email_port', '邮箱端口', '端口', NULL, 'input_text_number', 'email', '邮箱', '0', NULL, 'integer', NULL, 211, NOW(), NOW());
-INSERT INTO `system_config_facade` VALUES ('sys_email_password', '邮箱密码', '密码', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 213, NOW(), NOW());
-INSERT INTO `system_config_facade` VALUES ('sys_email_username', '邮箱用户名', '用户名', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 212, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('email_admin_address', '管理员邮箱', '管理员邮箱', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 215, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('email_exception_notify', '异常邮件发送', '异常邮件发送', NULL, 'input_checkbox', 'email', '邮箱', '0', NULL, NULL, NULL, 216,  NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('email_host', '邮箱主机', '主机', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 210, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('email_user_nick', '邮箱用户昵称', '用户昵称', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 214, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('email_port', '邮箱端口', '端口', NULL, 'input_text_number', 'email', '邮箱', '0', NULL, 'integer', NULL, 211, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('email_password', '邮箱密码', '密码', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 213, NOW(), NOW());
+INSERT INTO `system_config_facade` VALUES ('email_username', '邮箱用户名', '用户名', NULL, 'input_text', 'email', '邮箱', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 212, NOW(), NOW());
 
 INSERT INTO `system_config` VALUES ('sys_app_logo', '应用LOGO', 'system', 'S', 'https://cdn.jianwoo.cn/image/chatgpt/logo.png', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
 INSERT INTO `system_config_facade` VALUES ('sys_app_logo', '应用LOGO', '应用LOGO', NULL, 'input_file_image', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":2000}}', 104,NOW(), NOW());

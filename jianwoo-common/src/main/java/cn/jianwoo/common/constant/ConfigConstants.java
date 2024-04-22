@@ -15,27 +15,27 @@ public class ConfigConstants {
     /**
      * 邮箱主机
      */
-    public static final String EMAIL_HOST = "sys_email_host";
+    public static final String EMAIL_HOST = "email_host";
 
     /**
      * 邮箱用户昵称
      */
-    public static final String EMAIL_NICK = "sys_email_user_nick";
+    public static final String EMAIL_NICK = "email_user_nick";
 
     /**
      * 邮箱端口
      */
-    public static final String EMAIL_PORT = "sys_email_port";
+    public static final String EMAIL_PORT = "email_port";
 
     /**
      * 邮箱密码
      */
-    public static final String EMAIL_PWD = "sys_email_password";
+    public static final String EMAIL_PWD = "email_password";
 
     /**
      * 邮箱用户名
      */
-    public static final String EMAIL_USER = "sys_email_username";
+    public static final String EMAIL_USER = "email_username";
 
     /**
      * 应用名称
@@ -45,12 +45,12 @@ public class ConfigConstants {
     /**
      * 管理员邮箱
      */
-    public static final String EMAIL_ADMIN = "sys_admin_email_address";
+    public static final String EMAIL_ADMIN = "email_admin_address";
 
     /**
      * 异常邮件发送
      */
-    public static final String EMAIL_EXCEPTION = "sys_exception_email_notify";
+    public static final String EMAIL_EXCEPTION = "email_exception_notify";
 
     /**
      * 主框架页-默认皮肤样式名称

@@ -390,21 +390,21 @@ public class SysConfigServiceImpl implements SysConfigService
             {
                 return "";
             }
-            throw new RuntimeException(e);
+            throw new E(e);
         }
     }
 
 
     @Override
-    public Map<String, Object> querySystemConfByType(String cfgType)
+    public Map<String, String> querySystemConfByType(String cfgType)
     {
-        Map<String, Object> confMap = new HashMap<>();
+        Map<String, String> confMap = new HashMap<>();
         if (org.apache.commons.lang3.StringUtils.isBlank(cfgType)) return confMap;
         String typeCacheKey = getConfigTypeCacheKey(cfgType);
         if (redisCache.hasKey(typeCacheKey))
         {
             // 理论上永远不会为null，因为key存在，且value不能为null
-            return redisCache.getCacheMap(typeCacheKey);
+            return redisCache.getCacheObject(typeCacheKey);
         }
         List<SystemConfig> systemConfList = null;
         systemConfList = systemConfigService.querySystemConfigsByType(cfgType);
@@ -435,13 +435,13 @@ public class SysConfigServiceImpl implements SysConfigService
             confMap.put(systemConfig.getKey(), value);
         }
 
-        redisCache.setCacheMap(typeCacheKey, confMap);
+        redisCache.setCacheObject(typeCacheKey, confMap);
         return confMap;
     }
 
 
     @Override
-    public Map<String, Object> queryByType(String cfgType)
+    public Map<String, String> queryByType(String cfgType)
     {
         try
         {
@@ -454,7 +454,7 @@ public class SysConfigServiceImpl implements SysConfigService
             {
                 return new HashMap<>();
             }
-            throw new RuntimeException(e);
+            throw new E(e);
         }
     }
 

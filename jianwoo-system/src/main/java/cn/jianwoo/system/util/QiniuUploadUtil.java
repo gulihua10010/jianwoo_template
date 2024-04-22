@@ -58,13 +58,13 @@ public class QiniuUploadUtil {
     @Bean
     @ConditionalOnMissingBean
     public UploadManager init() {
-        Map<String, Object> cfgMap = null;
-        cfgMap = sysConfigService.querySystemConfByType(CfgType.QINIUYUN.getValue());
+        Map<String, String> cfgMap = null;
+        cfgMap = sysConfigService.queryByType(CfgType.QINIUYUN.getValue());
 
-        accessKey = (String) cfgMap.get(ConfigConstants.QINIUYUN_ACCESS_KEY);
-        secretKey = (String) cfgMap.get(ConfigConstants.QINIUYUN_SECRET_KEY);
-        bucketname = (String) cfgMap.get(ConfigConstants.QINIUYUN_BUCKET_NAME);
-        domain = (String) cfgMap.get(ConfigConstants.QINIUYUN_DOMAIN);
+        accessKey = cfgMap.get(ConfigConstants.QINIUYUN_ACCESS_KEY);
+        secretKey = cfgMap.get(ConfigConstants.QINIUYUN_SECRET_KEY);
+        bucketname = cfgMap.get(ConfigConstants.QINIUYUN_BUCKET_NAME);
+        domain = cfgMap.get(ConfigConstants.QINIUYUN_DOMAIN);
 
         auth = Auth.create(accessKey, secretKey);
         Zone z = Zone.autoZone();
@@ -105,7 +105,7 @@ public class QiniuUploadUtil {
             // 请求失败时打印的异常的信息
             log.error(">>Qiniuyun upload failed, response = [{}]", response);
             log.error(">>Qiniuyun upload failed, e:\r\n", e);
-            throw new E(MessageUtils.message("qiniuyun.upload.failed"), filepath);
+            throw new E(MessageUtils.message("qiniuyun.upload.failed", filepath));
 
         }
 
@@ -132,7 +132,7 @@ public class QiniuUploadUtil {
             // 请求失败时打印的异常的信息
             log.error(">>Qiniuyun upload failed, response = [{}]", response);
             log.error(">>Qiniuyun upload failed, e:\r\n", e);
-            throw new E(MessageUtils.message("qiniuyun.delete.failed"), filepath);
+            throw new E(MessageUtils.message("qiniuyun.delete.failed", filepath));
 
 
         }
@@ -163,7 +163,7 @@ public class QiniuUploadUtil {
             // 请求失败时打印的异常的信息
             log.error(">>Qiniuyun upload failed, response = [{}]", response);
             log.error(">>Qiniuyun upload failed, e:\r\n", e);
-            throw new E(MessageUtils.message("qiniuyun.upload.failed"), name);
+            throw new E(MessageUtils.message("qiniuyun.upload.failed", name));
         }
     }
 

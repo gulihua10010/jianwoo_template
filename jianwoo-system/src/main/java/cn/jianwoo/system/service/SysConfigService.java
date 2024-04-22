@@ -124,7 +124,7 @@ public interface SysConfigService
      * @return
      * @author gulihua
      */
-    Map<String, Object> querySystemConfByType(String cfgType);
+    Map<String, String> querySystemConfByType(String cfgType);
 
 
     /**
@@ -135,6 +135,6 @@ public interface SysConfigService
      * @return
      * @author gulihua
      */
-    Map<String, Object> queryByType(String cfgType);
+    Map<String, String> queryByType(String cfgType);
 
 }
