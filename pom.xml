@@ -32,21 +32,11 @@
         <hutool.version>5.8.3</hutool.version>
         <com.github.xiaoymin.version>4.3.0</com.github.xiaoymin.version>
         <codehaus.version>3.1.9</codehaus.version>
-        <aliyun.ecs.version>3.1.14</aliyun.ecs.version>
         <aliyun.oss.version>3.17.3</aliyun.oss.version>
         <httpcomponents.client5.version>5.1.3</httpcomponents.client5.version>
-        <aliyun.bssopenapi.version>1.10.0</aliyun.bssopenapi.version>
-        <aliyun.vpc.version>6.0.1</aliyun.vpc.version>
-        <aliyun.nas.version>2.0.2</aliyun.nas.version>
-        <aliyun.oss.sts.version>1.1.3</aliyun.oss.sts.version>
-        <aliyun.ram.version>1.0.2</aliyun.ram.version>
         <mail.version>1.6.2</mail.version>
-        <tencentcloud.billing.version>3.1.915</tencentcloud.billing.version>
-        <tencentcloud.cvm.version>3.1.925</tencentcloud.cvm.version>
-        <tencentcloud.cos.version>5.6.155</tencentcloud.cos.version>
-        <tencentcloud.sts.version>3.1.894</tencentcloud.sts.version>
-        <tencentcloud.vpc.version>3.1.917</tencentcloud.vpc.version>
-        <tencentcloud.tat.version>3.1.930</tencentcloud.tat.version>
+        <qiniu.version>[7.7.0, 7.7.99]</qiniu.version>
+
 
     </properties>
 	
@@ -227,72 +217,14 @@
                 <version>${aliyun.oss.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>bssopenapi20171214</artifactId>
-                <version>${aliyun.bssopenapi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>vpc20160428</artifactId>
-                <version>${aliyun.vpc.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>nas20170626</artifactId>
-                <version>${aliyun.nas.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.aliyun/sts20150401 -->
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>sts20150401</artifactId>
-                <version>${aliyun.oss.sts.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>ram20150501</artifactId>
-                <version>${aliyun.ram.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.sun.mail</groupId>
                 <artifactId>javax.mail</artifactId>
                 <version>${mail.version}</version>
             </dependency>
-            <!--腾讯云查询账户余额sdk-->
             <dependency>
-                <groupId>com.tencentcloudapi</groupId>
-                <artifactId>tencentcloud-sdk-java-billing</artifactId>
-                <version>${tencentcloud.billing.version}</version>
-            </dependency>
-            <!--腾讯云服务器sdk-->
-            <dependency>
-                <groupId>com.tencentcloudapi</groupId>
-                <artifactId>tencentcloud-sdk-java-cvm</artifactId>
-                <version>${tencentcloud.cvm.version}</version>
-            </dependency>
-            <!--腾讯云对象存储sdk-->
-            <dependency>
-                <groupId>com.qcloud</groupId>
-                <artifactId>cos_api</artifactId>
-                <version>${tencentcloud.cos.version}</version>
-            </dependency>
-            <!--腾讯云安全凭证服务sdk-->
-            <dependency>
-                <groupId>com.tencentcloudapi</groupId>
-                <artifactId>tencentcloud-sdk-java-sts</artifactId>
-                <version>${tencentcloud.sts.version}</version>
-            </dependency>
-            <!--腾讯云私有网络sdk-->
-            <dependency>
-                <groupId>com.tencentcloudapi</groupId>
-                <artifactId>tencentcloud-sdk-java-vpc</artifactId>
-                <version>${tencentcloud.vpc.version}</version>
-            </dependency>
-            <!--腾讯云云助手sdk-->
-            <dependency>
-                <groupId>com.tencentcloudapi</groupId>
-                <artifactId>tencentcloud-sdk-java-tat</artifactId>
-                <version>${tencentcloud.tat.version}</version>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
             </dependency>
         </dependencies>
 

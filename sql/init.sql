@@ -382,6 +382,25 @@ INSERT INTO `system_config_facade` VALUES ('sys_email_username', '邮箱用户�
 INSERT INTO `system_config` VALUES ('sys_app_logo', '应用LOGO', 'system', 'S', 'https://cdn.jianwoo.cn/image/chatgpt/logo.png', NULL, NULL, NULL, NULL, '1', NOW(), 'admin', NOW(), 'admin');
 INSERT INTO `system_config_facade` VALUES ('sys_app_logo', '应用LOGO', '应用LOGO', NULL, 'input_file_image', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":2000}}', 104,NOW(), NOW());
 
+INSERT INTO `system_config_facade`VALUES ('sys_app_nick', '应用标识', '应用LOGO', NULL, 'input_file_image', 'system', '系统配置', '1', NULL, 'maxLength', '{\"maxLength\":{\"value\":2000}}', 106, now(), now());
+INSERT INTO `system_config`VALUES ('sys_app_nick', '应用标识', 'system', 'S', 'http://localhost:8090/profile/upload/2024/04/21/iShot_2024-04-20_16.23.28_20240421215819A001.png', NULL, NULL, NULL, NULL, '1', now(), 'admin', now(), 'admin');
+
+
+INSERT INTO `system_config` VALUES ('qiniuyun_access_key', '访问key', 'qiniuyun', 'S', 'etsPygD5foKI8ayefLvuaIxta4BtCdQCGhnkmQjP', NULL, NULL, NULL, NULL, '1', now(), 'admin', now(), 'admin');
+INSERT INTO `system_config` VALUES ('qiniuyun_bucket_name', '存储空间名称', 'qiniuyun', 'S', 'jianwoo', NULL, NULL, NULL, NULL, '1',now(), 'admin', now(), 'admin');
+INSERT INTO `system_config` VALUES ('qiniuyun_context', '上传目录', 'qiniuyun', 'S', 'jwblog/upload', NULL, NULL, NULL, NULL, '1', now(), 'admin', now(), 'admin');
+INSERT INTO `system_config` VALUES ('qiniuyun_domain', '绑定域名', 'qiniuyun', 'S', 'https://cdn.jianwoo.cn', NULL, NULL, NULL, NULL, '1', now(), 'admin', now(), 'admin');
+INSERT INTO `system_config` VALUES ('qiniuyun_secret_key', '访问secret', 'qiniuyun', 'S', 'D7Q87X_Hr9isDzQeaZaT2QzibktkZHMIQ-8yk-yN', NULL, NULL, NULL, NULL, '1', now(), 'admin', now(), 'admin');
+INSERT INTO `system_config` VALUES ('qiniuyun_upload_enable', '开启图片上传到七牛云', 'qiniuyun', 'B', NULL, NULL, NULL, '0', NULL, '1', now(), 'admin', now(), 'admin');
+
+
+INSERT INTO `system_config_facade` VALUES ('qiniuyun_access_key', 'access key', 'access key', NULL, 'input_text', 'qiniuyun', '七牛云', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":500}}', 911, now(), now());
+INSERT INTO `system_config_facade` VALUES ('qiniuyun_bucket_name', '存储空间名称', '存储空间名称', NULL, 'input_text', 'qiniuyun', '七牛云', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":500}}', 913, now(), now());
+INSERT INTO `system_config_facade` VALUES ('qiniuyun_context', '上传目录', '上传目录', NULL, 'input_text', 'qiniuyun', '七牛云', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 914, now(), now());
+INSERT INTO `system_config_facade` VALUES ('qiniuyun_domain', '绑定域名', '绑定域名', '域名必须已经备案', 'input_text', 'qiniuyun', '七牛云', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":50}}', 915, now(), now());
+INSERT INTO `system_config_facade` VALUES ('qiniuyun_secret_key', 'SECRET KEY', 'SECRET KEY', NULL, 'input_text', 'qiniuyun', '七牛云', '0', NULL, 'maxLength', '{\"maxLength\":{\"value\":500}}', 912, now(), now());
+INSERT INTO `system_config_facade` VALUES ('qiniuyun_upload_enable', '开启图片上传到七牛云', '开启图片上传到七牛云', NULL, 'input_checkbox', 'qiniuyun', '七牛云', '0', NULL, NULL, NULL, 910, now(), now());
+
 
 
 

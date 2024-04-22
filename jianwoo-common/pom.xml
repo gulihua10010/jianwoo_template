@@ -153,66 +153,17 @@
         </dependency>
 
         <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>ecs20140526</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>bssopenapi20171214</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>vpc20160428</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>nas20170626</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>sts20150401</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>ram20150501</artifactId>
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
         </dependency>
-        <!--腾讯云查询账户余额sdk-->
+
         <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java-billing</artifactId>
-        </dependency>
-        <!--腾讯云服务器sdk-->
-        <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java-cvm</artifactId>
-        </dependency>
-        <!--腾讯云对象存储sdk-->
-        <dependency>
-            <groupId>com.qcloud</groupId>
-            <artifactId>cos_api</artifactId>
-        </dependency>
-        <!--腾讯云安全凭证服务sdk-->
-        <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java-sts</artifactId>
-        </dependency>
-        <!--腾讯云私有网络sdk-->
-        <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java-vpc</artifactId>
-        </dependency>
-        <!--腾讯云云助手sdk-->
-        <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java-tat</artifactId>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
         </dependency>
     </dependencies>
 

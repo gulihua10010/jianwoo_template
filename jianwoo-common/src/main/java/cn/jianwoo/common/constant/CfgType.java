@@ -5,11 +5,15 @@ public enum CfgType {
     /**
      * email
      */
-    EMAIL("EMAIL"),
+    EMAIL("email"),
     /**
      * system
      */
-    SYSTEM("SYSTEM"),
+    SYSTEM("system"),
+    /**
+     * 七牛云
+     */
+    QINIUYUN("qiniuyun"),
 
     ;
 
@@ -18,20 +22,17 @@ public enum CfgType {
      */
     private String value;
 
-    CfgType(String value)
-    {
+    CfgType(String value) {
         this.value = value;
     }
 
 
-    public String getValue()
-    {
+    public String getValue() {
         return this.value;
     }
 
 
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         this.value = value;
     }
 }

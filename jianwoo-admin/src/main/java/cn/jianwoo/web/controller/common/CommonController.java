@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.jianwoo.common.utils.MessageUtils;
+import cn.jianwoo.system.service.SysConfigService;
+import cn.jianwoo.system.util.QiniuUploadUtil;
 import cn.jianwoo.web.dto.comm.UploadListResponse;
 import cn.jianwoo.web.dto.comm.UploadResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +44,12 @@ public class CommonController
 
     @Autowired
     private ServerConfig serverConfig;
+
+    @Autowired
+    private SysConfigService sysConfigService;
+
+    @Autowired
+    private QiniuUploadUtil qiniuUploadUtil;
 
     private static final String FILE_DELIMETER = ",";
 

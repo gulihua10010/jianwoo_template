@@ -85,5 +85,36 @@ public class ConfigConstants {
     /**
      * 应用标识
      */
-    public static final String SYS_APP_NICK = "SYS_APP_NICK";
+    public static final String SYS_APP_NICK = "sys_app_nick";
+
+
+    /**
+     * 开启图片上传到七牛云
+     */
+    public static final String QINIUYUN_UPLOAD_ENABLE = "qiniuyun_upload_enable";
+
+    /**
+     * 访问key
+     */
+    public static final String QINIUYUN_ACCESS_KEY = "qiniuyun_access_key";
+
+    /**
+     * 访问secret
+     */
+    public static final String QINIUYUN_SECRET_KEY = "qiniuyun_secret_key";
+
+    /**
+     * 存储空间名称
+     */
+    public static final String QINIUYUN_BUCKET_NAME = "qiniuyun_bucket_name";
+
+    /**
+     * 绑定域名
+     */
+    public static final String QINIUYUN_DOMAIN = "qiniuyun_domain";
+
+    /**
+     * 上传目录
+     */
+    public static final String QINIUYUN_CONTEXT = "qiniuyun_context";
 }
