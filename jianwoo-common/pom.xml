@@ -165,6 +165,12 @@
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
         </dependency>
+
+        <!--        IP归属地-->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

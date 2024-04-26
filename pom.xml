@@ -36,6 +36,7 @@
         <httpcomponents.client5.version>5.1.3</httpcomponents.client5.version>
         <mail.version>1.6.2</mail.version>
         <qiniu.version>[7.7.0, 7.7.99]</qiniu.version>
+        <ip2region.version>2.6.4</ip2region.version>
 
 
     </properties>
@@ -225,6 +226,12 @@
                 <groupId>com.qiniu</groupId>
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>${qiniu.version}</version>
+            </dependency>
+            <!--        IP归属地-->
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
             </dependency>
         </dependencies>
 

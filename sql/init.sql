@@ -1095,3 +1095,56 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 ALTER TABLE `sys_user` ADD `open_id`  varchar(100) DEFAULT null  COMMENT '微信openid' AFTER nick_name;
+
+
+
+CREATE TABLE `product` (
+                           `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                           `name` varchar(256) NOT NULL COMMENT '名称',
+                           `desc` text COMMENT '描述',
+                           `cover` varchar(1024)  DEFAULT NULL COMMENT '图片',
+                           `price` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '价格',
+                           `origin_price` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '原价',
+                           `left_num` int DEFAULT NULL COMMENT '剩余数量',
+                           `type` varchar(128)  DEFAULT NULL COMMENT '商品类型',
+                           `extra_info` text COMMENT '商品额外信息（json）',
+                           `sold_num` int NOT NULL DEFAULT '0' COMMENT '已售数量',
+                           `status` varchar(2) DEFAULT '00' COMMENT '00:有效,91:下架',
+                           `is_activity` tinyint NOT NULL DEFAULT 0 COMMENT '是否活动优惠',
+                           `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+                           `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+                           `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+                           `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+                           `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+                           `del_flag` char(1) DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB COMMENT='商品';
+
+
+CREATE TABLE `product_order` (
+                                 `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                 `order_id` varchar(24) NOT NULL COMMENT '订单号',
+                                 `content` text COMMENT '内容',
+                                 `price` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '单价',
+                                 `number` int DEFAULT '1' COMMENT '购买数量',
+                                 `amount` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '金额',
+                                 `product_id` bigint NOT NULL COMMENT '商品id',
+                                 `user_id` bigint NOT NULL COMMENT '创建订单用户id',
+                                 `user_name` varchar(50) DEFAULT NULL COMMENT '用户名',
+                                 `biz_name` varchar(128) NOT NULL COMMENT '业务名称',
+                                 `pay_type` varchar(10) DEFAULT NULL COMMENT '支付类型',
+                                 `pay_info` text COLLATE utf8mb4_bin COMMENT '支付信息(json)',
+                                 `request_ip` varchar(30) DEFAULT NULL COMMENT '支付请求IP',
+                                 `pay_trade_no` varchar(255) DEFAULT NULL COMMENT '支付订单号',
+                                 `trade_state` varchar(128) NOT NULL DEFAULT 'NOTPAY' COMMENT '交易状态',
+                                 `pay_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '支付时间',
+                                 `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+                                 `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+                                 `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+                                 `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+                                 `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+                                 `del_flag` char(1) DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+                                 PRIMARY KEY (`id`),
+                                 KEY `idx_product_id` (`product_id`),
+                                 KEY `idx_user_id` (`user_id`)
+) ENGINE=InnoDB COMMENT='订单';

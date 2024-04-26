@@ -55,6 +55,7 @@ public class ${ClassName}Controller extends BaseController
     @Autowired
     private ${ClassName}Service ${className}Service;
 
+    // 模板引擎生成开始
     /**
      * 查询${functionName}列表
      */
@@ -229,4 +230,7 @@ public class ${ClassName}Controller extends BaseController
         ${className}Service.doDelete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s);
         return ok();
     }
+
+    // 模板引擎生成结束
+
 }

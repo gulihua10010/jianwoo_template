@@ -58,13 +58,13 @@ public class GenConstants
 
     /** 页面不需要查询字段 */
     public static final String[] COLUMNNAME_NOT_QUERY = { "create_by", "create_time", "del_flag", "update_by",
-            "update_time", "remark" };
+            "update_time", "remark"};
 
     /** Entity基类字段 */
-    public static final String[] BASE_ENTITY = { "createBy", "createTime", "updateBy", "updateTime", "remark" };
+    public static final String[] BASE_ENTITY = { "createBy", "createTime", "updateBy", "updateTime", "remark" , "del_flag"};
 
     /** Tree基类字段 */
-    public static final String[] TREE_ENTITY = { "parentName", "parentId", "orderNum", "ancestors", "children" };
+    public static final String[] TREE_ENTITY = { "parentName", "parentId", "orderNum", "ancestors", "children" , "del_flag"};
 
     /** 文本框 */
     public static final String HTML_INPUT = "input";
@@ -125,4 +125,10 @@ public class GenConstants
 
     /** 需要 */
     public static final String REQUIRE = "1";
+
+    /** ID */
+    public static final String COLUMN_JAVA_FIELD_ID = "id";
+
+    /** DEL_FLAG */
+    public static final String COLUMN_JAVA_FIELD_DEL_FLAG = "delFlag";
 }

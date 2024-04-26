@@ -11,6 +11,8 @@ import ${packageName}.${moduleName}.domain.${ClassName};
  */
 public interface ${ClassName}Service
 {
+    // 模板引擎生成开始
+
     /**
      * 查询${functionName}
      * 
@@ -54,4 +56,6 @@ public interface ${ClassName}Service
      * @param ${pkColumn.javaField} ${functionName}主键
      */
     void doDelete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField});
+
+    // 模板引擎生成结束
 }

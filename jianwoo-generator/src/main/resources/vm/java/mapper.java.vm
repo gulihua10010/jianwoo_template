@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ${ClassName}Mapper 
 {
+    // 模板引擎生成开始
 
     /**
      * 根据条件统计${functionName}
@@ -147,4 +148,7 @@ public interface ${ClassName}Mapper
      */
     int delete${subClassName}By${subTableFkClassName}(${pkColumn.javaType} ${pkColumn.javaField});
 #end
+
+    // 模板引擎生成结束
+
 }

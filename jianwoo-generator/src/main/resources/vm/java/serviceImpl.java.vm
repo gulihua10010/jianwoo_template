@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import ${packageName}.${moduleName}.mapper.${ClassName}Mapper;
 import ${packageName}.${moduleName}.domain.${ClassName};
 import ${packageName}.${moduleName}.service.${ClassName}Service;
+import cn.hutool.core.util.IdUtil;
 
 
 /**
@@ -30,6 +31,9 @@ public class ${ClassName}ServiceImpl implements ${ClassName}Service
 {
     @Autowired
     private ${ClassName}Mapper ${className}Mapper;
+
+
+    // 模板引擎生成开始
 
     /**
      * 查询${functionName}
@@ -72,6 +76,10 @@ public class ${ClassName}ServiceImpl implements ${ClassName}Service
     @Override
     public void doInsert${ClassName}(${ClassName} ${className})
     {
+        #if($genSnowflake)
+        long id = IdUtil.getSnowflakeNextId();
+        ${className}.set${pkColumn.capJavaField}(id);
+        #end
         ${className}.fillInfoBeforeCreate();
 #if($table.sub)
         int rows = ${className}Mapper.insertSelective(${className});
@@ -180,4 +188,7 @@ public class ${ClassName}ServiceImpl implements ${ClassName}Service
         }
     }
 #end
+
+    // 模板引擎生成结束
+
 }
